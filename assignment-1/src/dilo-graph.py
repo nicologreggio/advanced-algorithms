@@ -42,9 +42,11 @@ def readGraph(f):
     h = {}
     for i in m: 
         if i[0] not in h: 
-            h[i[0]] = {i[1]:i[2]}
-        else: 
-            h[i[0]].update({i[1]:i[2]})
+            h[i[0]] = {}
+        if i[1] not in h: 
+            h[i[1]] = {}
+        h[i[0]][i[1]] = i[2]
+        h[i[1]][i[0]] = i[2]
     g = Graph(h, n_vert, n_edge)
     return g
 
@@ -56,7 +58,7 @@ def open_graph(file_path):
 		return readGraph(f)
 
 def readAll(): 
-    path = "/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1"
+    path = "../dataset-1"
     os.chdir(path)
     A = []
     for file in os.listdir():
@@ -117,9 +119,10 @@ def prim_algo(graph, s):
 
 print(readAll())
 
-"""
-f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_20_100.txt', 'r')
-g = readGraph(f) # modifica 
+f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_01_10.txt', 'r')
+g = readGraph(f)
 
 #print(g.adlist)
 print(prim_algo(g, 1))
+
+"""
