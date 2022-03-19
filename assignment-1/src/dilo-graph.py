@@ -117,8 +117,6 @@ def prim_algo(graph, s):
 
 print(readAll())
 
-
-
 """
 f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_20_100.txt', 'r')
 g = readGraph(f) # modifica 
