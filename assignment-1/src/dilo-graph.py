@@ -8,7 +8,6 @@ class Graph:
     def __repr__(self): 
         return "(V: {0}, E: {1})".format(self.n_vert, self.n_edge)
 
-    
     def get_vertices(self): 
         return list(self.adlist.keys())
 
@@ -32,6 +31,7 @@ class Graph:
 # READ FROM ONE FILE
 def readGraph(f): 
     # adjacency list is "directed" in the way the graph is written in the document
+    # TO DO: fix this 
     lines = f.readlines()
     m = []
     info = list(map(int, lines[0].split()))
@@ -100,7 +100,6 @@ def prim_algo(graph, s):
     while bool(Q): 
         v = heapq.heappop(Q)
         A.append(v)
-        #problem here 
         e = E.get(v.name)
         if e: 
             for u in e.keys(): 
@@ -113,12 +112,15 @@ def prim_algo(graph, s):
     
 """
 #TEST 
+
+print(readAll())
+
 f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_20_100.txt', 'r')
 
 g = readGraph(f)
 
-print(readAll())
-
+#print(g.adlist)
 print(prim_algo(g, 1))
+
 """
 
