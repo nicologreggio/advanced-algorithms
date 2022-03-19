@@ -121,7 +121,7 @@ f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/
 g = readGraph(f)
 
 #print(g.adlist)
-print(prim_algo(g, 1))
+print(prim_algo(g, 1)) # AAAAAAAAAAAAAAAAAAAAAAAAAa
 
 """
 
