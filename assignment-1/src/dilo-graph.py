@@ -121,7 +121,7 @@ print(readAll())
 
 """
 f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_20_100.txt', 'r')
-g = readGraph(f)
+g = readGraph(f) # modifica 
 
 #print(g.adlist)
 print(prim_algo(g, 1))
