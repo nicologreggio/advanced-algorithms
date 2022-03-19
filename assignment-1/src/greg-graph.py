@@ -4,6 +4,9 @@ import os
 import functools
 
 
+def do_things(g):
+    print(f'\n\n*******\n<DOING STUFF WITH{g}')
+
 def read_file(f):
     h={}
     with open(f) as file:
@@ -16,8 +19,11 @@ def read_file(f):
             # print(f'({e1}, {e2}) {w}')
             if e1 not in h:
                 h[e1]={}
+            if e2 not in h:
+                h[e2]={}
             h[e1][e2]=w
-        print(h)
+            h[e2][e1]=w
+        return h
 
 
 # ========================================
@@ -37,6 +43,6 @@ print("you chose: "+os.getcwd())
 for root, dirs, files in os.walk(os.getcwd()):
     for file in files:
         if file.endswith(".txt"):
-            # calculate_vtw(os.path.join(root, file))
             print(os.path.join(root, file))
-            read_file(os.path.join(root, file))
+            graph=read_file(os.path.join(root, file))
+            do_things(graph)
