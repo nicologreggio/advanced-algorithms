@@ -34,6 +34,7 @@ def readGraph(f):
     # TO DO: fix this 
     lines = f.readlines()
     m = []
+    # hahahaha
     info = list(map(int, lines[0].split()))
     n_vert, n_edge = info[0], info[1]
     for l in lines[1:]: 
