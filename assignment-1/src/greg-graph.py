@@ -2,6 +2,7 @@
 import sys
 import os
 import functools
+import time
 
 
 def do_things(g):
@@ -10,8 +11,9 @@ def do_things(g):
 def read_file(f):
     h={}
     with open(f) as file:
-        nodes, edges = file.readline().strip().split(' ')
-        print(f'There are {nodes} nodes and {edges} edges')
+        # nodes, edges = file.readline().strip().split(' ')
+        # print(f'There are {nodes} nodes and {edges} edges')
+        file.readline().strip().split(' ')
         lines = file.readlines()
         for line in lines:
             # print(line)
@@ -27,8 +29,8 @@ def read_file(f):
 
 
 # ========================================
-# path='../dataset-1'
-path = 0
+path='../dataset-1'
+# path = 0
 if not path:
     path = '.'
 
@@ -39,10 +41,14 @@ assert(os.path.exists(path)), "Not a valid path! ("+path+")"
 os.chdir(path)
 
 print("you chose: "+os.getcwd())
-
+start=time.time()
+graphs=[]
 for root, dirs, files in os.walk(os.getcwd()):
     for file in files:
         if file.endswith(".txt"):
-            print(os.path.join(root, file))
-            graph=read_file(os.path.join(root, file))
-            do_things(graph)
+            # print(os.path.join(root, file))
+            graphs.append(read_file(os.path.join(root, file)))
+            # do_things(graph)
+end=time.time()
+
+print(f'Time: {end-start}, with {len(graphs)} graphs')
