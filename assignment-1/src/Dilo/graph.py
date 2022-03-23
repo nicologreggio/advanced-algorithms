@@ -30,11 +30,8 @@ class Graph:
 
 # READ FROM ONE FILE
 def readGraph(f): 
-    # adjacency list is "directed" in the way the graph is written in the document
-    # TO DO: fix this 
     lines = f.readlines()
     m = []
-    # hahahaha
     info = list(map(int, lines[0].split()))
     n_vert, n_edge = info[0], info[1]
     for l in lines[1:]: 
@@ -52,13 +49,14 @@ def readGraph(f):
 
 # READ ALL FILES 
 import os
+from tracemalloc import start
 
 def open_graph(file_path):
 	with open(file_path, 'r') as f:
 		return readGraph(f)
 
 def readAll(): 
-    path = "../dataset-1"
+    path = '/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1'
     os.chdir(path)
     A = []
     for file in os.listdir():
@@ -67,16 +65,7 @@ def readAll():
         A.append(g)
     return A
 
-# PRIM'S ALGORITHM - smart version with Heaps 
-
-# use predefined heaps or heapq library?
-# how to store information in the heapq? name of vertex, priority (which is what should be used to order the heap), parent
-
-import heapq
-
-# elements in heap as (key, vertex, parent)
-# can use float('inf') for the infinity 
-
+# VERTEX CLASS
 class Vertex: 
     def __init__(self, name, key, parent = None): 
         self.name = name
@@ -88,41 +77,3 @@ class Vertex:
 
     def __repr__(self):
         return "({0},{1},{2})".format(self.key, self.name, self.parent)
-
-
-def prim_algo(graph, s): 
-    V = graph.get_vertices()
-    E = graph.get_adlist()
-    infty = float('inf')
-    A = []
-    Q = list(map(lambda v: Vertex(v, infty), V))
-    for v in Q: 
-        if v.name == s: 
-            v.key = 0
-    heapq.heapify(Q)
-    while bool(Q): 
-        v = heapq.heappop(Q)
-        A.append(v)
-        e = E.get(v.name)
-        if e: 
-            for u in e.keys(): 
-                for l in Q:
-                    if l.name == u and e.get(u) < l.key: 
-                        l.parent = v.name 
-                        l.key = e.get(u) 
-        heapq.heapify(Q)
-    return A
-    
-
-"""
-#TEST 
-
-print(readAll())
-
-f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_01_10.txt', 'r')
-g = readGraph(f)
-
-#print(g.adlist)
-print(prim_algo(g, 1))
-
-"""
