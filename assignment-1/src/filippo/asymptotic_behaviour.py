@@ -7,8 +7,6 @@ from time import perf_counter_ns
 
 
 def measure_run_time(alg, graph, num_calls):
-  print("I'm computing...")
-
   gc.disable()
   start_time = perf_counter_ns()
   
@@ -19,10 +17,6 @@ def measure_run_time(alg, graph, num_calls):
   gc.enable()
   avg_time = (end_time - start_time)/num_calls
 
-  print("Done\n")
-  
-  # avg_time = int(round(sum_times/num_calls))
-  # return average time in nanoseconds
   return avg_time
 
 
