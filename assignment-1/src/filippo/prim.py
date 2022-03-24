@@ -12,29 +12,30 @@ from priority_queue import PriorityQueue
 
 class VertexHelper:
   def __init__(self, priority, v, parent):
-    self.priority = priority
-    self.v = v
-    self.parent = parent
+    self._priority = priority
+    self._v = v
+    self._parent = parent
 
   def get_key(self):
-    return self.priority
+    return self._priority
 
   def get_value(self):
-    return self.v
+    return self._v
 
   def set_parent(self, p):
-    self.parent = p
+    self._parent = p
 
   def __lt__(self, other):
-      return self.priority < other.priority
+      return self._priority < other._priority
 
   def __str__(self):
-    return f'({self.priority}, {self.v}, {self.parent.get_value() if self.parent else None})'
+    return f'({self._priority}, {self._v}, {self.parent.get_value() if self.parent else None})'
 
   def __repr__(self):
     return self.__str__()
 
-def prim(g: Graph, s: Vertex = 1):
+
+def prim_personal_impl(g: Graph, s: Vertex = 1):
   h = PriorityQueue()
 
   for v in g.get_vertices():
@@ -58,34 +59,31 @@ def prim(g: Graph, s: Vertex = 1):
         el.set_parent(u)
         h.change_priority(el.get_value(), new_priority)
 
+  return mst
 
-  # def getFromHeap(h, v):
-  #   return next(((i, x) for i, x in enumerate(h) if x[1] == v), (-1, None))
 
-  # while h:
-  #   # hq.heapify(h)
-  #   # u = hq.heappop(h)
-  #   # vertices.update({u.v: None})
-  #   # mst.append(u)
+def prim_internet_impl(g: Graph, s: Vertex = 1):
+  active_edges=[]
 
-  #   # adj = g.get_adj(u.v)
+  mst = []
+  in_mst={i:False for i in g.get_vertices()}
 
-  #   for v in adj:
-  #     # x = getFromHeap(h, v)
-  #     vHeap = vertices[v]
+  s = VertexHelper(0, s, -1)
+  hq.heappush(active_edges, s)
 
-  #     # i, vHeap = x
+  while active_edges:
+    node = hq.heappop(active_edges)
+    
+    mst.append(node)
+    in_mst[node.get_value()]=True
 
-  #     if vHeap and adj[v] < vHeap.priority:
-  #       vHeap.priority = adj[v]
-  #       vHeap.parent = u
-  #       # l = list(vHeap)
-
-  #       # l[0] = adj[v]
-  #       # l[2] = u[1]
-
-  #       # h[i] = tuple(l)
-
+    adj = g.get_adj(node.get_value())
+    
+    for v in adj:
+      w = adj[v]
+      if not in_mst[v]:
+          hq.heappush(active_edges, VertexHelper(w, v, node.get_value()))
+  
   return mst
 
 
@@ -94,7 +92,6 @@ def prim_asymptotic_behaviour(n, m):
 
 
 def plot_complexity(c, graphs_dimensions, run_times, asymptotic_behaviour):
-  fig = plt.figure()
   ax = plt.axes(projection='3d')
 
   x = np.asarray([n for (n, _) in graphs_dimensions])
@@ -105,12 +102,6 @@ def plot_complexity(c, graphs_dimensions, run_times, asymptotic_behaviour):
   ax.plot(x, y, reference_z, 'C1', label='C1')
   ax.plot(x, y, np.asarray(run_times), 'C2', label='C2')
   ax.legend()
-
-  # plt.plot(list_sizes, run_times)
-  # plt.plot(list_sizes, reference)
-  # plt.legend(["Measured time", "69 * N"])
-  # plt.ylabel('run time (ns)')
-  # plt.xlabel('size')
   plt.show()
 
 
@@ -122,10 +113,10 @@ def main():
   # run_times, ratios, c_estimates = compute_asymptotic_constant(prim, prim_asymptotic_behaviour, graphs, num_calls)
 
   graphs_dimensions, run_times, ratios, c_estimates = compute_asymptotic_constant_light(
-    prim, 
+    prim_personal_impl, 
     prim_asymptotic_behaviour, 
     files, 
-    init_graph_from_file, 
+    init_graph_from_file,
     10
   )
 
