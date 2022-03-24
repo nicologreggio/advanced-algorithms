@@ -27,7 +27,7 @@ class MyHeap:
         if min != i: 
             #maybe problem here!
             self.list[i], self.list[min] =   self.list[min], self.list[i]
-            return self.min_heapify(min)
+            self.min_heapify(min)
     
     def build_min_heap(self): 
         for i in reversed(range((self.size//2)+1)): 
@@ -43,6 +43,16 @@ class MyHeap:
         return min
 
     def min_heapify_up(self, i): 
-        if (i > 0) and (self.list[i] < self.list[self.parent(i)]): 
+        if (i > 0 and self.list[i] < self.list[self.parent(i)]):  
             self.list[i], self.list[self.parent(i)] = self.list[self.parent(i)], self.list[i]
             self.min_heapify_up(self.parent(i))
+            #self.min_heapify_up(i)
+
+    def decreaseKey(self, i, new_val):
+        self.list[i].key  = new_val 
+        self.min_heapify_up(i)
+        '''
+        while(i != 0 and self.list[self.parent(i)] > self.list[i]):
+            # Swap heap[i] with heap[parent(i)]
+            self.list[i] , self.list[self.parent(i)] = self.list[self.parent(i)], self.list[i]
+       '''       

@@ -65,6 +65,13 @@ def readAll():
         A.append(g)
     return A
 
+def readList(l): 
+    A = []
+    for file in l:
+        g = readGraph(file)
+        A.append(g)
+    return A
+
 # VERTEX CLASS
 class Vertex: 
     def __init__(self, name, key, parent = None): 
@@ -77,3 +84,45 @@ class Vertex:
 
     def __repr__(self):
         return "({0},{1},{2})".format(self.key, self.name, self.parent)
+
+# Graph with adjacency list [[v1, (v2, w), (v3, w')], [v2, (v1, w), ...], ...]
+class Graph_new: 
+    def __init__ (self, adlist, n_vert, n_edge): 
+        self.adlist = adlist 
+        self.n_vert = n_vert
+        self.n_edge = n_edge
+
+    def __repr__(self): 
+        return "(V: {0}, E: {1})".format(self.n_vert, self.n_edge)
+
+    def get_vertices(self): 
+        return list(range(1, self.n_vert+1))
+
+    def get_adlist(self): 
+        return self.adlist
+
+    def graph_infos(self): 
+        print("n. of vertices: %d" %self.n_vert)
+        print("n. of edges: %d" %self.n_edge)
+
+# READ FROM ONE FILE - graph new 
+def readGraph_new(f): 
+    lines = f.readlines()
+    m = []
+    info = list(map(int, lines[0].split()))
+    n_vert, n_edge = info[0], info[1]
+    for l in lines[1:]: 
+        m.append(list(map(int, l.split())))
+    h = [[i] for i in range(1, n_vert + 1)]
+    for i in m: 
+        h[i[0]-1].append((i[1], i[2]))
+        h[i[1]-1].append((i[0], i[2]))
+    g = Graph_new(h, n_vert, n_edge)
+    return g
+
+def readList_new(l): 
+    A = []
+    for file in l:
+        g = readGraph_new(file)
+        A.append(g)
+    return A
