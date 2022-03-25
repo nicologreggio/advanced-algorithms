@@ -1,6 +1,6 @@
 from graph import Graph, Vertex
 from graph import *
-from heap import MyHeap
+from heap import *
 import heapq
 
 # PRIM'S ALGORITHM - smart version with Heaps 
@@ -12,7 +12,7 @@ def prim_algo(graph, s):
     # can use float('inf') for the infinity 
     infty = float('inf')
     A = []
-    Q = MyHeap([])
+    Q = PriorityQueueVertex([])
     for v in graph.get_vertices(): 
         vert = Vertex(v, infty if v!=s else 0, None)
         Q.push(vert)

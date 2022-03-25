@@ -1,18 +1,22 @@
 from re import S
-from heap import MyHeap
+from graph import *
+from heap import *
 from random import seed, randint 
 from time import perf_counter_ns    
 import gc
 import math 
 
-alist = MyHeap([randint(1,100) for i in range(10)])
+#A = [randint(1,100) for i in range(10)]
+#V = [Vertex(a, a) for a in A]
+V = []
+alist = PriorityQueueVertex(V)
 alist.build_min_heap()
-print(alist)
+print(alist, "\n")
 
-alist.push(50)
+alist.push(Vertex(50, 50))
 
-print(alist)
+print(alist, "\n")
 
 alist.extract_min()
 
-print(alist)
+print(alist, "\n")

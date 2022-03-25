@@ -79,6 +79,9 @@ class Vertex:
         self.key = key
         self.parent = parent 
 
+    def get_key(self): 
+        return self.key
+
     def __lt__(self, other): 
         return self.key < other.key
 
