@@ -58,9 +58,10 @@ f6 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1
 l = [f1, f2, f3, f4, f5, f6]
 #l = [f1, f2, f3, f4, f5]
 
-A = readList_new(l)
+#A = readList_new(l)
+A = readList(l)
 
-asymptotic_analysis(A, prim_algo_new, 1)
+asymptotic_analysis(A, prim_algo, 1)
 
 
 '''

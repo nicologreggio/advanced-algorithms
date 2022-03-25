@@ -6,8 +6,32 @@ import heapq
 # PRIM'S ALGORITHM - smart version with Heaps 
 
 # version with my heaps
-# this is not O(m*log(n))
+
 def prim_algo(graph, s): 
+    E = graph.get_adlist()
+    # can use float('inf') for the infinity 
+    infty = float('inf')
+    A = []
+    Q = MyHeap([])
+    for v in graph.get_vertices(): 
+        vert = Vertex(v, infty if v!=s else 0, None)
+        Q.push(vert)
+    while Q.list: 
+        v = Q.extract_min()
+        A.append(v)
+        e = E.get(v.name)
+        #if e: 
+            #l = Q.list
+            #print("l:", l)
+        for u in e.keys(): 
+            pass
+                #if l[i].name == u and e.get(u) < l[i].key: 
+                    #l[i].parent = v.name
+                    #Q.decreaseKey(i, e.get(u)) 
+    return A
+
+# this is not O(m*log(n))
+def prim_algo_old(graph, s): 
     V = graph.get_vertices()
     E = graph.get_adlist()
     # can use float('inf') for the infinity 
