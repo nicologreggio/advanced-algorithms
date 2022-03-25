@@ -1,5 +1,5 @@
 from graph import *
-from heap import MyHeap
+from heap import *
 import heapq
 from time import perf_counter_ns    
 import math 
@@ -54,12 +54,17 @@ f3 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1
 f4 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_32_800.txt', 'r')
 f5 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_43_4000.txt', 'r')
 f6 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_53_20000.txt', 'r')
+f7 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_63_80000.txt', 'r')
+f8 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_68_100000.txt', 'r')
 
-l = [f1, f2, f3, f4, f5, f6]
+#l = [f1, f2]
+l = [f1, f2, f3, f4, f5, f6,f7,f8]
 #l = [f1, f2, f3, f4, f5]
 
 #A = readList_new(l)
-A = readList(l)
+#A = readList(l)
+
+A = readAll()
 
 asymptotic_analysis(A, prim_algo, 1)
 
@@ -70,4 +75,32 @@ g = readGraph_new(f)
 
 print(g.adlist)
 print(prim_algo_new(g, 1))
+
+g = readGraph(f1)
+print(g.adlist)
+
+E = g.get_adlist()
+infty = float('inf')
+A = []
+Q = PriorityQueueVertex()
+for v in g.get_vertices(): 
+    vert = Vertex(v, infty if v!=1 else 0, None)
+    Q.push(vert)
+print("Q:", Q, "\n")
+while Q.list: 
+    v = Q.extract_min()
+    print("v:", v)
+    A.append(v)
+    print("A:", A)
+    e = E.get(v.name)
+    print("e:", e)
+    #print("e.keys:", e.keys())
+    for u in e.keys():
+        n = Q.get_element(u)
+        print("n:", n, "\n")
+        new_key = e[u]
+        if n and new_key < n.key: 
+            n.parent = v.name
+            Q.decreaseKey(Q.get_index(u), new_key) 
+            print("n update:", n, "\n")
 '''

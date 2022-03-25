@@ -88,6 +88,7 @@ class Vertex:
     def __repr__(self):
         return "({0},{1},{2})".format(self.key, self.name, self.parent)
 
+'''
 # Graph with adjacency list [[v1, (v2, w), (v3, w')], [v2, (v1, w), ...], ...]
 class Graph_new: 
     def __init__ (self, adlist, n_vert, n_edge): 
@@ -129,3 +130,5 @@ def readList_new(l):
         g = readGraph_new(file)
         A.append(g)
     return A
+
+'''

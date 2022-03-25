@@ -4,15 +4,14 @@ from heap import *
 import heapq
 
 # PRIM'S ALGORITHM - smart version with Heaps 
-
 # version with my heaps
-
+# THIS IS THE ONE!!
 def prim_algo(graph, s): 
     E = graph.get_adlist()
     # can use float('inf') for the infinity 
     infty = float('inf')
     A = []
-    Q = PriorityQueueVertex([])
+    Q = PriorityQueueVertex()
     for v in graph.get_vertices(): 
         vert = Vertex(v, infty if v!=s else 0, None)
         Q.push(vert)
@@ -20,16 +19,15 @@ def prim_algo(graph, s):
         v = Q.extract_min()
         A.append(v)
         e = E.get(v.name)
-        #if e: 
-            #l = Q.list
-            #print("l:", l)
-        for u in e.keys(): 
-            pass
-                #if l[i].name == u and e.get(u) < l[i].key: 
-                    #l[i].parent = v.name
-                    #Q.decreaseKey(i, e.get(u)) 
+        for u in e.keys():
+            n = Q.get_element(u)
+            new_key = e[u]
+            if n and new_key < n.key: 
+                n.parent = v.name
+                Q.decreaseKey(Q.get_index(u), new_key) 
     return A
 
+'''
 # this is not O(m*log(n))
 def prim_algo_old(graph, s): 
     V = graph.get_vertices()
@@ -118,3 +116,4 @@ def prim_algo_new(graph, s):
                         #print("Q:", Q)      
         #heapq.heapify(Q)
     return A
+'''
