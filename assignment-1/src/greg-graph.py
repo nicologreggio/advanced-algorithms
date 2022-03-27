@@ -22,12 +22,11 @@ def prim(g, s):
     while len(Q)>0:
         u=hpop(Q)
         # print('adjacent of ', u, ' are ', g[u[1]])
-        print('next u ',u)
         for v in [item for item in g[u[1]] if item!='key' and item !='parent']:
             for key, i in Q:
-                print(i,' ',key[0],' ',g[u[1]][v])
+                # print(i,'==',v,' and ',int(g[u[1]][v]),' < ', key[0])
                 if i==v and int(g[u[1]][v])<key[0]:
-                    key[0]=g[u[1]][v]
+                    key[0]=int(g[u[1]][v])
                     g[v]['parent']=u[1]
                     
 
