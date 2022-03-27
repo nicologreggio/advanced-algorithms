@@ -3,10 +3,33 @@ import sys
 import os
 import functools
 import time
+import heapq
+from heapq import heappop as hpop
 
+def prim(g, s):
+    # build Q as heap
+    # since python sorts heap based on list or list of tuples considering the first element, 
+    # must be build a list of keys:node with keys initially inf
+    # print(f'\n\n*******\n<DOING STUFF WITH{g}')
+    inf=float('inf')
+    for i in g:
+        g[i]['parent']=None
+        g[i]['key']=[inf]
+    Q=[(g[i]['key'], i) for i in list(g.keys())]
+    g[s]['key'][0]=0
+    heapq.heapify(Q)
 
-def do_things(g):
-    print(f'\n\n*******\n<DOING STUFF WITH{g}')
+    while len(Q)>0:
+        u=hpop(Q)
+        # print('adjacent of ', u, ' are ', g[u[1]])
+        print('next u ',u)
+        for v in [item for item in g[u[1]] if item!='key' and item !='parent']:
+            for key, i in Q:
+                print(i,' ',key[0],' ',g[u[1]][v])
+                if i==v and int(g[u[1]][v])<key[0]:
+                    key[0]=g[u[1]][v]
+                    g[v]['parent']=u[1]
+                    
 
 def read_file(f):
     h={}
@@ -29,8 +52,8 @@ def read_file(f):
 
 
 # ========================================
-path='../dataset-1'
-# path = 0
+# path='../dataset-1'
+path = 0
 if not path:
     path = '.'
 
@@ -47,8 +70,9 @@ for root, dirs, files in os.walk(os.getcwd()):
     for file in files:
         if file.endswith(".txt"):
             # print(os.path.join(root, file))
-            graphs.append(read_file(os.path.join(root, file)))
-            # do_things(graph)
+            graph=read_file(os.path.join(root, file))
+            prim(graph, '1')
+            graphs.append(graph)
 end=time.time()
 
 print(f'Time: {end-start}, with {len(graphs)} graphs')
