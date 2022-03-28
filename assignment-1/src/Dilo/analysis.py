@@ -22,7 +22,7 @@ def filt(g, threshold = 2000):
 def average(lst):
     return sum(lst) / len(lst)
 
-def asymptotic_analysis(graph_list, algo, num_calls): 
+def asymptotic_analysis(graph_list, algo, num_calls): # come parametro anche la funzione T(n, m) 
     # returns times on all graphs
     run_times = []
     c_estimates = []
@@ -42,3 +42,5 @@ def asymptotic_analysis(graph_list, algo, num_calls):
     print(40*"-") 
     print("average c_est =", average(c_estimates))
     return sizes, c_estimates, run_times
+
+# generica funzione per il plot(c, T(n,m), [(n, m, t)]) 

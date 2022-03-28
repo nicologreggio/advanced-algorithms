@@ -7,10 +7,14 @@ from analysis import *
 from prim_algo import * 
 # elements in heap as (key, vertex, parent)
 
-"""
+
 #TEST                 
 
+A = readAll()
 
+asymptotic_analysis(A, prim_algo, 10)
+
+"""
 print(readAll())
 """
 '''
@@ -47,7 +51,7 @@ print(time)
 print(time/(g.n_edge*math.log(g.n_vert)))
 '''
 
-
+'''
 f1 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_01_10.txt', 'r')
 f2 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_05_20.txt', 'r')
 f3 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_21_200.txt', 'r')
@@ -63,12 +67,15 @@ l = [f1, f2, f3, f4, f5, f6,f7,f8]
 
 #A = readList_new(l)
 #A = readList(l)
+'''
 
-A = readAll()
+'''
+f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_03_10.txt', 'r')
+g = readGraph(f)
 
-asymptotic_analysis(A, prim_algo, 1)
-
-
+print(g.adlist, "\n")
+print(prim_algo(g, 1))
+'''
 '''
 f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_01_10.txt', 'r')
 g = readGraph_new(f)
