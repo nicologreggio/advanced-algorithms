@@ -1,5 +1,5 @@
 class PriorityQueue:
-    def __init__(self):
+    def __init__(self, n = 0):
         self._h = []
         self._keys = {}
         self._size = 0 
@@ -25,9 +25,11 @@ class PriorityQueue:
 
     def push(self, item):
         last_el = self._size
-        self._size += 1
-        
+        # self._h[self._size] = item
+
         self._h.append(item)
+        
+        self._size += 1
         self._keys.update({item.get_value(): last_el})
 
         i = last_el
@@ -87,7 +89,7 @@ class PriorityQueue:
 
     def change_priority(self, v, new_priority):
         i, el = self.get_element_and_index(v)
-        el.priority = new_priority
+        el.set_priority(new_priority)
 
         p = self._parent(i)
 

@@ -62,7 +62,7 @@ def compute_asymptotic_constant_light(alg, asymptotic_behaviour, files, init_gra
     files,
     lambda graph:
       measure_run_time(alg, graph, num_calls),
-    lambda graph:
+    lambda graph:3
       (graph.get_n(), graph.get_m()),
     init_graph_function
   )

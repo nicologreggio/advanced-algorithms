@@ -25,11 +25,14 @@ class VertexHelper:
   def set_parent(self, p):
     self._parent = p
 
+  def set_priority(self, priority):
+    self._priority = priority
+
   def __lt__(self, other):
       return self._priority < other._priority
 
   def __str__(self):
-    return f'({self._priority}, {self._v}, {self.parent.get_value() if self.parent else None})'
+    return f'({self._priority}, {self._v}, {self._parent.get_value() if self._parent else None})'
 
   def __repr__(self):
     return self.__str__()
@@ -113,9 +116,9 @@ def main():
   # run_times, ratios, c_estimates = compute_asymptotic_constant(prim, prim_asymptotic_behaviour, graphs, num_calls)
 
   graphs_dimensions, run_times, ratios, c_estimates = compute_asymptotic_constant_light(
-    prim_personal_impl, 
+    prim_internet_impl, 
     prim_asymptotic_behaviour, 
-    files, 
+    files,
     init_graph_from_file,
     10
   )
@@ -134,6 +137,7 @@ def main():
   c = sum(c_estimates)/len(c_estimates)
 
   plot_complexity(c, graphs_dimensions, run_times, prim_asymptotic_behaviour)
+  # print(prim_personal_impl(init_graph_from_file(args.f)))
 
 
 if __name__ == "__main__":
