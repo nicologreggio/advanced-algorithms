@@ -123,15 +123,6 @@ def main():
     10
   )
 
-  print(run_times)
-  print(c_estimates)
-
-  print("Size\t\tTime(ns)\t\tCostant\t\tRatio")
-  print(90*"-")
-  for i in range(len(c_estimates)):
-    print(f'{graphs_dimensions[i][0]}*log({graphs_dimensions[i][1]})', run_times[i], '', c_estimates[i], '', ratios[i], sep="\t")
-  print(90*"-")
-
   # Plot
 
   c = sum(c_estimates)/len(c_estimates)

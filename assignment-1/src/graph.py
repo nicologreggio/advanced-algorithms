@@ -1,5 +1,9 @@
 GRAPH_FILE_EXTENSION = "txt"
-from glob import glob 
+from glob import glob
+from typing import NewType, Tuple 
+
+Edge = NewType('Edge', Tuple[Tuple[int, int], int])
+Vertex = NewType('Vertex', int)
 
 class Graph:
     def __init__(self, n: int, m: int):
