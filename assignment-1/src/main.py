@@ -15,21 +15,24 @@ def prim_complexity(graphs):
     10
   )
 
-  print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates)
+  print_complexity_data(
+    run_times, 
+    graphs_dimensions,
+    lambda dim: f'{dim[0]}*log({dim[1]})',
+    ratios, 
+    c_estimates
+  )
 
   C = select_complexity_constant_function(c_estimates)
 
   plot_complexity(C, run_times, graphs_dimensions, prim_behaviour)
   
 
-def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates):
-  print(run_times)
-  print(c_estimates)
-
+def print_complexity_data(run_times, graphs_dimensions, print_complexity, ratios, c_estimates):
   print("Size\t\tTime(ns)\t\tCostant\t\tRatio")
   print(90*"-")
   for i in range(len(c_estimates)):
-    print(f'{graphs_dimensions[i][0]}*log({graphs_dimensions[i][1]})', run_times[i], '', c_estimates[i], '', ratios[i], sep="\t")
+    print(f'{print_complexity(graphs_dimensions[i])}', run_times[i], '', c_estimates[i], '', ratios[i], sep="\t")
   print(90*"-")
 
 
