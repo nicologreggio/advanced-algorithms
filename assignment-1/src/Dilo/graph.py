@@ -16,13 +16,15 @@ class Graph:
 
     def get_edges(self): 
         # list of edges: cannot set E = set() because of "TypeError: unhashable type: 'set'"
-        # should anyway not have duplicates for how it is written. 
+        # THIS HAS DUPLICATES! 
         E = []
         for i in self.get_vertices(): 
             for j in (self.adlist.get(i)).keys(): 
-                E.append(({i, j}, (self.adlist.get(i)).get(j)))
+                if j > i: 
+                    e = Edge((i, j), (self.adlist.get(i)).get(j))
+                    E.append(e)
         return E
-        # E = [({v, u}, w)]
+        # E = [({v, u}, w)] edge class 
 
     def graph_infos(self): 
         print("n. of vertices: %d" %self.n_vert)
@@ -87,6 +89,33 @@ class Vertex:
 
     def __repr__(self):
         return "({0},{1},{2})".format(self.key, self.name, self.parent)
+
+# EDGES CLASS 
+class Edge: 
+    def __init__(self, s, w): 
+        self.s = s 
+        self.w = w
+    # set of edges + weight 
+
+    def __lt__(self, other): 
+        return self.w < other.w
+
+    def __repr__(self): 
+        return "({0}, {1})".format(self.s, self.w)
+
+    def get_weight(self): 
+        return self.w
+
+    def get_vert_1(self): 
+        return self.s[0]
+
+    def get_vert_2(self): 
+        return self.s[1]
+
+    def __eq__(self, other):
+        if self.get_weight() == other.get_weight() and ((self.get_vert_1() == other.get_vert_1() and self.get_vert_2() == other.get_vert_2()) or (self.get_vert_1() == other.get_vert_2() and self.get_vert_2() == other.get_vert_1())): 
+            return True 
+    # Error: unhashable type object 
 
 '''
 # Graph with adjacency list [[v1, (v2, w), (v3, w')], [v2, (v1, w), ...], ...]
