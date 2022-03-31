@@ -1,5 +1,5 @@
 class PriorityQueue:
-    def __init__(self, n = 0):
+    def __init__(self):
         self.h = []
         self.indexes = {}
         self.size = 0 
