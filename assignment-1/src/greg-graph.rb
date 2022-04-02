@@ -50,14 +50,14 @@ end
 
 path='../dataset-1/*'
 # path='../dataset-1/*01_10*'
-
+GC.disable
 start=Time.now
 
 graphs=[]
 Dir[path].each do |file|
   # g = Hash.new { |h,k| h[k] = {} } # 1
-  # g=Set.new # 2
-  g=Graph.new
+  g=Set.new # 2
+  # g=Graph.new # 3
   File.foreach(file).drop(1).each do |line|
     e1,e2,w=line.split ' '
     # 1
@@ -65,10 +65,12 @@ Dir[path].each do |file|
     # g[e2][e1]=w
 
     # 2
-    # g.add({[e1,e2].to_set => w})
-    g.add_vertex(e1)
-    g.add_vertex(e1)
-    g.add_edge(e1, e2, w)
+    g.add({[e1,e2].to_set => w})
+    
+    # 3
+    # g.add_vertex(e1)
+    # g.add_vertex(e1)
+    # g.add_edge(e1, e2, w)
   end
   graphs << g
 end
@@ -76,5 +78,5 @@ end
 #ap graphs
 
 endt=Time.now
-
+GC.enable
 puts "Time: #{endt-start}, with #{graphs.count} graphs"
