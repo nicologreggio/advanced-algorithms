@@ -9,6 +9,7 @@ import heapq
 from heapq import heappop as hpop
 from heapq import heappush as hpush
 from unicodedata import numeric
+import matplotlib.pyplot as plt
 
 time_for_heap=0
 
@@ -119,7 +120,7 @@ for root, dirs, files in os.walk(os.getcwd()):
       graph_sizes.append([nodes, edges])
       num_exec = int(base_exec / nodes)
       if num_exec == 0:
-          num_exec = 1
+          num_exec = 10
 
       gc.disable()
       start = time.perf_counter_ns()
@@ -155,3 +156,12 @@ print("average c: ", (sum(c_estimates) / len(c_estimates)))
 
 # print(f'Time: {end-start}, with {len(graphs)} graphs')
 # print('total heap time: ', time_for_heap/(10**9))
+
+C = 3161000
+reference = [C * m*(log(n)) for n,m in graph_sizes]
+plt.plot([m*n for n,m in graph_sizes], run_times)
+plt.plot([m*n for n,m in graph_sizes], reference)
+plt.legend(["Measured time", "c * m*log(n)"])
+plt.ylabel('run time (ns)')
+plt.xlabel('size')
+plt.show()
