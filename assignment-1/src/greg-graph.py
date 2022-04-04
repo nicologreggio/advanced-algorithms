@@ -141,7 +141,7 @@ for root, dirs, files in os.walk(os.getcwd()):
 =================== MEASURE RUN TIME
 """
 ratios = [None] + [round(run_times[i+1]/run_times[i],3) for i in range(len(graph_sizes)-1)]
-c_estimates = [round(run_times[i]/log(graph_sizes[i][0]*graph_sizes[i][1]),3) for i in range(len(graph_sizes))]
+c_estimates = [round(run_times[i]/(graph_sizes[i][1]*log(graph_sizes[i][0])),3) for i in range(len(graph_sizes))]
 
 padding=18
 headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Costant','Ratio']]
@@ -157,7 +157,7 @@ print("average c: ", (sum(c_estimates) / len(c_estimates)))
 # print(f'Time: {end-start}, with {len(graphs)} graphs')
 # print('total heap time: ', time_for_heap/(10**9))
 
-C = 3161000
+C = sum(c_estimates) / len(c_estimates)
 reference = [C * m*(log(n)) for n,m in graph_sizes]
 plt.plot([m*n for n,m in graph_sizes], run_times)
 plt.plot([m*n for n,m in graph_sizes], reference)
