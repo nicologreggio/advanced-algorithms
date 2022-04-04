@@ -4,8 +4,8 @@ from src.union_find import UnionFind
 
 class UnionFinderTest(unittest.TestCase):
   def test_init(self):
-    n = 10
-    uf = UnionFind(n)
+    data = list(range(10))
+    uf = UnionFind(data)
 
     actual = uf.find(1)
     expected = 1
@@ -14,8 +14,8 @@ class UnionFinderTest(unittest.TestCase):
 
   
   def test_union(self):
-    n = 10
-    uf = UnionFind(n)
+    data = list(range(10))
+    uf = UnionFind(data)
     
     uf.union(1, 2)
     uf.union(1, 3)
@@ -33,8 +33,8 @@ class UnionFinderTest(unittest.TestCase):
     self.assertEqual(expected, actual)
 
   def test_multiple_union_same_element(self):
-    n = 10
-    uf = UnionFind(n)
+    data = list(range(10))
+    uf = UnionFind(data)
     
     uf.union(1, 2)
     uf.union(1, 3)

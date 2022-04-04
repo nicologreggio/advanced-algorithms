@@ -16,7 +16,7 @@ class Graph:
             self.adj_list.update({i: {}})
 
     def get_vertices(self):
-      return self.adj_list.keys()
+      return list(self.adj_list.keys())
 
     def get_edges(self):
       return self.edges

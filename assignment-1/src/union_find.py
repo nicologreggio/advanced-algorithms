@@ -1,10 +1,11 @@
 class UnionFind:
-  def __init__(self, n):
-    self.data = list(range(n))
+  def __init__(self, data):
+    self.data = {}
     self.sizes = {}
 
-    for el in self.data:
+    for el in data:
       self.sizes.update({el: 0})
+      self.data.update({el: el})
 
   def find(self, el):
     if el == self._parent(el): return el
@@ -25,7 +26,7 @@ class UnionFind:
     self.sizes[self.data[i]] -= 1
     self.sizes[new_parent] += 1
 
-    self.data[i] = new_parent
+    self.data.update({i: new_parent})
 
   def _parent(self, i):
     return self.data[i]
