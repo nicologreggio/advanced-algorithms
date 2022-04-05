@@ -29,5 +29,5 @@ def prim(g: Graph, s: Vertex = 1):
   return mst
 
 
-def asymptotic_behaviour(m, n):
+def asymptotic_behaviour(n, m):
   return m * math.log(n)

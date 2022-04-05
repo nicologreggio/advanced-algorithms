@@ -21,5 +21,5 @@ def kruskal_smart(g: Graph):
   return mst
 
 
-def kruskal_smart_behaviour(m, n):
+def kruskal_smart_behaviour(n, m):
   return m * math.log(n)

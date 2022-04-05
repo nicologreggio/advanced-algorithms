@@ -27,7 +27,13 @@ def prim_complexity(graphs):
 
     C = select_complexity_constant_function(c_estimates)
 
-    plot_complexity(C, run_times, graphs_dimensions, prim_behaviour)
+    plot_complexity(
+        C,
+        run_times,
+        graphs_dimensions,
+        prim_behaviour,
+        "Prim's algorithm"
+    )
 
 
 def kruskal_smart_complexity(graphs):
@@ -47,7 +53,13 @@ def kruskal_smart_complexity(graphs):
 
     C = select_complexity_constant_function(c_estimates)
 
-    plot_complexity(C, run_times, graphs_dimensions, kruskal_smart_behaviour)
+    plot_complexity(
+        C, 
+        run_times, 
+        graphs_dimensions, 
+        kruskal_smart_behaviour,
+        "Kruskal's algorithm smart version"
+    )
 
 
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates):

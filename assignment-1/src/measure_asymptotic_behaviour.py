@@ -33,16 +33,28 @@ def compute_asymptotic_constant(graphs, alg, asymptotic_behaviour, num_calls = 1
 
   ratios = [None] + [round(run_times[i+1]/run_times[i],3) for i in range(len(graphs) - 1)]
 
-  c_estimates = [round(run_times[i]/asymptotic_behaviour(graph.get_m(), graph.get_n()),3) for i, graph in enumerate(graphs)]
+  c_estimates = [round(run_times[i]/asymptotic_behaviour(n, m), 3) for i, (n, m) in enumerate(graphs_dimensions)]
 
   return (run_times, graphs_dimensions, ratios, c_estimates)
 
 
-def plot_complexity(C, run_times, graphs_dimensions, asymptotic_behaviour):
+def plot_complexity(
+  C, 
+  run_times,
+  graphs_dimensions, 
+  asymptotic_behaviour,
+  title,
+  expected_graphic_label = 'Expected complexity',
+  actual_graphic_label = 'Obtained complexity'
+):
   x = [n*m for n, m in graphs_dimensions]
   reference_z = [C * asymptotic_behaviour(n, m) for n, m in graphs_dimensions]
 
-  plt.plot(x, reference_z, 'C1', label='C1')
-  plt.plot(x, run_times, 'C2', label='C2')
+  plt.plot(x, reference_z, label=expected_graphic_label)
+  plt.plot(x, run_times, label=actual_graphic_label)
+  
+  plt.title(title)
+  plt.xlabel("n*m")
+  plt.ylabel("Time")
   plt.legend()
   plt.show()
