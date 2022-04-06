@@ -26,6 +26,9 @@ class Graph:
         return E
         # E = [({v, u}, w)] edge class 
 
+    def get_kr_edges(self): 
+        pass 
+
     def graph_infos(self): 
         print("n. of vertices: %d" %self.n_vert)
         print("n. of edges: %d" %self.n_edge)
