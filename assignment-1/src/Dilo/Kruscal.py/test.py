@@ -25,6 +25,7 @@ f5 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1
 f6 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_53_20000.txt', 'r')
 f7 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_63_80000.txt', 'r')
 f8 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_68_100000.txt', 'r')
+
 l = [f1, f2, f3, f4]
 
 def readList(l): 
@@ -34,9 +35,11 @@ def readList(l):
         A.append(g)
     return A
 
-B = readList(l)
+#B = readList(l)
+path = '/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1'
+B = read_all(path)
+C = filter(lambda x : x.get_n() < 1000, B)
 
-for f in B: 
+for f in C: 
     A =kruscal(f)
-    print(A)
     print(len(A))
