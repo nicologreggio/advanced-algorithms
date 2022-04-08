@@ -5,34 +5,6 @@ from typing import NewType, Tuple
 Edge = NewType('Edge', Tuple[Tuple[int, int], int])
 Vertex = NewType('Vertex', int)
 
-class krEdge: 
-    def __init__(self,s, t, w): 
-        self.name = (s, t)
-        self.weight = w
-        self.label = None       # None, 0 for discovery, 1 for back 
-        self.ancestor = None    # a node which is ancestor, maybe just 1 since need to find cycles
-
-    def get_opposite(self, v): 
-        if v == self.name[0]: 
-            return self.name[1]
-        elif v == self.name[1]: 
-            return self.name[0]
-        else: 
-            return None 
-    
-    def change_label(self, l): 
-        self.label = l
-
-    def add_ancestor(self, a):
-        self.ancestor = a
-
-    def get_label(self): 
-        return self.label()
-    
-    def __repr__(self): 
-       #return "Edge({0}, {1})".format(self.name[0], self.name[1])
-       return "({0}, {1})".format(self.name[0], self.name[1])
-
 class Graph:
     def __init__(self, n: int, m: int):
         self.adj_list = {}
@@ -65,10 +37,11 @@ class Graph:
         self.adj_list[s].update({t: w})
         self.adj_list[t].update({s: w})
 
-        self.edges.add(krEdge(s, t, w))
+        self.edges.add(((s, t), w))
 
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.n, self.m)
+
 
 def read_graph(f):
     lines = f.readlines()
