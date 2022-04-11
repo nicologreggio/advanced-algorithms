@@ -38,7 +38,7 @@ def acyclic(Q, E, v):
                 E[e] = 1
                 #Q[w][1] = v 
                 if not acyclic(Q, E, w): 
-                    return False # problem in how it returns results 
+                    return False 
             else: 
                 return False 
     return True 

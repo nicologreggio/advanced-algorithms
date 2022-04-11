@@ -38,8 +38,8 @@ def acyclic(Q, E, v):
             if Q[w] == 0: 
                 E[e] = 1
                 #Q[w][1] = v 
-                if not acyclic(Q, E, w): 
-                    return False # problem in how it returns results 
+                if not acyclic(Q, E, w):   
+                    return False 
             else: 
                 return False 
     return True 
@@ -55,7 +55,7 @@ def kruscal(graph):
         A.update({e[0] : E[e[0]]})
         if not(acyclic(Q, A, e[0][0])):
             A.pop(e[0])    
-        A = reset(A)
+        A = reset(A)   
         Q = reset(Q)   
     A = list(A.keys())
     return A 

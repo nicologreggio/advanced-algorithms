@@ -1,6 +1,8 @@
 from cv2 import sort
 from graph import *
 from kruscal import * 
+from analysis import *
+
 
 '''
 f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_01_10.txt', 'r')
@@ -40,6 +42,14 @@ path = '/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1'
 B = read_all(path)
 C = filter(lambda x : x.get_n() < 1000, B)
 
-for f in C: 
-    A =kruscal(f)
-    print(len(A))
+for g in C: 
+    print(len(kruscal(g)))
+
+'''
+def b (m, n): 
+    return m * n 
+
+run_times, graphs_dimensions, ratios, c_estimates = compute_asymptotic_constant(C, kruscal, b, 100)
+'''
+
+# asymptotic_analysis(C, kruscal, 10)
