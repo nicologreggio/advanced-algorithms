@@ -95,7 +95,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)[:1]
+    graphs = graph.read_all(args.d)
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,
