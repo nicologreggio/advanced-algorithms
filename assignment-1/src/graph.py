@@ -6,7 +6,7 @@ Edge = NewType('Edge', Tuple[Tuple[int, int], int])
 Vertex = NewType('Vertex', int)
 
 class Graph:
-    def __init__(self, n: int, m: int):
+    def __init__(self, n: int = 0, m: int = 0):
         self.adj_list = {}
         self.n = n
         self.m = m

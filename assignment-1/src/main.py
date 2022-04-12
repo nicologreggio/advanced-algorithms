@@ -7,7 +7,7 @@ from kruskal_smart import kruskal_smart, kruskal_smart_behaviour
 import graph
 
 
-def select_complexity_constant_function(x): return sum(x) / len(x)
+def select_complexity_constant(x): return sum(x) / len(x)
 
 
 def prim_complexity(graphs):
@@ -25,7 +25,7 @@ def prim_complexity(graphs):
         c_estimates
     )
 
-    C = select_complexity_constant_function(c_estimates)
+    C = select_complexity_constant(c_estimates)
 
     plot_complexity(
         C,
@@ -51,7 +51,7 @@ def kruskal_smart_complexity(graphs):
         c_estimates
     )
 
-    C = select_complexity_constant_function(c_estimates)
+    C = select_complexity_constant(c_estimates)
 
     plot_complexity(
         C, 
@@ -95,7 +95,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)
+    graphs = graph.read_all(args.d)[:1]
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,
