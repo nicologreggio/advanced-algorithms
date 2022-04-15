@@ -39,6 +39,13 @@ class Graph:
 
         self.edges.add(((s, t), w))
 
+    def remove_edge(self, s: int, t: int):
+      if t in self.adj_list[s]:
+        del self.adj_list[s][t]
+
+      if s in self.adj_list[t]:
+        del self.adj_list[t][s]
+
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.n, self.m)
 

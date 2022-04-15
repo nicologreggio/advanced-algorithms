@@ -22,9 +22,9 @@ def incident_edges(E, v):
     return L 
 
 def opposite(v, e): 
-    if e[0] == v: 
+    if e[0] == v:
         return e[1]
-    elif e[1] == v: 
+    elif e[1] == v:
         return e[0]
     else: 
         return None 
@@ -50,7 +50,7 @@ def reset(Q):
 def kruscal(graph): 
     Q, E, s_edges = preprocess(graph)
     A = {}
-    for e in s_edges: 
+    for e in s_edges:
         A.update({e[0] : E[e[0]]})
         if not(acyclic(Q, A, e[0][0])):
             A.pop(e[0])    
