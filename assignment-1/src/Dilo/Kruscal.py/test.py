@@ -1,6 +1,6 @@
 from cv2 import sort
 from graph import *
-from kruscal import * 
+from kruscal_dumb import * 
 from analysis import *
 
 
@@ -18,7 +18,7 @@ edges = list(e)
 sort_edges= sorted(edges, key=take_second)
 E = {j[0] : 0 for j in e}
 '''
-
+'''
 f1 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_01_10.txt', 'r')
 f2 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_05_20.txt', 'r')
 f3 = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_21_200.txt', 'r')
@@ -40,16 +40,20 @@ def readList(l):
 #B = readList(l)
 path = '/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1'
 B = read_all(path)
-C = filter(lambda x : x.get_n() < 1000, B)
+C = filter(lambda x : x.get_n() < 800, B)
+'''
 
+'''
 for g in C: 
     print(len(kruscal(g)))
+''' 
 
-'''
-def b (m, n): 
-    return m * n 
+#asymptotic_analysis(C, kruscal, 1000)
 
-run_times, graphs_dimensions, ratios, c_estimates = compute_asymptotic_constant(C, kruscal, b, 100)
-'''
+f = open('/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1/input_random_01_10.txt', 'r')
+g = read_graph(f)
 
-# asymptotic_analysis(C, kruscal, 10)
+print(g.adj_list)
+
+
+#print(kruscal(g))

@@ -1,4 +1,3 @@
-from typing import List
 from graph import * 
 
 def take_1(i):
@@ -36,7 +35,7 @@ def acyclic(Q, E, v):
         if E[e] == 0: 
             w = opposite(v, e)
             if Q[w] == 0: 
-                E[e] = 1
+                E[e] = 1     # set as discovery edge 
                 #Q[w][1] = v 
                 if not acyclic(Q, E, w):   
                     return False 
@@ -47,6 +46,8 @@ def acyclic(Q, E, v):
 def reset(Q): 
     R = dict.fromkeys(Q.keys(), 0)
     return R
+
+# lista di vertici già aggiunti, non aggiungere un nuovo edge se entrambi i vertici ci sono già 
 
 def kruscal(graph): 
     Q, E, s_edges = preprocess(graph)
