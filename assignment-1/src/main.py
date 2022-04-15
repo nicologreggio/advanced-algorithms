@@ -4,7 +4,7 @@ from measure_asymptotic_behaviour import compute_asymptotic_constant, plot_compl
 # from prim_smarter import prim, asymptotic_behaviour as prim_behaviour
 from prim import prim, asymptotic_behaviour as prim_behaviour
 from kruskal_smart import kruskal_smart, kruskal_smart_behaviour
-from kruskal import kruskal, kruskal_behaviour
+from kruskal_naif import kruskal, kruskal_behaviour
 import graph
 
 
@@ -35,6 +35,32 @@ def prim_complexity(graphs):
         "Prim's algorithm"
     )
 
+def kruskal_naif_complexity(graphs): 
+    run_times, graphs_dimensions, ratios, c_estimates = compute_asymptotic_constant(
+        graphs,
+        kruskal,
+        kruskal_behaviour,
+        10
+    )
+
+    print_complexity_data(
+        run_times,
+        graphs_dimensions,
+        ratios,
+        c_estimates
+    )
+
+    #C = select_complexity_constant(c_estimates)
+    C = min(c_estimates)
+
+    plot_complexity(
+        C, 
+        run_times, 
+        graphs_dimensions, 
+        kruskal_behaviour,
+        "Kruskal's algorithm naif version"
+    )
+
 
 def kruskal_smart_complexity(graphs):
     run_times, graphs_dimensions, ratios, c_estimates = compute_asymptotic_constant(
@@ -61,44 +87,18 @@ def kruskal_smart_complexity(graphs):
         "Kruskal's algorithm smart version"
     )
 
-def kruskal_complexity(graphs):
-    run_times, graphs_dimensions, ratios, c_estimates = compute_asymptotic_constant(
-        graphs,
-        kruskal,
-        kruskal_behaviour,
-        10
-    )
-
-    print_complexity_data(
-        run_times,
-        graphs_dimensions,
-        ratios,
-        c_estimates
-    )
-
-    C = select_complexity_constant(c_estimates)
-
-    plot_complexity(
-        C, 
-        run_times, 
-        graphs_dimensions, 
-        kruskal_behaviour,
-        "Kruskal's algorithm dumb version"
-    )
-
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates):
   print("Size\t\tTime(ns)\t\tCostant\t\tRatio")
   print(90*"-")
   for i in range(len(c_estimates)):
-      print(f'{graphs_dimensions[i]}',
-            run_times[i], '', c_estimates[i], '', ratios[i], sep="\t")
+      print(f'{graphs_dimensions[i]}', run_times[i], '', c_estimates[i], '', ratios[i], sep="\t")
   print(90*"-")
 
 
 class MSTAlgorithms(Enum):
   all = 'all'
   prim = 'prim'
-  kruskal_stupid = 'kruskal_stupid'
+  kruskal_naif = 'kruskal_naif'
   kruskal_smart = 'kruskal_smart'
   def __str__(self):
       return self.value
@@ -119,12 +119,12 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)
+    graphs = graph.read_all(args.d)[:20]
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,
+        MSTAlgorithms.kruskal_naif : kruskal_naif_complexity, 
         MSTAlgorithms.kruskal_smart: kruskal_smart_complexity,
-        MSTAlgorithms.kruskal_stupid: kruskal_complexity
     }
 
     if args.alg == MSTAlgorithms.all:

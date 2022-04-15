@@ -1,4 +1,4 @@
-from src.graph import Graph
+from graph import Graph
 
 def DFS_cycle(g: Graph, v, parent, visited):
   visited[v] = True
