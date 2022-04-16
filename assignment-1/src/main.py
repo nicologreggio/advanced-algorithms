@@ -4,7 +4,7 @@ from measure_asymptotic_behaviour import compute_asymptotic_constant, plot_compl
 # from prim_smarter import prim, asymptotic_behaviour as prim_behaviour
 from prim import prim, asymptotic_behaviour as prim_behaviour
 from kruskal_smart import kruskal_smart, kruskal_smart_behaviour
-from kruskal_naif import kruskal, kruskal_behaviour
+from kruskal_naive import kruskal, kruskal_behaviour
 import graph
 
 
@@ -35,7 +35,7 @@ def prim_complexity(graphs):
         "Prim's algorithm"
     )
 
-def kruskal_naif_complexity(graphs): 
+def kruskal_naive_complexity(graphs): 
     run_times, graphs_dimensions, ratios, c_estimates = compute_asymptotic_constant(
         graphs,
         kruskal,
@@ -58,7 +58,7 @@ def kruskal_naif_complexity(graphs):
         run_times, 
         graphs_dimensions, 
         kruskal_behaviour,
-        "Kruskal's algorithm naif version"
+        "Kruskal's algorithm naive version"
     )
 
 
@@ -98,7 +98,7 @@ def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates):
 class MSTAlgorithms(Enum):
   all = 'all'
   prim = 'prim'
-  kruskal_naif = 'kruskal_naif'
+  kruskal_naive = 'kruskal_naive'
   kruskal_smart = 'kruskal_smart'
   def __str__(self):
       return self.value
@@ -123,7 +123,7 @@ def main():
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,
-        MSTAlgorithms.kruskal_naif : kruskal_naif_complexity, 
+        MSTAlgorithms.kruskal_naif : kruskal_naive_complexity, 
         MSTAlgorithms.kruskal_smart: kruskal_smart_complexity,
     }
 
