@@ -36,18 +36,19 @@ def prim_complexity(graphs):
     )
 
 def kruskal_naive_complexity(graphs): 
-    run_times, graphs_dimensions, ratios, c_estimates = compute_asymptotic_constant(
+    run_times, graphs_dimensions, ratios, c_estimates, weight = compute_asymptotic_constant(
         graphs,
         kruskal,
         kruskal_behaviour,
-        10
+        1
     )
 
     print_complexity_data(
         run_times,
         graphs_dimensions,
         ratios,
-        c_estimates
+        c_estimates, 
+        weight 
     )
 
     #C = select_complexity_constant(c_estimates)
@@ -86,12 +87,20 @@ def kruskal_smart_complexity(graphs):
         kruskal_smart_behaviour,
         "Kruskal's algorithm smart version"
     )
-
+'''
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates):
   print("Size\t\tTime(ns)\t\tCostant\t\tRatio")
   print(90*"-")
   for i in range(len(c_estimates)):
       print(f'{graphs_dimensions[i]}', run_times[i], '', c_estimates[i], '', ratios[i], sep="\t")
+  print(90*"-")
+'''
+
+def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weight):
+  print("Size\t\tTime(ns)\t\tCostant\t\tRatio\t\tWeight")
+  print(90*"-")
+  for i in range(len(c_estimates)):
+      print(f'{graphs_dimensions[i]}', run_times[i], '', c_estimates[i], '', ratios[i], '', weight[i], sep="\t")
   print(90*"-")
 
 
@@ -119,11 +128,11 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)[:20]
+    graphs = graph.read_all(args.d)[:35]
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,
-        MSTAlgorithms.kruskal_naif : kruskal_naive_complexity, 
+        MSTAlgorithms.kruskal_naive : kruskal_naive_complexity, 
         MSTAlgorithms.kruskal_smart: kruskal_smart_complexity,
     }
 
