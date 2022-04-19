@@ -1,12 +1,6 @@
 import glob
 import argparse
-import itertools
-import functools
-from turtle import update
-
 from typing import NewType, Tuple
-
-from nbformat import read
 
 Edge = NewType('Edge', Tuple[Tuple[int, int], int])
 Vertex = NewType('Vertex', int)
