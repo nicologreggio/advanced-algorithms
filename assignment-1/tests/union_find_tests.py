@@ -1,6 +1,6 @@
 import unittest
 
-from src.union_find import UnionFind
+from union_find.union_find import UnionFind
 
 class UnionFinderTest(unittest.TestCase):
   def test_init(self):
@@ -12,7 +12,7 @@ class UnionFinderTest(unittest.TestCase):
 
     self.assertEqual(expected, actual)
 
-  
+
   def test_union(self):
     data = list(range(10))
     uf = UnionFind(data)
@@ -51,7 +51,6 @@ class UnionFinderTest(unittest.TestCase):
     expected = 1
 
     self.assertEqual(expected, actual)
-
 
 
 if __name__ == '__main__':

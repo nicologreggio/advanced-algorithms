@@ -1,6 +1,6 @@
-from graph import Graph
+from graph.graph import Graph, Vertex, Edge
 
-def DFS_cycle(g: Graph, v, parent, visited):
+def DFS_cycle(g: Graph, v: Vertex, parent: Vertex, visited: list[bool]) -> bool:
   visited[v] = True
 
   for n in g.get_adj_list_vertex(v):
@@ -16,7 +16,7 @@ def DFS_cycle(g: Graph, v, parent, visited):
   return False
 
 
-def is_acyclic(g: Graph):
+def is_acyclic(g: Graph) -> bool:
   visited = [False] * (g.get_n() + 1)
 
   for v in g.get_vertices():
@@ -28,7 +28,7 @@ def is_acyclic(g: Graph):
   return True
 
 
-def kruskal(g: Graph):
+def kruskal(g: Graph) -> list[Edge]:
   edges = sorted(g.get_edges(), key=lambda edge: edge[1])
   mst = []
 
@@ -48,5 +48,5 @@ def kruskal(g: Graph):
   return mst
 
 
-def kruskal_behaviour(n, m):
+def kruskal_behaviour(n: int, m: int):
   return n * m

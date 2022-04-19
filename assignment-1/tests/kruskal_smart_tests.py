@@ -2,8 +2,8 @@ import io
 import math
 import unittest
 
-from src.kruskal_smart import kruskal_smart, kruskal_smart_behaviour
-from src.graph import Graph, read_graph
+from algorithms.kruskal_smart import kruskal_smart, kruskal_smart_behaviour
+from graph.graph import Graph, read_graph
 
 class KruskalSmartTest(unittest.TestCase):
   def test_empty_graph(self):

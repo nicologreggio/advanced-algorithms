@@ -2,8 +2,8 @@ import io
 import math
 import unittest
 
-from src.kruskal import is_acyclic, kruskal
-from src.graph import read_graph
+from algorithms.kruskal_naive import is_acyclic, kruskal
+from graph.graph import read_graph
 
 class KruskalTest(unittest.TestCase):
   def test_is_acyclic_true(self):
