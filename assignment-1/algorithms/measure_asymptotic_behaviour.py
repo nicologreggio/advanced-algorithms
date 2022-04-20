@@ -14,7 +14,7 @@ def measure_run_time(alg, graph, num_calls):
   end_time = perf_counter_ns()
   gc.enable()
   avg_time = (end_time - start_time)/num_calls
-  weight = sum([i[1] for i in mst])
+  weight = sum([i[2] for i in mst])
 
   return avg_time, weight
 
