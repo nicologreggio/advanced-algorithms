@@ -2,8 +2,8 @@ import io
 import math
 import unittest
 
-from src.kruskal import is_acyclic, kruskal
-from src.graph import read_graph
+from algorithms.kruskal_naive import is_acyclic, kruskal
+from graph.graph import read_graph
 
 class KruskalTest(unittest.TestCase):
   def test_is_acyclic_true(self):
@@ -57,7 +57,7 @@ class KruskalTest(unittest.TestCase):
     ))
 
     actual_mst = kruskal(g)
-    expected_mst = [((6, 7), -7462), ((8, 9), -976), ((4, 5), -433), ((2, 3), 1392), ((1, 2), 4993), ((5, 6), 6590), ((7, 8), 6658), ((3, 4), 8856), ((9, 10), 9698)]
+    expected_mst = [(6, 7, -7462), (8, 9, -976), (4, 5, -433), (2, 3, 1392), (1, 2, 4993), (5, 6, 6590), (7, 8, 6658), (3, 4, 8856), (9, 10, 9698)]
 
     actual_size = len(actual_mst)
     expected_size = g.get_n() - 1

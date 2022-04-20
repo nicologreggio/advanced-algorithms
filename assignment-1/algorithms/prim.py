@@ -1,8 +1,8 @@
-from graph import Graph, Vertex
+from graph.graph import Graph, Vertex
 import math
 
-from priority_queue import PriorityQueue
-from VertexHelper import VertexHelper
+from priority_queue.priority_queue import PriorityQueue
+from priority_queue.VertexHelper import VertexHelper
 
 
 def prim(g: Graph, s: Vertex = 1):

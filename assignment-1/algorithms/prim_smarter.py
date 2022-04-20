@@ -1,6 +1,6 @@
 from graph import Graph, Vertex
 import math
-from VertexHelper import VertexHelper
+from priority_queue.VertexHelper import VertexHelper
 
 import heapq as hq
 
