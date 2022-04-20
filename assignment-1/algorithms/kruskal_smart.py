@@ -12,11 +12,11 @@ def kruskal_smart(g: Graph) -> list[Edge]:
 
   for e in edges:
     vertices, _ = e
-    u, v = vertices
+    v, w = vertices
     
-    if uf.find(u) != uf.find(v):
+    if uf.find(v) != uf.find(w):
       mst.append(e)
-      uf.union(u, v)
+      uf.union(v, w)
 
   return mst
 
