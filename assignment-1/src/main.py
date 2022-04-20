@@ -40,7 +40,7 @@ def kruskal_naive_complexity(graphs):
         graphs,
         kruskal,
         kruskal_behaviour,
-        1
+        1000
     )
 
     print_complexity_data(
@@ -128,7 +128,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)[:35]
+    graphs = graph.read_all(args.d)
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,
