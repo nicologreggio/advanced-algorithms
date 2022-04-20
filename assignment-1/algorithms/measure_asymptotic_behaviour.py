@@ -19,13 +19,6 @@ def measure_run_time(alg, graph, num_calls):
   return avg_time, weight
 
 
-# def map2(f1, f2, l):
-#   if not l: return ([], [])
-  
-#   el = l[0]
-#   return tuple(x[0] + x[1] for x in zip(([f1(el)], [f2(el)]), map2(f1, f2, l[1:])))
-
-
 def compute_asymptotic_constant(graphs, alg, asymptotic_behaviour, num_calls = 1000000):
   run_times = []
   weight = []

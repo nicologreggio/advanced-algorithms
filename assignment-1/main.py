@@ -1,5 +1,6 @@
 import argparse
 from enum import Enum
+
 from algorithms.measure_asymptotic_behaviour import compute_asymptotic_constant, plot_complexity
 # from prim_smarter import prim, asymptotic_behaviour as prim_behaviour
 from algorithms.prim import prim, asymptotic_behaviour as prim_behaviour
@@ -79,6 +80,7 @@ def kruskal_union_find_complexity(graphs):
     )
 
     C = sum(c_estimates) / len(c_estimates)
+    # C = 300
 
     plot_complexity(
         C, 
