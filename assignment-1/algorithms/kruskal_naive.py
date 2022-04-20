@@ -29,14 +29,13 @@ def is_acyclic(g: Graph) -> bool:
 
 
 def kruskal(g: Graph) -> list[Edge]:
-  edges = sorted(g.get_edges(), key=lambda edge: edge[1])
+  edges = sorted(g.get_edges(), key = lambda edge: edge[2])
   mst = []
 
   tmp = Graph(g.get_n(), g.get_m())
 
   for e in edges:
-    vertices, w = e
-    u, v = vertices
+    u, v, w = e
 
     tmp.add_edge(u, v, w)
 

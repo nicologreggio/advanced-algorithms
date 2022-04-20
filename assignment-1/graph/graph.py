@@ -1,20 +1,18 @@
+from collections import defaultdict
 from glob import glob
 from typing import NewType, Tuple 
 
-Edge = NewType('Edge', Tuple[Tuple[int, int], int])
+Edge = NewType('Edge', Tuple[int, int, int])
 Vertex = NewType('Vertex', int)
 
 GRAPH_FILE_EXTENSION = "txt"
 
 class Graph:
     def __init__(self, n: int = 0, m: int = 0):
-        self.adj_list = {}
+        self.adj_list = defaultdict(dict)
         self.n = n
         self.m = m
         self.edges = set()
-
-        for i in range(1, n + 1):
-            self.adj_list.update({i: {}})
 
     def get_vertices(self):
       return list(self.adj_list.keys())
@@ -22,7 +20,7 @@ class Graph:
     def get_edges(self):
       return self.edges
 
-    def get_adj_list_vertex(self, v: int):
+    def get_adj_list_vertex(self, v: Vertex):
         return self.adj_list.get(v, None)
 
     def get_n(self):
@@ -31,13 +29,13 @@ class Graph:
     def get_m(self):
         return self.m
 
-    def add_edge(self, s: int, t: int, w: int):
-        self.adj_list[s].update({t: w})
-        self.adj_list[t].update({s: w})
+    def add_edge(self, s: Vertex, t: Vertex, w: int):
+        self.adj_list[s][t] = w
+        self.adj_list[t][s] = w
 
-        self.edges.add(((s, t), w))
+        self.edges.add((s, t, w))
 
-    def remove_edge(self, s: int, t: int):
+    def remove_edge(self, s: Vertex, t: Vertex):
       if t in self.adj_list[s]:
         del self.adj_list[s][t]
 
@@ -75,4 +73,3 @@ def read_all(directory_path):
 
 def read_sort_files(directory_path):
     return sorted(glob(f'{directory_path}/*.{GRAPH_FILE_EXTENSION}'))
-

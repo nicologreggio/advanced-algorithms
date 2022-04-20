@@ -1,3 +1,4 @@
+from asyncio import run
 from time import perf_counter_ns
 import matplotlib.pyplot as plt
 import gc
@@ -30,21 +31,21 @@ def compute_asymptotic_constant(graphs, alg, asymptotic_behaviour, num_calls = 1
   weight = []
   graphs_dimensions = []
   c_estimates = []
+  ratios = [None]
 
   for graph in graphs:
     run_time, w = measure_run_time(alg, graph, num_calls)
 
     n, m = graph.get_n(), graph.get_m()
     
+    if run_times:
+      ratios.append(round(run_time/run_times[-1],3))
+
     run_times.append(run_time)
     weight.append(w)
     graphs_dimensions.append((n, m))
     c_estimates.append(round(run_time/asymptotic_behaviour(n, m), 3))
 
-  ratios = [None] + [round(run_times[i+1]/run_times[i],3) for i in range(len(graphs) - 1)]
-
-  # c_estimates = [ for i, (n, m) in enumerate(graphs_dimensions)]
- 
   return (run_times, graphs_dimensions, ratios, c_estimates, weight)
 
 

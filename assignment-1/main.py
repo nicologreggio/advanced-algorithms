@@ -3,7 +3,7 @@ from enum import Enum
 from algorithms.measure_asymptotic_behaviour import compute_asymptotic_constant, plot_complexity
 # from prim_smarter import prim, asymptotic_behaviour as prim_behaviour
 from algorithms.prim import prim, asymptotic_behaviour as prim_behaviour
-from algorithms.kruskal_smart import kruskal_smart, kruskal_smart_behaviour
+from algorithms.kruskal_union_find import kruskal_union_find, kruskal_union_find_behaviour
 from algorithms.kruskal_naive import kruskal, kruskal_behaviour
 from graph import graph
 
@@ -62,11 +62,11 @@ def kruskal_naive_complexity(graphs):
     )
 
 
-def kruskal_smart_complexity(graphs):
+def kruskal_union_find_complexity(graphs):
     run_times, graphs_dimensions, ratios, c_estimates, weight = compute_asymptotic_constant(
         graphs,
-        kruskal_smart,
-        kruskal_smart_behaviour,
+        kruskal_union_find,
+        kruskal_union_find_behaviour,
         100
     )
 
@@ -84,8 +84,8 @@ def kruskal_smart_complexity(graphs):
         C, 
         run_times, 
         graphs_dimensions, 
-        kruskal_smart_behaviour,
-        "Kruskal's algorithm smart version",
+        kruskal_union_find_behaviour,
+        "Kruskal's algorithm union find version",
         "m*log(n)"
     )
 
@@ -101,7 +101,7 @@ class MSTAlgorithms(Enum):
   all = 'all'
   prim = 'prim'
   kruskal_naive = 'kruskal_naive'
-  kruskal_smart = 'kruskal_smart'
+  kruskal_union_find = 'kruskal_union_find'
   def __str__(self):
       return self.value
 
@@ -121,12 +121,12 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)
+    graphs = graph.read_all(args.d)[:40]
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,
         MSTAlgorithms.kruskal_naive: kruskal_naive_complexity, 
-        MSTAlgorithms.kruskal_smart: kruskal_smart_complexity,
+        MSTAlgorithms.kruskal_union_find: kruskal_union_find_complexity,
     }
 
     if args.alg == MSTAlgorithms.all:
