@@ -49,8 +49,6 @@ def plot_complexity(
   asymptotic_behaviour,
   title,
   expected_graphic_label,
-  x_label = "m*n",
-  y_label = "Time",
   actual_graphic_label = 'Obtained complexity'
 ):
   x = [n*m for n, m in graphs_dimensions]
@@ -60,7 +58,7 @@ def plot_complexity(
   plt.plot(x, run_times, label=actual_graphic_label)
   
   plt.title(title)
-  plt.xlabel(x_label)
-  plt.ylabel(y_label)
+  plt.xlabel("m*n")
+  plt.ylabel("Time")
   plt.legend()
   plt.show()
