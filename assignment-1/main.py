@@ -32,7 +32,7 @@ def prim_complexity(graphs):
         graphs_dimensions,
         prim_behaviour,
         "Prim's algorithm",
-        "m*log(n)"
+        "Expected complexity: O(m*log(n))",
     )
 
 def kruskal_naive_complexity(graphs): 
@@ -40,7 +40,7 @@ def kruskal_naive_complexity(graphs):
         graphs,
         kruskal,
         kruskal_behaviour,
-        1000
+        10
     )
 
     print_complexity_data(
@@ -59,7 +59,7 @@ def kruskal_naive_complexity(graphs):
         graphs_dimensions, 
         kruskal_behaviour,
         "Kruskal's algorithm naive version",
-        "m*n"
+        "Expected complexity: O(m*n)",
     )
 
 
@@ -88,7 +88,7 @@ def kruskal_union_find_complexity(graphs):
         graphs_dimensions, 
         kruskal_union_find_behaviour,
         "Kruskal's algorithm union find version",
-        "m*log(n)"
+        "Expected complexity: O(m*log(n))",
     )
 
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weight):
@@ -123,7 +123,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)
+    graphs = graph.read_all(args.d)[:15]
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,

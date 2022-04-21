@@ -14,4 +14,4 @@ graphs = read_all(path)
 
 graphs_dimensions = [(i.get_n(), i.get_m()) for i in graphs]
 
-plot_complexity(337, run_times, graphs_dimensions, kruskal_behaviour, "Kruskal's algorithm naive version")
+plot_complexity(337, run_times, graphs_dimensions, kruskal_behaviour, "Kruskal's algorithm naive version", "Expected complexity: O(m*n)")

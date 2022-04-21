@@ -48,9 +48,9 @@ def plot_complexity(
   graphs_dimensions, 
   asymptotic_behaviour,
   title,
-  x_label,
+  expected_graphic_label,
+  x_label = "m*n",
   y_label = "Time",
-  expected_graphic_label = 'Expected complexity',
   actual_graphic_label = 'Obtained complexity'
 ):
   x = [n*m for n, m in graphs_dimensions]
