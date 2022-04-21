@@ -92,7 +92,7 @@ def kruskal_union_find_complexity(graphs):
     )
 
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weight):
-  print("Size\t\tTime(ns)\t\tCostant\t\tRatio\t\tWeight")
+  print("Size\t\tTime(ns)\t\tConstant\t\tRatio\t\tWeight")
   print(90*"-")
   for i in range(len(c_estimates)):
       print(f'{graphs_dimensions[i]}', run_times[i], '', c_estimates[i], '', ratios[i], '', weight[i], sep="\t")
