@@ -34,7 +34,7 @@ class KruskalUnionFindTest(unittest.TestCase):
 
     self.assertEqual(expected, actual)
 
-  def test_basic_graph(self):
+  def test_basic_graph_with_cycle(self):
     g = read_graph(io.StringIO(
     """10 12
       1 2 4993
