@@ -34,11 +34,8 @@ def prim2(g, s):
         hpush(Q, (v, k))
         g[k]['parent']=u[1]
 
-      """ for key, i in Q:
-        # print(i,'==',v,' and ',int(g[u[1]][v]),' < ', key[0])
-        if i == v and int(g[u[1]][v]) < key[0]:
-          key[0] = int(g[u[1]][v])
-          g[v]['parent'] = u[1] """
+  weights=[i['key'] for i in g.values()]
+  return sum(weights)
 
 
 def prim(g, s):
@@ -95,6 +92,7 @@ def read_file(f):
 
 # ========================================
 path='../dataset-1'
+# path='../dataset-2'
 # path = 0
 if not path:
     path = '.'
@@ -121,11 +119,15 @@ for root, dirs, files in os.walk(os.getcwd()):
       num_exec = int(base_exec / nodes)
       if num_exec == 0:
           num_exec = 10
+      # num_exec=1000
 
       gc.disable()
       start = time.perf_counter_ns()
       for _ in range(num_exec):
-          prim2(graph, '1')
+        weights=prim2(graph, '1')
+      
+      # print(weights)
+      
       end = time.perf_counter_ns()
       gc.enable()
 
@@ -164,4 +166,5 @@ plt.plot([m*n for n,m in graph_sizes], reference)
 plt.legend(["Measured time", "c * m*log(n)"])
 plt.ylabel('run time (ns)')
 plt.xlabel('size')
+# plt.yscale('log')
 plt.show()
