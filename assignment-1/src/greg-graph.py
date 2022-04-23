@@ -145,6 +145,7 @@ for root, dirs, files in os.walk(os.getcwd()):
 ratios = [None] + [round(run_times[i+1]/run_times[i],3) for i in range(len(graph_sizes)-1)]
 c_estimates = [round(run_times[i]/(graph_sizes[i][1]*log(graph_sizes[i][0])),3) for i in range(len(graph_sizes))]
 
+# trick for right automatic padding can be picking the length of the max element we're going to print & add some spaces
 padding=18
 headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Costant','Ratio']]
 hr=padding*(len(headers)+1) * "-"
