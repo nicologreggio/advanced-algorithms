@@ -1,41 +1,44 @@
-from sqlite3 import TimeFromTicks
-import sys
+from collections import defaultdict
 import os
-import functools
 import time
 import gc
 from math import log
 import heapq
 from heapq import heappop as hpop
 from heapq import heappush as hpush
-from unicodedata import numeric
 import matplotlib.pyplot as plt
-
-time_for_heap=0
 
 def prim2(g, s):
   inf = float('inf')
+  keys, parents, inQ = {}, {}, {}
   for i in g:
-    g[i]['parent'] = None
-    g[i]['key'] = inf
-    g[i]['inQ'] = 1
+    # g[i]['parent'] = None
+    parents[i] = None
+    # g[i]['key'] = inf
+    keys[i] = inf
+    # g[i]['inQ'] = 1
+    inQ[i] = 1
+
   # Q = [(g[i]['key'], i) for i in list(g.keys())]
-  g[s]['key'] = 0
+  # g[s]['key'] = 0
+  keys[s] = 0
   Q=[]
   hpush(Q, (0,s))
-  # heapq.heapify(Q)
+  # heapq.heapify(Q) # not needed since Q is initialized empty and then only operations are made on it
 
   while len(Q) > 0:
     u = hpop(Q)
-    g[u[1]]['inQ'] = 0
+    # g[u[1]]['inQ'] = 0
+    inQ[u[1]] = 0
     for k, v in [item for item in g[u[1]].items() if item[0] != 'key' and item[0] != 'parent' and item[0] != 'inQ']:
-      if g[k]['inQ'] and v < g[k]['key']:
-        g[k]['key']=v
+      # if g[k]['inQ'] and v < g[k]['key']:
+      if inQ[k] and v < keys[k]:
+        keys[k]=v
         hpush(Q, (v, k))
-        g[k]['parent']=u[1]
+        parents[k]=u[1]
 
-  weights=[i['key'] for i in g.values()]
-  return sum(weights)
+  # weights=[i['key'] for i in g.values()]
+  return parents, sum(keys.values())
 
 
 def prim(g, s):
@@ -43,7 +46,6 @@ def prim(g, s):
   # build Q as heap
   # since python sorts heap based on list or list of tuples considering the first element,
   # must be build a list of keys:node with keys initially inf
-  # print(f'\n\n*******\n<DOING STUFF WITH{g}')
   inf = float('inf')
   for i in g:
     g[i]['parent'] = None
@@ -66,25 +68,16 @@ def prim(g, s):
     s=time.perf_counter_ns()
     heapq.heapify(Q)
     e=time.perf_counter_ns()
-    # time_for_heap+=e-s
     
 
 
 def read_file(f):
-  h = {}
+  h=defaultdict(dict) # automatically creates dict on non-existing keys
   with open(f) as file:
-    # nodes, edges = file.readline().strip().split(' ')
-    # print(f'There are {nodes} nodes and {edges} edges')
     n, m = file.readline().strip().split(' ')
     lines = file.readlines()
     for line in lines:
-      # print(line)
       e1, e2, w = line.strip().split(' ')
-      # print(f'({e1}, {e2}) {w}')
-      if e1 not in h:
-        h[e1] = {}
-      if e2 not in h:
-        h[e2] = {}
       h[e1][e2] = int(w)
       h[e2][e1] = int(w)
   return h, int(n), int(m)
@@ -93,53 +86,37 @@ def read_file(f):
 # ========================================
 path='../dataset-1'
 # path='../dataset-2'
-# path = 0
-if not path:
-    path = '.'
 
-# os.path.relpath()  -> to get relative path
-# os.path.abspath() ...
-# os.getcwd() -> print working dir
 assert (os.path.exists(path)), "Not a valid path! (" + path + ")"
 os.chdir(path)
 
 print("path chosen: " + os.getcwd())
+
 base_exec = 1000
-graph_sizes = []
-run_times = []
-weights=[]
-# print('File\t Avg')
-# print('-'*20)
+graph_sizes, run_times, weights = [], [], []
+
 for root, dirs, files in os.walk(os.getcwd()):
-#   files=sorted(files)
   for file in sorted(files):
     if file.endswith(".txt"):
-      # print(os.path.join(root, file))
       graph, nodes, edges = read_file(os.path.join(root, file))
       graph_sizes.append([nodes, edges])
       num_exec = int(base_exec / nodes)
       # if num_exec == 0:
       #     num_exec = 10
-      num_exec=1
+      num_exec=1000
 
       gc.disable()
       start = time.perf_counter_ns()
       for _ in range(num_exec):
-        mst_weight=prim2(graph, '1')
-      
-      # print(weights)
-      weights.append(mst_weight)
-      
+        mst, mst_weight=prim2(graph, '1')
       end = time.perf_counter_ns()
       gc.enable()
 
+      print(mst)
+      weights.append(mst_weight)
+
       avg = int((end - start) / num_exec)
       run_times.append(avg)
-      # print(graphs, '\t', avg)
-      # graphs.append(graph)
-      # mst={k: v['parent'] for k,v in graph.items()}
-      # print('we have ',mst)
-
 
 """ 
 =================== MEASURE RUN TIME
@@ -168,12 +145,11 @@ print("average c: ", (sum(c_estimates) / len(c_estimates)))
 # print('total heap time: ', time_for_heap/(10**9))
 
 C = sum(c_estimates) / len(c_estimates)
-C=330
+# C=330
 reference = [C * m*(log(n)) for n,m in graph_sizes]
 plt.plot([m*n for n,m in graph_sizes], run_times)
 plt.plot([m*n for n,m in graph_sizes], reference)
 plt.legend(["Measured time", "c * m*log(n)"])
 plt.ylabel('run time (ns)')
 plt.xlabel('size')
-# plt.yscale('log')
 plt.show()
