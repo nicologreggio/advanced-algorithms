@@ -20,5 +20,5 @@ def kruskal_union_find(g: Graph) -> list[Edge]:
   return mst
 
 
-def kruskal_union_find_behaviour(n: int, m: int):
+def kruskal_union_find_asymptotic_behaviour(n: int, m: int):
   return m * math.log(n)
