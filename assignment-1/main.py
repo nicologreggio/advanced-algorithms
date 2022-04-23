@@ -157,7 +157,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)
+    graphs = graph.read_all(args.d)[:28]
 
     algorithms = {
         MSTAlgorithms.prim_priority_queue: prim_priority_queue_complexity,
