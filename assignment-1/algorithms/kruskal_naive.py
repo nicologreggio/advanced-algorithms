@@ -28,7 +28,7 @@ def is_acyclic(g: Graph) -> bool:
   return True
 
 
-def kruskal(g: Graph) -> list[Edge]:
+def kruskal_naive(g: Graph) -> list[Edge]:
   edges = sorted(g.get_edges(), key = lambda edge: edge[2])
   mst = []
 
@@ -47,5 +47,5 @@ def kruskal(g: Graph) -> list[Edge]:
   return mst
 
 
-def kruskal_behaviour(n: int, m: int):
+def kruskal_naive_asymptotic_behaviour(n: int, m: int):
   return n * m

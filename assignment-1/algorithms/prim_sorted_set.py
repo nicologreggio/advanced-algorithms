@@ -5,7 +5,7 @@ from priority_queue.priority_queue import PriorityQueue
 from priority_queue.vertex_helper import VertexHelper
 from sortedcontainers import SortedDict, SortedList, SortedSet
 
-def prim(g: Graph, s: Vertex = 1) -> list[Edge]:
+def prim_sorted_set(g: Graph, s: Vertex = 1) -> list[Edge]:
   pq = SortedSet()
   inf = float('inf')
   vertices = {}
@@ -38,5 +38,5 @@ def prim(g: Graph, s: Vertex = 1) -> list[Edge]:
   return mst
 
 
-def prim_behaviour(n: int, m: int):
+def prim_sorted_set_asymptotic_behaviour(n: int, m: int):
   return m * math.log(n)
