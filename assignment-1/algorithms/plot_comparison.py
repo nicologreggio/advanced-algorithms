@@ -1,6 +1,6 @@
 from measure_asymptotic_behaviour import measure_run_time, compute_asymptotic_constant
 #from kruskal_naive import kruskal, kruskal_behaviour
-from prim_priority_queue import prim_priority_queue, prim_priority_queue_asymptotic_behaviour
+#from prim_priority_queue import prim_priority_queue, prim_priority_queue_asymptotic_behaviour
 import matplotlib.pyplot as plt
 from graph import read_all
 
@@ -13,6 +13,9 @@ run_times_k_u = [float(x) for x in run_times_str_k_u]
 run_times_str_p = "68371.666 74362.25 87112.541 74741.083 220440.708 195012.208 209947.334 200191.459 514323.292 505162.833 514929.458 527084.583 1229287.042 1152658.667 1166463.625 1284979.75 1614801.667 1562933.584 1657815.334 1609519.041 3725183.0 3714950.0 3761651.041 3712237.791 8454728.625 8520341.584 8504253.584 8476757.709 19390325.0 19473375.0 19380091.7 19412825.0 25256712.5 25150091.7 25456958.4 25490754.2 57222270.9 56566304.1 56900583.3 56829820.8 124307629.2 122747987.5 122566191.7 122605395.8 267844604.2 267624370.8 268544287.5 269682533.4 347909804.2 345876445.8 345712287.5 339238791.6 734343850.0 746810487.5 747033845.8 740922354.2 1606015762.5 1619549466.7 1622485208.3 1624862991.6 3505104041.6 3495363600.0 3539552033.4 3552087700.0 4671771529.2 4536536020.8 4621599641.6 4606644816.7".split(' ')
 run_times_p = [float(x) for x in run_times_str_p]
 
+run_times_str_p_s = "15116 21715 21146 28938 85160 82111 61841 45593 109124 80267 80790 106502 191107 180570 185219 211772 245572 226311 237109 255394 665992 529513 509318 538591 1088839 1005566 1058735 1036846 2012351 2024829 2138431 2053541 2579494 2557002 2658185 2644747 5571182 5465765 5457104 5569408 11672551 11467942 11759146 12139141 24885139 25318224 26782182 26873478 35108503 34329678 33366144 33314773 76479362 76439261 76969651 75956078 168475795 191204769 168747432 168199046 364499029 363577994 370332756 371930461 477100810 471871311 483638323 476749468".split(' ')
+run_times_p_s = [float(x) for x in run_times_str_p_s]
+
 path = '/Users/dilettarigo/Desktop/advanced-algorithms/assignment-1/dataset-1'
 
 graphs = read_all(path)
@@ -20,16 +23,15 @@ graphs = read_all(path)
 graphs_dimensions = [(i.get_n(), i.get_m()) for i in graphs]
 
 def plot_comparison(
-  run_times_p,
-  #run_times_p_s,
+  run_times_p_s,
   run_times_k_u,
   graphs_dimensions, 
 ):
   x = [n*m for n, m in graphs_dimensions]
 
   #plt.plot(x, run_times_k, label="Kruskal Naive Algorithm")
-  plt.plot(x, run_times_p, label="Prim Algorithm")
-  #plt.plot(x, run_times_p_s, label = "Prim Smarter Algorithm")
+  #plt.plot(x, run_times_p, label="Prim Algorithm")
+  plt.plot(x, run_times_p_s, label = "Prim Smarter Algorithm")
   plt.plot(x, run_times_k_u, label="Kruskal Union Find Algorithm")
   
   plt.title("Comparison between algorithms runtimes")
@@ -59,6 +61,8 @@ def plot_complexity(
   plt.legend()
   plt.show()
 
-plot_comparison(run_times_p, run_times_k_u, graphs_dimensions)
+#plot_comparison(run_times_p, run_times_p_s, run_times_k_u, graphs_dimensions)
+
+plot_comparison(run_times_p_s, run_times_k_u, graphs_dimensions)
 
 #plot_complexity(2782, run_times_p, graphs_dimensions, prim_priority_queue_asymptotic_behaviour, "Prim's algorithm priority queue version", "Expected complexity: O(m*log(n))")
