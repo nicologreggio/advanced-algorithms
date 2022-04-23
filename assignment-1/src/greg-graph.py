@@ -39,7 +39,7 @@ def prim2(g, s):
 
 
 def prim(g, s):
-  global time_for_heap 
+  # global time_for_heap 
   # build Q as heap
   # since python sorts heap based on list or list of tuples considering the first element,
   # must be build a list of keys:node with keys initially inf
@@ -66,7 +66,7 @@ def prim(g, s):
     s=time.perf_counter_ns()
     heapq.heapify(Q)
     e=time.perf_counter_ns()
-    time_for_heap+=e-s
+    # time_for_heap+=e-s
     
 
 
@@ -107,6 +107,7 @@ print("path chosen: " + os.getcwd())
 base_exec = 1000
 graph_sizes = []
 run_times = []
+weights=[]
 # print('File\t Avg')
 # print('-'*20)
 for root, dirs, files in os.walk(os.getcwd()):
@@ -117,16 +118,17 @@ for root, dirs, files in os.walk(os.getcwd()):
       graph, nodes, edges = read_file(os.path.join(root, file))
       graph_sizes.append([nodes, edges])
       num_exec = int(base_exec / nodes)
-      if num_exec == 0:
-          num_exec = 10
-      # num_exec=1000
+      # if num_exec == 0:
+      #     num_exec = 10
+      num_exec=1
 
       gc.disable()
       start = time.perf_counter_ns()
       for _ in range(num_exec):
-        weights=prim2(graph, '1')
+        mst_weight=prim2(graph, '1')
       
       # print(weights)
+      weights.append(mst_weight)
       
       end = time.perf_counter_ns()
       gc.enable()
@@ -147,13 +149,18 @@ c_estimates = [round(run_times[i]/(graph_sizes[i][1]*log(graph_sizes[i][0])),3) 
 
 # trick for right automatic padding can be picking the length of the max element we're going to print & add some spaces
 padding=18
-headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Costant','Ratio']]
+headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Costant','Ratio', 'Mst weight']]
 hr=padding*(len(headers)+1) * "-"
 print('\n\n\n')
 print(*headers, sep='\t')
 print(hr)
 for i in range(len(graph_sizes)):
-  print(str(graph_sizes[i]).ljust(padding), str(run_times[i]).ljust(padding), str(c_estimates[i]).ljust(padding), str(ratios[i]).ljust(padding), sep="\t")
+  print(str(graph_sizes[i]).ljust(padding), 
+        str(run_times[i]).ljust(padding), 
+        str(c_estimates[i]).ljust(padding), 
+        str(ratios[i]).ljust(padding), 
+        str(weights[i]).ljust(padding),
+        sep="\t")
 print(hr)
 print("average c: ", (sum(c_estimates) / len(c_estimates)))
 
@@ -161,6 +168,7 @@ print("average c: ", (sum(c_estimates) / len(c_estimates)))
 # print('total heap time: ', time_for_heap/(10**9))
 
 C = sum(c_estimates) / len(c_estimates)
+C=330
 reference = [C * m*(log(n)) for n,m in graph_sizes]
 plt.plot([m*n for n,m in graph_sizes], run_times)
 plt.plot([m*n for n,m in graph_sizes], reference)
