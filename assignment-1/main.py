@@ -3,12 +3,14 @@ from enum import Enum
 
 from algorithms.measure_asymptotic_behaviour import compute_asymptotic_constant, plot_complexity
 # from prim_smarter import prim, asymptotic_behaviour as prim_behaviour
-from algorithms.prim import prim, asymptotic_behaviour as prim_behaviour
+from algorithms.prim import prim, prim_behaviour
+# from algorithms.prim_smarter import prim, prim_behaviour
 from algorithms.kruskal_union_find import kruskal_union_find, kruskal_union_find_behaviour
 from algorithms.kruskal_naive import kruskal, kruskal_behaviour
 from graph import graph
+from graph.graph import Graph
 
-def prim_complexity(graphs):
+def prim_complexity(graphs: list[Graph]):
     run_times, graphs_dimensions, ratios, c_estimates, weight = compute_asymptotic_constant(
         graphs,
         prim,
@@ -25,6 +27,7 @@ def prim_complexity(graphs):
     )
 
     C = sum(c_estimates) / len(c_estimates)
+    # C = 300
 
     plot_complexity(
         C,
@@ -35,7 +38,7 @@ def prim_complexity(graphs):
         "Expected complexity: O(m*log(n))",
     )
 
-def kruskal_naive_complexity(graphs): 
+def kruskal_naive_complexity(graphs: list[Graph]): 
     run_times, graphs_dimensions, ratios, c_estimates, weight = compute_asymptotic_constant(
         graphs,
         kruskal,
@@ -51,7 +54,7 @@ def kruskal_naive_complexity(graphs):
         weight 
     )
 
-    C = min(c_estimates)
+    C = sum(c_estimates) / len(c_estimates)
 
     plot_complexity(
         C, 
@@ -63,7 +66,7 @@ def kruskal_naive_complexity(graphs):
     )
 
 
-def kruskal_union_find_complexity(graphs):
+def kruskal_union_find_complexity(graphs: list[Graph]):
     run_times, graphs_dimensions, ratios, c_estimates, weight = compute_asymptotic_constant(
         graphs,
         kruskal_union_find,
@@ -95,7 +98,7 @@ def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, wei
   print("Size\t\tTime(ns)\t\tConstant\t\tRatio\t\tWeight")
   print(90*"-")
   for i in range(len(c_estimates)):
-      print(f'{graphs_dimensions[i]}', run_times[i], '', c_estimates[i], '', ratios[i], '', weight[i], sep="\t")
+      print(graphs_dimensions[i], run_times[i], '', c_estimates[i], '', ratios[i], '', weight[i], sep="\t")
   print(90*"-")
 
 
@@ -106,7 +109,6 @@ class MSTAlgorithms(Enum):
   kruskal_union_find = 'kruskal_union_find'
   def __str__(self):
       return self.value
-
 
 def init_args():
   parser = argparse.ArgumentParser()
@@ -123,7 +125,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)[:15]
+    graphs = graph.read_all(args.d)
 
     algorithms = {
         MSTAlgorithms.prim: prim_complexity,

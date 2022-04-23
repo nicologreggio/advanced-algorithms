@@ -1,38 +1,42 @@
-from graph.graph import Graph, Vertex
+from graph.graph import Edge, Graph, Vertex
 import math
 
 from priority_queue.priority_queue import PriorityQueue
-from priority_queue.VertexHelper import VertexHelper
+from priority_queue.vertex_helper import VertexHelper
+from sortedcontainers import SortedDict, SortedList, SortedSet
 
-
-def prim(g: Graph, s: Vertex = 1):
-  h = PriorityQueue()
-
-  for v in g.get_vertices():
-    vertex = VertexHelper(float('inf') if v != s else 0, v, None)
-    h.push(vertex)
-
+def prim(g: Graph, s: Vertex = 1) -> list[Edge]:
+  pq = SortedSet()
+  inf = float('inf')
+  vertices = {}
   mst = []
 
-  while len(h) != 0:
-    u = h.pop()
+  for v in g.get_vertices():
+    vertex = VertexHelper(v, inf if v != s else 0, None)
+    vertices.update({v: vertex})
+    pq.add(vertex)
 
-    mst.append(u)
+  while len(pq):
+    u = pq.pop(0)
+    vertices.pop(u.get_value())
+
+    if u.get_parent():
+      mst.append((u.get_parent(), u.get_value(), u.get_priority()))
 
     adj = g.get_adj_list_vertex(u.get_value())
 
     for v in adj:
-      el = h.get_element(v)
+      vertex = vertices.get(v, None)
       new_priority = adj[v]
 
-      if el and new_priority < el.get_key():
-        el.set_parent(u)
-        h.change_priority(el.get_value(), new_priority)
-
+      if vertex and new_priority < vertex.get_priority():
+        pq.remove(vertex)
+        vertex.change_priority(new_priority)
+        vertex.set_parent(u.get_value())
+        pq.add(vertex)
+    
   return mst
 
 
-
-def asymptotic_behaviour(n, m):
+def prim_behaviour(n: int, m: int):
   return m * math.log(n)
-  
