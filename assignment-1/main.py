@@ -127,12 +127,13 @@ class MSTAlgorithms(Enum):
 
 def init_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", type=str, required=True)
+    parser.add_argument("-d", type=str, required=True, help='path to the dataset to use ')
     parser.add_argument(
         "--alg",
         type=MSTAlgorithms,
         choices=list(MSTAlgorithms),
-        required=True)
+        required=True,
+        help='Alogorithm to execute on the chosen dataset among those available')
 
     return parser
 
