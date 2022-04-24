@@ -4,7 +4,7 @@ import math
 from priority_queue.priority_queue import PriorityQueue
 from priority_queue.vertex_helper import VertexHelper
 
-def prim_priority_queue(g: Graph, s: Vertex = 1) -> list[Edge]:
+def prim_priority_queue(g: Graph, s: Vertex = 1) -> 'list[Edge]':
   Q = PriorityQueue()
   mst = []
 

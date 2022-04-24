@@ -4,7 +4,7 @@ from union_find.union_find import UnionFind
 from graph.graph import Edge, Graph
 
 
-def kruskal_union_find(g: Graph) -> list[Edge]:
+def kruskal_union_find(g: Graph) -> 'list[Edge]':
   mst = []
   uf = UnionFind(g.get_vertices())
 

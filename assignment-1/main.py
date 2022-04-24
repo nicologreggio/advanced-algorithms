@@ -14,7 +14,7 @@ from algorithms.kruskal_union_find import kruskal_union_find, kruskal_union_find
 from algorithms.kruskal_naive import kruskal_naive, kruskal_naive_asymptotic_behaviour
 
 
-def prim_priority_queue_complexity(graphs: list[Graph]):
+def prim_priority_queue_complexity(graphs: 'list[Graph]'):
     run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
         graphs,
         prim_priority_queue,
@@ -42,7 +42,7 @@ def prim_priority_queue_complexity(graphs: list[Graph]):
     )
 
 
-def kruskal_naive_complexity(graphs: list[Graph]):
+def kruskal_naive_complexity(graphs: 'list[Graph]'):
     run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
         graphs,
         kruskal_naive,
@@ -70,7 +70,7 @@ def kruskal_naive_complexity(graphs: list[Graph]):
     )
 
 
-def kruskal_union_find_complexity(graphs: list[Graph]):
+def kruskal_union_find_complexity(graphs: 'list[Graph]'):
     run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
         graphs,
         kruskal_union_find,
@@ -132,7 +132,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)[:28]
+    graphs = graph.read_all(args.d)[:28] # TODO: remove !!!
 
     algorithms = {
         MSTAlgorithms.prim_priority_queue: prim_priority_queue_complexity,

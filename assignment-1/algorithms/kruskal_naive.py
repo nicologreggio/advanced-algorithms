@@ -1,6 +1,6 @@
 from graph.graph import Graph, Vertex, Edge
 
-def DFS_cycle(g: Graph, v: Vertex, parent: Vertex, visited: list[bool]) -> bool:
+def DFS_cycle(g: Graph, v: Vertex, parent: Vertex, visited: 'list[bool]') -> bool:
   visited[v] = True
 
   for n in g.get_adj_list_vertex(v):
@@ -28,7 +28,7 @@ def is_acyclic(g: Graph) -> bool:
   return True
 
 
-def kruskal_naive(g: Graph) -> list[Edge]:
+def kruskal_naive(g: Graph) -> 'list[Edge]':
   edges = sorted(g.get_edges(), key = lambda edge: edge[2])
   mst = []
 
