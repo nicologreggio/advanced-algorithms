@@ -1,21 +1,32 @@
+class IPriorityQueueElement:
+  def get_priority(self):
+    pass
+  
+  def set_priority(self, priority):
+    pass
+
+  def get_name(self):
+    pass
+
+
 class PriorityQueue:
   def __init__(self):
     self.h = []
     self.indexes = {}
     self.size = 0
 
-  def parent(self, i):
+  def _parent(self, i: int) -> int:
     return (i - 1) // 2
 
-  def left(self, i):
+  def _left(self, i: int) -> int:
     return 2*i + 1
 
-  def right(self, i):
+  def _right(self, i: int) -> int:
     return 2*i + 2
 
-  def min_heapify(self, i):
-    l = self.left(i)
-    r = self.right(i)
+  def _min_heapify(self, i: int):
+    l = self._left(i)
+    r = self._right(i)
 
     minimum = i
 
@@ -26,51 +37,51 @@ class PriorityQueue:
       minimum = r
     
     if minimum != i:
-      self.swap(minimum, i)
-      self.min_heapify(minimum)
+      self._swap(minimum, i)
+      self._min_heapify(minimum)
 
   def extract_min(self):
     minimum = self.h[0]
     maximum = self.h[self.size - 1]
     
     self.h[0] = maximum
-    self.indexes.pop(minimum.get_value())
-    self.indexes[maximum.get_value()] = 0
+    self.indexes.pop(minimum.get_name())
+    self.indexes[maximum.get_name()] = 0
     self.size -= 1
-    self.min_heapify(0)
+    self._min_heapify(0)
 
     return minimum
 
-  def insert(self, x):
+  def insert(self, x: IPriorityQueueElement):
     priority = x.get_priority()
-    x.change_priority(float("inf"))
+    x.set_priority(float("inf"))
     self.h.append(x)
-    self.indexes[x.get_value()] = self.size
+    self.indexes[x.get_name()] = self.size
     self.size += 1
 
     self.decrease_key(self.size - 1, priority)  
 
   def decrease_key(self, i, new_priority):
-    self.h[i].change_priority(new_priority)
+    self.h[i].set_priority(new_priority)
 
-    p = self.parent(i)
+    p = self._parent(i)
     while i > 0 and self.h[p] > self.h[i]:
-      self.swap(i, p)
+      self._swap(i, p)
       i = p
-      p = self.parent(i)
+      p = self._parent(i)
 
-  def swap(self, i, j):
+  def _swap(self, i: int, j: int):
     x = self.h[i]
     y = self.h[j]
-    self.indexes[x.get_value()] = j
-    self.indexes[y.get_value()] = i
+    self.indexes[x.get_name()] = j
+    self.indexes[y.get_name()] = i
     self.h[i], self.h[j] = y, x
 
-  def get_index(self, x):
+  def get_index(self, x) -> int:
     return self.indexes.get(x, -1)
 
-  def get_element(self, i):
+  def get_element(self, i: int):
     return self.h[i]
 
-  def __len__(self):
+  def __len__(self) -> int:
     return self.size
