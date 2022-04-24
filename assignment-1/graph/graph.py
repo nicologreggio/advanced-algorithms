@@ -24,9 +24,11 @@ class Graph:
         return self.adj_list.get(v, None)
 
     def get_n(self):
+        """ returns the number of nodes """
         return self.n
 
     def get_m(self):
+        """ returns the number of edges """
         return self.m
 
     def add_edge(self, s: Vertex, t: Vertex, w: int):
