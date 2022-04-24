@@ -24,8 +24,7 @@ def prim(g, s):
   while len(Q) > 0:
     u = hpop(Q)
     inQ[u[1]] = 0
-    for k, v in [item for item in g[u[1]].items() if item[0] != 'key' and item[0] != 'parent' and item[0] != 'inQ']:
-      # if g[k]['inQ'] and v < g[k]['key']:
+    for k, v in [item for item in g[u[1]].items()]:
       if inQ[k] and v < keys[k]:
         keys[k]=v
         hpush(Q, (v, k))
@@ -65,7 +64,7 @@ for root, dirs, files in os.walk(os.getcwd()):
       num_exec = int(base_exec / nodes)
       # if num_exec == 0:
       #     num_exec = 10
-      num_exec=1000
+      num_exec=1
 
       gc.disable()
       start = time.perf_counter_ns()
