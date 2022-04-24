@@ -8,27 +8,22 @@ from heapq import heappop as hpop
 from heapq import heappush as hpush
 import matplotlib.pyplot as plt
 
-def prim2(g, s):
+def prim(g, s):
   inf = float('inf')
   keys, parents, inQ = {}, {}, {}
   for i in g:
-    # g[i]['parent'] = None
     parents[i] = None
-    # g[i]['key'] = inf
     keys[i] = inf
-    # g[i]['inQ'] = 1
     inQ[i] = 1
 
-  # Q = [(g[i]['key'], i) for i in list(g.keys())]
-  # g[s]['key'] = 0
   keys[s] = 0
+  # Q is a heap since initialized empty and used only with python heapq functions
+  # -> this ensures that the heap invariant holds
   Q=[]
-  hpush(Q, (0,s))
-  # heapq.heapify(Q) # not needed since Q is initialized empty and then only operations are made on it
+  hpush(Q, (0,s)) # Q will contain tuples in the form (key, vertex), sorted by key
 
   while len(Q) > 0:
     u = hpop(Q)
-    # g[u[1]]['inQ'] = 0
     inQ[u[1]] = 0
     for k, v in [item for item in g[u[1]].items() if item[0] != 'key' and item[0] != 'parent' and item[0] != 'inQ']:
       # if g[k]['inQ'] and v < g[k]['key']:
@@ -37,39 +32,7 @@ def prim2(g, s):
         hpush(Q, (v, k))
         parents[k]=u[1]
 
-  # weights=[i['key'] for i in g.values()]
-  return parents, sum(keys.values())
-
-
-def prim(g, s):
-  # global time_for_heap 
-  # build Q as heap
-  # since python sorts heap based on list or list of tuples considering the first element,
-  # must be build a list of keys:node with keys initially inf
-  inf = float('inf')
-  for i in g:
-    g[i]['parent'] = None
-    g[i]['key'] = [inf]
-  Q = [(g[i]['key'], i) for i in list(g.keys())]
-  g[s]['key'][0] = 0
-  heapq.heapify(Q)
-
-  while len(Q) > 0:
-    u = hpop(Q)
-    # print('adjacent of ', u, ' are ', g[u[1]])
-    for v in [
-      item for item in g[u[1]] if item != 'key' and item != 'parent'
-    ]:
-      for key, i in Q:
-        # print(i,'==',v,' and ',int(g[u[1]][v]),' < ', key[0])
-        if i == v and int(g[u[1]][v]) < key[0]:
-          key[0] = int(g[u[1]][v])
-          g[v]['parent'] = u[1]
-    s=time.perf_counter_ns()
-    heapq.heapify(Q)
-    e=time.perf_counter_ns()
-    
-
+  return parents, sum(keys.values()) # returns the mst & its weight
 
 def read_file(f):
   h=defaultdict(dict) # automatically creates dict on non-existing keys
