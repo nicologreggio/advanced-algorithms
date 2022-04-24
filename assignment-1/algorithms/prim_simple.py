@@ -71,7 +71,7 @@ for root, dirs, files in os.walk(os.getcwd()):
       gc.disable()
       start = time.perf_counter_ns()
       for _ in range(num_exec):
-        mst, mst_weight=prim2(graph, '1')
+        mst, mst_weight=prim(graph, '1')
       end = time.perf_counter_ns()
       gc.enable()
 
