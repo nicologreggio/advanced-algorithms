@@ -3,7 +3,6 @@ import os
 import time
 import gc
 from math import log
-import heapq
 from heapq import heappop as hpop
 from heapq import heappush as hpush
 import matplotlib.pyplot as plt

@@ -99,12 +99,20 @@ def kruskal_union_find_complexity(graphs: 'list[Graph]'):
 
 
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights):
-    print("Size\t\tTime(ns)\t\tConstant\t\tRatio\t\tWeight")
-    print(90*"-")
+    padding=len(str(max(run_times)))+5
+    headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Constant','Ratio', 'Mst weight']]
+    hr=padding*(len(headers)+1) * "-"
+    print('\n\n\n')
+    print(*headers, sep='\t')
+    print(hr)
     for i in range(len(c_estimates)):
-        print(graphs_dimensions[i], run_times[i], '',
-              c_estimates[i], '', ratios[i], '', weights[i], sep="\t")
-    print(90*"-")
+        print(str(graphs_dimensions[i]).ljust(padding), 
+                str(run_times[i]).ljust(padding), 
+                str(c_estimates[i]).ljust(padding), 
+                str(ratios[i]).ljust(padding), 
+                str(weights[i]).ljust(padding),
+                sep="\t")
+    print(hr)
 
 
 class MSTAlgorithms(Enum):
