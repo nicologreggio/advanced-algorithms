@@ -61,7 +61,7 @@ class PriorityQueue:
 
     self.decrease_key(self.size - 1, priority)  
 
-  def decrease_key(self, i, new_priority):
+  def decrease_key(self, i: int, new_priority):
     self.h[i].set_priority(new_priority)
 
     p = self._parent(i)

@@ -15,7 +15,7 @@ from algorithms.kruskal_naive import kruskal_naive, kruskal_naive_asymptotic_beh
 
 
 def prim_priority_queue_complexity(graphs: list[Graph]):
-    run_times, graphs_dimensions, ratios, c_estimates, weight = compute_asymptotic_constant(
+    run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
         graphs,
         prim_priority_queue,
         prim_priority_queue_asymptotic_behaviour,
@@ -27,7 +27,7 @@ def prim_priority_queue_complexity(graphs: list[Graph]):
         graphs_dimensions,
         ratios,
         c_estimates,
-        weight
+        weights
     )
 
     C = sum(c_estimates) / len(c_estimates)
@@ -43,7 +43,7 @@ def prim_priority_queue_complexity(graphs: list[Graph]):
 
 
 def kruskal_naive_complexity(graphs: list[Graph]):
-    run_times, graphs_dimensions, ratios, c_estimates, weight = compute_asymptotic_constant(
+    run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
         graphs,
         kruskal_naive,
         kruskal_naive_asymptotic_behaviour,
@@ -55,7 +55,7 @@ def kruskal_naive_complexity(graphs: list[Graph]):
         graphs_dimensions,
         ratios,
         c_estimates,
-        weight
+        weights
     )
 
     C = sum(c_estimates) / len(c_estimates)
@@ -71,7 +71,7 @@ def kruskal_naive_complexity(graphs: list[Graph]):
 
 
 def kruskal_union_find_complexity(graphs: list[Graph]):
-    run_times, graphs_dimensions, ratios, c_estimates, weight = compute_asymptotic_constant(
+    run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
         graphs,
         kruskal_union_find,
         kruskal_union_find_asymptotic_behaviour,
@@ -83,7 +83,7 @@ def kruskal_union_find_complexity(graphs: list[Graph]):
         graphs_dimensions,
         ratios,
         c_estimates,
-        weight
+        weights
     )
 
     C = sum(c_estimates) / len(c_estimates)
@@ -98,12 +98,12 @@ def kruskal_union_find_complexity(graphs: list[Graph]):
     )
 
 
-def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weight):
+def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights):
     print("Size\t\tTime(ns)\t\tConstant\t\tRatio\t\tWeight")
     print(90*"-")
     for i in range(len(c_estimates)):
         print(graphs_dimensions[i], run_times[i], '',
-              c_estimates[i], '', ratios[i], '', weight[i], sep="\t")
+              c_estimates[i], '', ratios[i], '', weights[i], sep="\t")
     print(90*"-")
 
 
