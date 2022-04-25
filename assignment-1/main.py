@@ -127,7 +127,7 @@ def kruskal_union_find_complexity(graphs: 'list[Graph]'):
 
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights):
     padding=len(str(max(run_times)))+5
-    headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Constant','Ratio', 'Weight']]
+    headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Constant','Ratio', 'MST Weight']]
     hr=padding*(len(headers)+2) * "-"
     print('\n\n\n')
     print(*headers, sep='\t')
