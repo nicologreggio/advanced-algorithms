@@ -20,7 +20,6 @@ def prim_smarter(g: Graph, s: Vertex = 1) -> 'list[Edge]':
   while len(Q):
     u = hpop(Q)
     inQ[u[1]] = 0
-    # for k, v in [item for item in g.get_adj_list_vertex(u[1]).items()]:
     for k, v in g.get_adj_list_vertex(u[1]).items():
       if inQ[k] and v < keys[k]:
         keys[k]=v
