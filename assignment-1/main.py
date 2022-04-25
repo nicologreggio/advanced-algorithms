@@ -47,7 +47,7 @@ def prim_smarter_complexity(graphs: 'list[Graph]'):
         graphs,
         prim_smarter,
         prim_smarter_asymptotic_behaviour,
-        100
+        10
     )
 
     print_complexity_data(

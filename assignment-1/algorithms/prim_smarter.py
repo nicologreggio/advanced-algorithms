@@ -1,9 +1,9 @@
-from graph.graph import Graph, Vertex
+from graph.graph import Graph, Vertex, Edge
 from heapq import heappop as hpop
 from heapq import heappush as hpush
 from math import log
 
-def prim_smarter(g: Graph, s: Vertex = 1):
+def prim_smarter(g: Graph, s: Vertex = 1) -> 'list[Edge]':
   inf = float('inf')
   keys, parents, inQ = {}, {}, {}
   for i in g.get_vertices():
@@ -21,7 +21,7 @@ def prim_smarter(g: Graph, s: Vertex = 1):
     u = hpop(Q)
     inQ[u[1]] = 0
     # for k, v in [item for item in g.get_adj_list_vertex(u[1]).items()]:
-    for k, v in (g.get_adj_list_vertex(u[1]).items()):
+    for k, v in g.get_adj_list_vertex(u[1]).items():
       if inQ[k] and v < keys[k]:
         keys[k]=v
         hpush(Q, (v, k))
