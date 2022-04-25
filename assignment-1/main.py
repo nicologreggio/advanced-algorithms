@@ -127,7 +127,7 @@ def kruskal_union_find_complexity(graphs: 'list[Graph]'):
 
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights):
     padding=len(str(max(run_times)))+5
-    headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Constant','Ratio', 'Mst weight']]
+    headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Constant','Ratio', 'Weight']]
     hr=padding*(len(headers)+2) * "-"
     print('\n\n\n')
     print(*headers, sep='\t')
@@ -155,7 +155,7 @@ class MSTAlgorithms(Enum):
 
 def init_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", type=str, required=True, help='path to the dataset to use ')
+    parser.add_argument("-d", type=str, required=True, help='Path to the dataset to use')
     parser.add_argument(
         "--alg",
         type=MSTAlgorithms,
