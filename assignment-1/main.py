@@ -169,7 +169,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.d)[:10] # TODO: remove !!!
+    graphs = graph.read_all(args.d)
 
     algorithms = {
         MSTAlgorithms.prim_priority_queue: prim_priority_queue_complexity,
@@ -179,7 +179,7 @@ def main():
     }
 
     if args.alg == MSTAlgorithms.all:
-        for alg in list(algorithms.values()):
+        for alg in algorithms.values():
             alg(graphs)
     else:
         algorithms[args.alg](graphs)

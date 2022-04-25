@@ -16,7 +16,7 @@ class Graph:
 
   def get_vertices(self):
     """ returns the list of vertices """
-    return list(self.adj_list.keys())
+    return self.adj_list.keys()
 
   def get_edges(self):
     """ returns the list of edges """
