@@ -17,7 +17,7 @@ def prim_smarter(g: Graph, s: Vertex = 1):
   Q=[]
   hpush(Q, (0,s)) # Q will contain tuples in the form (key, vertex), sorted by key
 
-  while len(Q) > 0:
+  while len(Q):
     u = hpop(Q)
     inQ[u[1]] = 0
     # for k, v in [item for item in g[u[1]].items()]:

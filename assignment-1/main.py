@@ -8,7 +8,7 @@ from algorithms.measure_asymptotic_behaviour import compute_asymptotic_constant,
 
 # Prim's algorithms
 from algorithms.prim_priority_queue import prim_priority_queue, prim_priority_queue_asymptotic_behaviour
-from algorithms.prim_simple import prim_smarter, prim_smarter_asymptotic_behaviour
+from algorithms.prim_smarter import prim_smarter, prim_smarter_asymptotic_behaviour
 
 # Kruskal's algorithms
 from algorithms.kruskal_union_find import kruskal_union_find, kruskal_union_find_asymptotic_behaviour
