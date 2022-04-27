@@ -32,7 +32,7 @@ def init_args():
     parser.add_argument(
         "--size",
         type=check_positive,
-        help="How many files of the dataset load",
+        help="How many dataset files to load",
     )
 
     return parser
