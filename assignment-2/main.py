@@ -3,6 +3,10 @@ from enum import Enum
 from graph import graph
 
 
+def error_function(approximate_solution, optimal_solution):
+    return (approximate_solution - optimal_solution) / optimal_solution
+
+
 class TSPAlgorithms(Enum):
     all = "all"
 

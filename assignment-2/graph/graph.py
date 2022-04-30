@@ -14,9 +14,12 @@ Vertex = NewType("Vertex", int)
 
 
 class Graph:
-    def __init__(self):
+    def __init__(self, edges: "list[Edge]" = []):
         self.adj_list = defaultdict(dict)
         self.edges = set()
+
+        for s, t, w in edges:
+            self.add_edge(s, t, w)
 
     def get_vertices(self):
         """returns the list of vertices"""
@@ -38,7 +41,7 @@ class Graph:
         """returns the number of edges"""
         return len(self.edges)
 
-    def add_edge(self, s: Vertex, t: Vertex, w: int):
+    def add_edge(self, s: Vertex, t: Vertex, w):
         """adds an edge between the vertices s and t with weight w"""
         self.adj_list[s][t] = w
         self.adj_list[t][s] = w
@@ -61,7 +64,7 @@ class Graph:
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
 
 
-def read_graph(f):
+def read_tsp_graph(f):
     file_information = {}
 
     s = next(f).strip()
@@ -92,14 +95,14 @@ def read_graph(f):
     return (g, int(file_information[TSPLabel.OPTIMAL_SOLUTION.value]))
 
 
-def open_graph(file_path):
+def open_tsp_graph(file_path):
     with open(file_path, "r") as f:
-        return read_graph(f)
+        return read_tsp_graph(f)
 
 
 def read_all(directory_path, size=None):
     files = read_sort_files(directory_path, size)
-    return list(map(open_graph, files))
+    return list(map(open_tsp_graph, files))
 
 
 def read_sort_files(directory_path, size=None):

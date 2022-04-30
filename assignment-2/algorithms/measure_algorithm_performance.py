@@ -16,14 +16,14 @@ def measure_run_time(alg, graph, num_calls):
     return avg_time, approximate_solution
 
 
-def measure_algorithm_performance(alg, tsp_graphs, num_calls=100000):
+def measure_algorithm_performance(alg, tsp_graphs, error_function, num_calls=100000):
     approximate_solutions = []
     run_times = []
     errors = []
 
     for graph, optimal_solution in tsp_graphs:
         run_time, approximate_solution = measure_run_time(alg, graph, num_calls)
-        error = (approximate_solution - optimal_solution) / optimal_solution
+        error = error_function(approximate_solution, optimal_solution)
 
         approximate_solutions.append(approximate_solution)
         run_times.append(run_time)
