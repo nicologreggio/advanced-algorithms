@@ -3,6 +3,10 @@ from enum import Enum
 from graph import graph
 
 
+def error_function(approximate_solution, optimal_solution):
+    return (approximate_solution - optimal_solution) / optimal_solution
+
+
 class TSPAlgorithms(Enum):
     all = "all"
 
@@ -41,15 +45,16 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    graphs = graph.read_all(args.directory, args.size)
+    tsp_graphs = graph.read_all(args.directory, args.size)
+    print(tsp_graphs)
 
     algorithms = {}
 
     if args.alg == TSPAlgorithms.all:
         for alg in algorithms.values():
-            alg(graphs)
+            alg(tsp_graphs)
     else:
-        algorithms[args.alg](graphs)
+        algorithms[args.alg](tsp_graphs)
 
 
 if __name__ == "__main__":
