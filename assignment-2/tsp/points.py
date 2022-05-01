@@ -20,9 +20,18 @@ class SimplePoint(Coordinate):
 
 
 class Radian(Coordinate):
-    def __init__(self, latitude, longitude):
-        self.latitude = latitude
-        self.longitude = longitude
+    def __init__(self, x, y):
+        def to_radian(d):
+            PI = 3.141592
+
+            integer_part = int(d)
+            decimal_part = d - integer_part
+            rad = PI * (integer_part + 5.0 * decimal_part / 3.0) / 180.0
+
+            return rad
+
+        self.latitude = to_radian(x)
+        self.longitude = to_radian(y)
 
     def compute_distance(self, c):
         RRR = 6378.388
@@ -31,9 +40,7 @@ class Radian(Coordinate):
         q2 = math.cos(self.latitude - c.latitude)
         q3 = math.cos(self.latitude + c.latitude)
 
-        return math.trunc(
-            RRR * math.acos(0.5 * ((1.0 + q1) * q2 - (1.0 - q1) * q3)) + 1.0
-        )
+        return int(RRR * math.acos(0.5 * ((1.0 + q1) * q2 - (1.0 - q1) * q3)) + 1.0)
 
     def __str__(self) -> str:
         return (self.latitude, self.longitude)

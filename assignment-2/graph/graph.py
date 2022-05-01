@@ -86,12 +86,13 @@ def read_tsp_graph(f):
         s = next(f).strip()
 
     g = Graph()
-    for i, s in enumerate(vertices):
-        for t in vertices[i + 1 :]:
+    for i, s in enumerate(vertices):  # [(0, 32), (1, 54), (2, 55), (3, 56), (4, 57)]
+        for t in vertices[i + 1 :]:  # [54, 55, 56, 57]
             p_s = data[s]
             p_t = data[t]
             g.add_edge(s, t, p_s.compute_distance(p_t))
 
+    # TODO: write in the report that the parameter optimal solution has been added to the dataset files
     return (g, int(file_information[TSPLabel.OPTIMAL_SOLUTION.value]))
 
 
