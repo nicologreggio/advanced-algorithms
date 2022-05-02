@@ -2,7 +2,7 @@
 Advanced Algorithms assignments ; Master's Degree in Computer Science @ UniPd
 
 ## Contributors
-- [Diletta Rigo](https://github.com/rigodiletta) 
+- [Diletta Rigo](https://github.com/dilettarigo) 
 - [Filippo Fantinato](https://github.com/FilippoFantinato)
 - [Nicolò Greggio](https://github.com/nicologreggio/)
 
