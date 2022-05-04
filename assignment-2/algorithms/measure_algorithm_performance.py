@@ -7,11 +7,13 @@ def measure_run_time(alg, graph, num_calls):
     start_time = perf_counter_ns()
 
     for _ in range(num_calls):
-        approximate_solution = alg(graph)
+        H = alg(graph)
 
     end_time = perf_counter_ns()
     gc.enable()
     avg_time = (end_time - start_time) / num_calls
+
+    approximate_solution = sum([e[2] for e in H])
 
     return avg_time, approximate_solution
 
