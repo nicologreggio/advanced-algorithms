@@ -5,7 +5,7 @@ from graph.kruskal_union_find import kruskal_union_find
 from graph.kruskal_naive import is_acyclic, kruskal_naive
 
 
-def DFS_recursive(g: Graph, v: Vertex, visited):
+def DFS_recursive(g: Graph, v: Vertex, visited: "list[bool]") -> "list[Vertex]":
     visited[v] = True
     children = []
 
@@ -23,16 +23,20 @@ def DFS(g: Graph, r: Vertex):
 
 def approximation2_metric_tsp(g: Graph, r: Vertex = 1) -> "list[Edge]":
     mst = prim_priority_queue(g)
-    # print(mst)
+    # print(Graph(mst))
     mst = Graph(mst)
 
     vertices = DFS(mst, r)
     # print(vertices)
 
-    last_vertex = vertices[-1]
-    H = []
-    for v in vertices:
-        H.append((last_vertex, v, g.get_weight(last_vertex, v)))
-        last_vertex = v
+    # last_vertex = vertices[-1]
+    # H = []
+    # for v in vertices:
+    #     H.append((last_vertex, v, g.get_weight(last_vertex, v)))
+    #     last_vertex = v
 
-    return H
+    # return H
+
+    H = DFS(mst, r)
+
+    return H + [r]

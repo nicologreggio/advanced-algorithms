@@ -13,7 +13,7 @@ def error_function(approximate_solution, optimal_solution):
 
 def measure_approximation2_algorithm(tsp_graphs):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
-        approximation2_metric_tsp, tsp_graphs, error_function, 100
+        approximation2_metric_tsp, tsp_graphs, error_function, 1
     )
 
     print_measurement_data(approximate_solutions, run_times, errors)
