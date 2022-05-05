@@ -36,9 +36,9 @@ def random_insertion(g):
   
     while len(C) < g.get_n() + 1:
         k = random_selection(C, G)
-        tmp, ins = min_triangular(k, C, g)
+        pmin, ins = min_triangular(k, C, g)
         C.insert(ins, k)
-        w = w + tmp
+        w = w + pmin
     return C, int(w) 
 
 

@@ -2,13 +2,41 @@ import argparse
 from enum import Enum
 from graph import graph
 
+from algorithms.measure_algorithm_performance import measure_algorithm_performance
+from algorithms.random_insertion import random_insertion
 
 def error_function(approximate_solution, optimal_solution):
     return (approximate_solution - optimal_solution) / optimal_solution
 
+def measure_random_insertion_algorithm(tsp_graphs):
+    approximate_solutions, run_times, errors = measure_algorithm_performance(
+        random_insertion, tsp_graphs, error_function, 100
+    )
+
+    print_measurement_data(approximate_solutions, run_times, errors)
+
+
+def print_measurement_data(approximate_solutions, run_times, errors):
+    padding = len(str(max(run_times))) + 5
+    headers = [
+        str(h).ljust(padding) for h in ["Approximate solution", "Time(ns)", "Error"]
+    ]
+    hr = padding * (len(headers) + 2) * "-"
+    print(*headers, sep="\t")
+    print(hr)
+    for i in range(len(approximate_solutions)):
+        print(
+            str(approximate_solutions[i]).ljust(padding),
+            str(run_times[i]).ljust(padding),
+            str(errors[i]).ljust(padding),
+            sep="\t",
+        )
+    print(hr)
+
 
 class TSPAlgorithms(Enum):
     all = "all"
+    random_insertion = "random_insertion"
 
     def __str__(self):
         return self.value
@@ -48,7 +76,8 @@ def main():
     tsp_graphs = graph.read_all(args.directory, args.size)
     print(tsp_graphs)
 
-    algorithms = {}
+    algorithms = { TSPAlgorithms.random_insertion: measure_random_insertion_algorithm
+}
 
     if args.alg == TSPAlgorithms.all:
         for alg in algorithms.values():
