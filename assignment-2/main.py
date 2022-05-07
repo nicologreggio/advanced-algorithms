@@ -5,6 +5,7 @@ from graph import graph
 from algorithms.measure_algorithm_performance import measure_algorithm_performance
 
 from algorithms.approximation2_metric_tsp import approximation2_metric_tsp
+from algorithms.closest_insertion import closest_insertion
 
 
 def error_function(approximate_solution, optimal_solution):
@@ -14,6 +15,13 @@ def error_function(approximate_solution, optimal_solution):
 def measure_approximation2_algorithm(tsp_graphs):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
         approximation2_metric_tsp, tsp_graphs, error_function, 1
+    )
+
+    print_measurement_data(approximate_solutions, run_times, errors)
+
+def measure_closest_insertion(tsp_graphs):
+    approximate_solutions, run_times, errors = measure_algorithm_performance(
+        closest_insertion, tsp_graphs, error_function, 1
     )
 
     print_measurement_data(approximate_solutions, run_times, errors)
@@ -40,6 +48,7 @@ def print_measurement_data(approximate_solutions, run_times, errors):
 class TSPAlgorithms(Enum):
     all = "all"
     approximation2_metric_tsp = "approximation2_metric_tsp"
+    closest_insertion = "closest_insertion"
 
     def __str__(self):
         return self.value
@@ -79,7 +88,8 @@ def main():
     tsp_graphs = graph.read_all(args.directory, args.size)
 
     algorithms = {
-        TSPAlgorithms.approximation2_metric_tsp: measure_approximation2_algorithm
+        TSPAlgorithms.approximation2_metric_tsp: measure_approximation2_algorithm,
+        TSPAlgorithms.closest_insertion: measure_closest_insertion
     }
 
     if args.alg == TSPAlgorithms.all:

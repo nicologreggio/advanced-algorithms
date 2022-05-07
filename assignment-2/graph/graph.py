@@ -34,6 +34,7 @@ class Graph:
         return self.adj_list.get(v, None)
 
     def get_weight(self, s: Vertex, t: Vertex):
+        """returns the weight of the edge (s,t) """
         return self.adj_list[s][t]
 
     def get_n(self):
