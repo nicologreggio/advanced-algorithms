@@ -39,7 +39,9 @@ def random_insertion(g):
         pmin, ins = min_triangular(k, C, g)
         C.insert(ins, k)
         w = w + pmin
-    return C, int(w) 
+    #return C, int(w) 
+    return int(w)
+    
 
 
 
