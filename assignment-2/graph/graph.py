@@ -33,6 +33,9 @@ class Graph:
         """returns the adjaceny list of v"""
         return self.adj_list.get(v, None)
 
+    def get_weight(self, s: Vertex, t: Vertex):
+        return self.adj_list[s][t]
+
     def get_n(self):
         """returns the number of nodes"""
         return len(self.adj_list)
@@ -59,6 +62,9 @@ class Graph:
 
         self.edges.discard((s, t, w))
         self.edges.discard((t, s, w))
+
+    def exist_edge(self, s: Vertex, t: Vertex):
+        return self.adj_list[s].get(t, None) != None
 
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
