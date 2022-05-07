@@ -1,3 +1,4 @@
+from typing import Tuple
 from graph.graph import Graph, Vertex, Edge
 from graph.prim_smarter import prim_smarter
 from graph.prim_priority_queue import prim_priority_queue
@@ -21,22 +22,8 @@ def DFS(g: Graph, r: Vertex):
     return DFS_recursive(g, r, visited)
 
 
-def approximation2_metric_tsp(g: Graph, r: Vertex = 1) -> "list[Edge]":
-    mst = prim_priority_queue(g)
-    # print(Graph(mst))
-    mst = Graph(mst)
-
-    vertices = DFS(mst, r)
-    # print(vertices)
-
-    # last_vertex = vertices[-1]
-    # H = []
-    # for v in vertices:
-    #     H.append((last_vertex, v, g.get_weight(last_vertex, v)))
-    #     last_vertex = v
-
-    # return H
-
+def approximation2_metric_tsp(g: Graph, r: Vertex = 1) -> "list[Vertex]":
+    mst = Graph(prim_priority_queue(g))
     H = DFS(mst, r)
 
     return H + [r]

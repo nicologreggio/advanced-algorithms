@@ -25,7 +25,6 @@ def measure_run_time(alg, graph, num_calls):
     gc.enable()
     avg_time = (end_time - start_time) / num_calls
 
-    # approximate_solution = sum([e[2] for e in H])
     approximate_solution = compute_approximate_solution(graph, H)
 
     return avg_time, approximate_solution
