@@ -6,7 +6,7 @@ from algorithms.measure_algorithm_performance import measure_algorithm_performan
 from algorithms.random_insertion import random_insertion
 from algorithms.approximation2_metric_tsp import approximation2_metric_tsp
 
-DEFAULT_NUM_CALLS = 100
+DEFAULT_NUM_CALLS = 10
 
 
 def error_function(approximate_solution, optimal_solution):
