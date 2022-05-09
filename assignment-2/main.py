@@ -39,7 +39,7 @@ def print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
     print(hr)
     for i in range(len(approximate_solutions)):
         g, _ = tsp_graphs[i]
-        name = g.get_information(TSPLabel.NAME)
+        name = g.get_information(TSPLabel.NAME.value)
         print(
             str(name).ljust(padding),
             str(approximate_solutions[i]).ljust(padding),

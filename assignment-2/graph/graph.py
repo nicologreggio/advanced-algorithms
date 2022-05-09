@@ -45,8 +45,8 @@ class Graph:
         """returns the number of edges"""
         return len(self.edges)
 
-    def get_information(self, label: TSPLabel):
-        return self.information.get(label.value, None)
+    def get_information(self, key):
+        return self.information.get(key, None)
 
     def add_edge(self, s: Vertex, t: Vertex, w):
         """adds an edge between the vertices s and t with weight w"""
