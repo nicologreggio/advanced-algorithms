@@ -20,13 +20,13 @@ def min_triangular(k: Vertex, C: list[int], g: Graph) -> "Tuple[int,int]":
 
 
 # to randomly select a node which is not in the circuit yet
-def random_selection(C: list[int], G: set[int]):
+def random_selection(C: list[int], G: set[int]) -> "Vertex":
     """Select the node according to the random insertion heuristic"""
     c = set(C)
     r = random.choice(list(G - c))
     return r
 
-def init_path(g: Graph, s: Vertex):
+def init_path(g: Graph, s: Vertex) -> "Tuple[list[int], set[int], int, int]":
     """Initialize circuit for constructive heuristics with node s"""
     d = g.get_adj_list_vertex(s)
     m = min(d, key=d.get)
@@ -35,7 +35,7 @@ def init_path(g: Graph, s: Vertex):
     total_len, total_w = g.get_n(), 2 * g.get_weight(s, m)
     return C, G, total_len, total_w
 
-def random_insertion(g: Graph, s: Vertex = 1) -> "list[Edge]":
+def random_insertion(g: Graph, s: Vertex = 1) -> "list[Vertex]":
     """Return the hamiltonian path built using the random insertion heuristic"""
     C, G, total_len, total_w=init_path(g, s)
 
@@ -73,7 +73,7 @@ def closest_selection(C: list[int], G: set[int], g: Graph) -> "Vertex":
     return r
 
 
-def closest_insertion(g: Graph, s: Vertex = 1) -> "list[Edge]":
+def closest_insertion(g: Graph, s: Vertex = 1) -> "list[Vertex]":
     """Return the hamiltonian path built using the closest insertion heuristic"""
     C, G, total_len, total_w=init_path(g, s)
 
