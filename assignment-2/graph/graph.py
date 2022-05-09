@@ -3,7 +3,7 @@ from glob import glob
 from typing import NewType, Tuple
 import heapq as hq
 
-from tsp.tsp_file import TSPLabel
+from tsp.tsp_file import TSPFileFormat, TSPLabel
 from tsp.points import init_point
 
 
@@ -87,7 +87,9 @@ def read_tsp_graph(f):
     while s and s != TSPLabel.EOF.value:
         line = s.split()
         v, x, y = int(line[0]), float(line[1]), float(line[2])
-        data[v] = init_point(x, y, file_information[TSPLabel.EDGE_WEIGHT_TYPE])
+        data[v] = init_point(
+            x, y, TSPFileFormat[file_information[TSPLabel.EDGE_WEIGHT_TYPE]]
+        )
         hq.heappush(vertices, v)
 
         s = next(f).strip()
