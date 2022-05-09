@@ -13,7 +13,7 @@ class SimplePoint(Coordinate):
         self.y = y
 
     def compute_distance(self, c):
-        return math.sqrt((self.y - c.y) ** 2 + (self.x - c.x) ** 2)
+        return round(math.sqrt((self.y - c.y) ** 2 + (self.x - c.x) ** 2))
 
     def __str__(self) -> str:
         return (self.x, self.y)
@@ -21,17 +21,8 @@ class SimplePoint(Coordinate):
 
 class Radian(Coordinate):
     def __init__(self, x, y):
-        def to_radian(d):
-            PI = 3.141592
-
-            integer_part = int(d)
-            decimal_part = d - integer_part
-            rad = PI * (integer_part + 5.0 * decimal_part / 3.0) / 180.0
-
-            return rad
-
-        self.latitude = to_radian(x)
-        self.longitude = to_radian(y)
+        self.latitude = self._to_radian(x)
+        self.longitude = self._to_radian(y)
 
     def compute_distance(self, c):
         RRR = 6378.388
@@ -42,17 +33,26 @@ class Radian(Coordinate):
 
         return int(RRR * math.acos(0.5 * ((1.0 + q1) * q2 - (1.0 - q1) * q3)) + 1.0)
 
+    def _to_radian(self, d):
+        PI = 3.141592
+
+        integer_part = int(d)
+        decimal_part = d - integer_part
+        rad = PI * (integer_part + 5.0 * decimal_part / 3.0) / 180.0
+
+        return rad
+
     def __str__(self) -> str:
         return (self.latitude, self.longitude)
 
 
-file_type_to_point = {
-    TSPFileFormat.GEO.value: Radian,
-    TSPFileFormat.EUC_2D.value: SimplePoint,
+filetype_to_point = {
+    TSPFileFormat.GEO: Radian,
+    TSPFileFormat.EUC_2D: SimplePoint,
 }
 
 
-def create_point(x, y, format: TSPFileFormat):
-    Point = file_type_to_point[format]
+def init_point(x, y, format: TSPFileFormat) -> Coordinate:
+    Point = filetype_to_point[format]
 
     return Point(x, y)

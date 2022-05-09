@@ -1,14 +1,13 @@
 import argparse
 from enum import Enum
 from graph import graph
+from tsp.tsp_file import TSPLabel
 
 from algorithms.measure_algorithm_performance import measure_algorithm_performance
 
 from algorithms.approximation2_metric_tsp import approximation2_metric_tsp
 from algorithms.closest_insertion import closest_insertion
 from algorithms.random_insertion import random_insertion
-
-DEFAULT_NUM_CALLS = 10
 
 
 def error_function(approximate_solution, optimal_solution):
@@ -20,14 +19,14 @@ def measure_approximation2_algorithm(tsp_graphs):
         approximation2_metric_tsp, tsp_graphs, error_function, 1
     )
 
-    print_measurement_data(approximate_solutions, run_times, errors)
+    print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
 
 def measure_closest_insertion(tsp_graphs):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
         closest_insertion, tsp_graphs, error_function, 1
     )
 
-    print_measurement_data(approximate_solutions, run_times, errors)
+    print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
 
 def measure_random_insertion_algorithm(tsp_graphs, calls):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
@@ -35,16 +34,20 @@ def measure_random_insertion_algorithm(tsp_graphs, calls):
     )
     print_measurement_data(approximate_solutions, run_times, errors)
 
-def print_measurement_data(approximate_solutions, run_times, errors):
+def print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors):
     padding = len(str(max(run_times))) + 5
     headers = [
-        str(h).ljust(padding) for h in ["Approximate solution", "Time(ns)", "Error"]
+        str(h).ljust(padding)
+        for h in ["Name", "Approximate solution", "Time(ns)", "Error"]
     ]
     hr = padding * (len(headers) + 2) * "-"
     print(*headers, sep="\t")
     print(hr)
     for i in range(len(approximate_solutions)):
+        g, _ = tsp_graphs[i]
+        name = g.get_information(TSPLabel.NAME)
         print(
+            str(name).ljust(padding),
             str(approximate_solutions[i]).ljust(padding),
             str(run_times[i]).ljust(padding),
             str(errors[i]).ljust(padding),
@@ -88,7 +91,11 @@ def init_args():
         help="How many dataset files to load",
     )
     parser.add_argument(
-        "--calls", type=check_positive, help="How many times execute an algorithm"
+        "--calls",
+        type=check_positive,
+        help="How many times to run an algorithm",
+        const=100,
+        nargs="?",
     )
 
     return parser
@@ -96,8 +103,6 @@ def init_args():
 
 def main():
     args = init_args().parse_args()
-
-    calls = args.calls if args.calls else DEFAULT_NUM_CALLS
 
     tsp_graphs = graph.read_all(args.directory, args.size)
 
@@ -109,9 +114,9 @@ def main():
 
     if args.alg == TSPAlgorithms.all:
         for alg in algorithms.values():
-            alg(tsp_graphs, calls)
+            alg(tsp_graphs, args.calls)
     else:
-        algorithms[args.alg](tsp_graphs, calls)
+        algorithms[args.alg](tsp_graphs, args.calls)
 
 
 if __name__ == "__main__":
