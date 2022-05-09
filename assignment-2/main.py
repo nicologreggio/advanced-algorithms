@@ -6,24 +6,27 @@ from tsp.tsp_file import TSPLabel
 from algorithms.measure_algorithm_performance import measure_algorithm_performance
 
 from algorithms.approximation2_metric_tsp import approximation2_metric_tsp
-from algorithms.closest_insertion import closest_insertion
-from algorithms.random_insertion import random_insertion
+
+# TODO: remove following 2 import when sure everything is fine
+# from algorithms.closest_insertion import closest_insertion
+# from algorithms.random_insertion import random_insertion
+from algorithms.constructive_heuristics import closest_insertion, random_insertion
 
 
 def error_function(approximate_solution, optimal_solution):
     return (approximate_solution - optimal_solution) / optimal_solution
 
 
-def measure_approximation2_algorithm(tsp_graphs):
+def measure_approximation2_algorithm(tsp_graphs, calls):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
-        approximation2_metric_tsp, tsp_graphs, error_function, 1
+        approximation2_metric_tsp, tsp_graphs, error_function, calls
     )
 
     print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
 
-def measure_closest_insertion(tsp_graphs):
+def measure_closest_insertion(tsp_graphs, calls):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
-        closest_insertion, tsp_graphs, error_function, 1
+        closest_insertion, tsp_graphs, error_function, calls
     )
 
     print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
@@ -32,7 +35,7 @@ def measure_random_insertion_algorithm(tsp_graphs, calls):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
         random_insertion, tsp_graphs, error_function, calls
     )
-    print_measurement_data(approximate_solutions, run_times, errors)
+    print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
 
 def print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors):
     padding = len(str(max(run_times))) + 5
