@@ -86,7 +86,7 @@ def init_args():
     parser.add_argument(
         "--calls",
         type=check_positive,
-        help="How many times execute an algorithm",
+        help="How many times to run an algorithm",
         const=100,
         nargs="?",
     )
