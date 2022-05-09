@@ -4,7 +4,7 @@ from typing import NewType, Tuple
 import heapq as hq
 
 from tsp.tsp_file import TSPLabel
-from tsp.points import create_point
+from tsp.points import init_point
 
 
 GRAPH_FILE_EXTENSION = "tsp"
@@ -14,9 +14,10 @@ Vertex = NewType("Vertex", int)
 
 
 class Graph:
-    def __init__(self, edges: "list[Edge]" = []):
+    def __init__(self, edges: "list[Edge]" = [], information={}):
         self.adj_list = defaultdict(dict)
         self.edges = set()
+        self.information = information
 
         for s, t, w in edges:
             self.add_edge(s, t, w)
@@ -44,6 +45,9 @@ class Graph:
         """returns the number of edges"""
         return len(self.edges)
 
+    def get_information(self, label: TSPLabel):
+        return self.information.get(label.value, None)
+
     def add_edge(self, s: Vertex, t: Vertex, w):
         """adds an edge between the vertices s and t with weight w"""
         self.adj_list[s][t] = w
@@ -62,9 +66,6 @@ class Graph:
 
         self.edges.discard((s, t, w))
         self.edges.discard((t, s, w))
-
-    def exist_edge(self, s: Vertex, t: Vertex):
-        return self.adj_list[s].get(t, None) != None
 
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
@@ -86,12 +87,12 @@ def read_tsp_graph(f):
     while s and s != TSPLabel.EOF.value:
         line = s.split()
         v, x, y = int(line[0]), float(line[1]), float(line[2])
-        data[v] = create_point(x, y, file_information[TSPLabel.EDGE_WEIGHT_TYPE.value])
+        data[v] = init_point(x, y, file_information[TSPLabel.EDGE_WEIGHT_TYPE.value])
         hq.heappush(vertices, v)
 
         s = next(f).strip()
 
-    g = Graph()
+    g = Graph([], file_information)
     for i, s in enumerate(vertices):  # [(0, 32), (1, 54), (2, 55), (3, 56), (4, 57)]
         for t in vertices[i + 1 :]:  # [54, 55, 56, 57]
             p_s = data[s]
