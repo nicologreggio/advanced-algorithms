@@ -1,7 +1,5 @@
 from numpy import infty
-from tsp.tsp_file import *
-from tsp.points import *
-from graph.graph import *
+from graph.graph import Graph, Vertex, Edge 
 import random
 
 # k has been randomly selected 
@@ -12,9 +10,9 @@ def min_triangular(k, C, g):
     for n in range(len(C)-1):
         i = C[n]
         j = C[n+1] 
-        w_ik = g.get_adj_list_vertex(k)[i]
-        w_kj = g.get_adj_list_vertex(k)[j]
-        w_ij = g.get_adj_list_vertex(i)[j]
+        w_ik = g.get_weight(i, k) 
+        w_kj = g.get_weight(k, j)
+        w_ij = g.get_weight(i, j)
         tmp = w_ik + w_kj - w_ij
         if tmp < p_min: 
             p_min = tmp 
@@ -39,9 +37,7 @@ def random_insertion(g):
         pmin, ins = min_triangular(k, C, g)
         C.insert(ins, k)
         w = w + pmin
-    #return C, int(w) 
-    return int(w)
-    
+    return C 
 
 
 

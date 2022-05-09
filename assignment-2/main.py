@@ -6,6 +6,9 @@ from algorithms.measure_algorithm_performance import measure_algorithm_performan
 
 from algorithms.approximation2_metric_tsp import approximation2_metric_tsp
 from algorithms.closest_insertion import closest_insertion
+from algorithms.random_insertion import random_insertion
+
+DEFAULT_NUM_CALLS = 10
 
 
 def error_function(approximate_solution, optimal_solution):
@@ -26,6 +29,11 @@ def measure_closest_insertion(tsp_graphs):
 
     print_measurement_data(approximate_solutions, run_times, errors)
 
+def measure_random_insertion_algorithm(tsp_graphs, calls):
+    approximate_solutions, run_times, errors = measure_algorithm_performance(
+        random_insertion, tsp_graphs, error_function, calls
+    )
+    print_measurement_data(approximate_solutions, run_times, errors)
 
 def print_measurement_data(approximate_solutions, run_times, errors):
     padding = len(str(max(run_times))) + 5
@@ -49,6 +57,7 @@ class TSPAlgorithms(Enum):
     all = "all"
     approximation2_metric_tsp = "approximation2_metric_tsp"
     closest_insertion = "closest_insertion"
+    random_insertion = "random_insertion"
 
     def __str__(self):
         return self.value
@@ -78,6 +87,9 @@ def init_args():
         type=check_positive,
         help="How many dataset files to load",
     )
+    parser.add_argument(
+        "--calls", type=check_positive, help="How many times execute an algorithm"
+    )
 
     return parser
 
@@ -85,18 +97,21 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
+    calls = args.calls if args.calls else DEFAULT_NUM_CALLS
+
     tsp_graphs = graph.read_all(args.directory, args.size)
 
     algorithms = {
         TSPAlgorithms.approximation2_metric_tsp: measure_approximation2_algorithm,
-        TSPAlgorithms.closest_insertion: measure_closest_insertion
+        TSPAlgorithms.closest_insertion: measure_closest_insertion,
+        TSPAlgorithms.random_insertion: measure_random_insertion_algorithm
     }
 
     if args.alg == TSPAlgorithms.all:
         for alg in algorithms.values():
-            alg(tsp_graphs)
+            alg(tsp_graphs, calls)
     else:
-        algorithms[args.alg](tsp_graphs)
+        algorithms[args.alg](tsp_graphs, calls)
 
 
 if __name__ == "__main__":
