@@ -16,11 +16,17 @@ def preorder_visit_recursive(
 
 
 def preorder_visit(g: Graph, r: Vertex) -> "list[Vertex]":
+    if g.get_n() == 0:
+        return []
+
     visited = {i: False for i in g.get_vertices()}
     return preorder_visit_recursive(g, r, visited)
 
 
 def approximation2_metric_tsp(g: Graph, r: Vertex = 1) -> "list[Vertex]":
+    if g.get_n() == 0:
+        return []
+
     mst = Graph(prim_priority_queue(g))
     H = preorder_visit(mst, r)
 

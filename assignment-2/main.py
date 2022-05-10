@@ -22,20 +22,27 @@ def measure_approximation2_algorithm(tsp_graphs, calls):
         approximation2_metric_tsp, tsp_graphs, error_function, calls
     )
 
+    print("2-Approximation algorithm")
     print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
+
 
 def measure_closest_insertion(tsp_graphs, calls):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
         closest_insertion, tsp_graphs, error_function, calls
     )
 
+    print("Closest insertion algorithm")
     print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
+
 
 def measure_random_insertion_algorithm(tsp_graphs, calls):
     approximate_solutions, run_times, errors = measure_algorithm_performance(
         random_insertion, tsp_graphs, error_function, calls
     )
+
+    print("Random insertion algorithm")
     print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
+
 
 def print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors):
     padding = len(str(max(run_times))) + 5
@@ -112,7 +119,7 @@ def main():
     algorithms = {
         TSPAlgorithms.approximation2_metric_tsp: measure_approximation2_algorithm,
         TSPAlgorithms.closest_insertion: measure_closest_insertion,
-        TSPAlgorithms.random_insertion: measure_random_insertion_algorithm
+        TSPAlgorithms.random_insertion: measure_random_insertion_algorithm,
     }
 
     if args.alg == TSPAlgorithms.all:

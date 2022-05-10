@@ -19,7 +19,7 @@ class SimplePoint(Coordinate):
         return (self.x, self.y)
 
 
-class Radian(Coordinate):
+class RadianPoint(Coordinate):
     def __init__(self, x, y):
         self.latitude = self._to_radian(x)
         self.longitude = self._to_radian(y)
@@ -47,7 +47,7 @@ class Radian(Coordinate):
 
 
 filetype_to_point = {
-    TSPFileFormat.GEO: Radian,
+    TSPFileFormat.GEO: RadianPoint,
     TSPFileFormat.EUC_2D: SimplePoint,
 }
 

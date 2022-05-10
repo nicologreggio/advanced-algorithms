@@ -35,7 +35,7 @@ class Graph:
         return self.adj_list.get(v, None)
 
     def get_weight(self, s: Vertex, t: Vertex):
-        """returns the weight of the edge (s,t) """
+        """returns the weight of the edge (s,t)"""
         return self.adj_list[s][t]
 
     def get_n(self):
@@ -72,7 +72,7 @@ class Graph:
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
 
 
-def read_tsp_graph(f):
+def read_tsp_graph(f) -> "Tuple[Graph, int]":
     file_information = {}
 
     s = next(f).strip()
