@@ -4,20 +4,17 @@ from graph import graph
 from tsp.tsp_file import TSPLabel
 
 from algorithms.measure_algorithm_performance import measure_algorithm_performance
-from algorithms.random_insertion import random_insertion
+
 from algorithms.approximation2_metric_tsp import approximation2_metric_tsp
+
+# TODO: remove following 2 import when sure everything is fine
+# from algorithms.closest_insertion import closest_insertion
+# from algorithms.random_insertion import random_insertion
+from algorithms.constructive_heuristics import closest_insertion, random_insertion
 
 
 def error_function(approximate_solution, optimal_solution):
     return (approximate_solution - optimal_solution) / optimal_solution
-
-
-def measure_random_insertion_algorithm(tsp_graphs, calls):
-    approximate_solutions, run_times, errors = measure_algorithm_performance(
-        random_insertion, tsp_graphs, error_function, calls
-    )
-
-    print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
 
 
 def measure_approximation2_algorithm(tsp_graphs, calls):
@@ -27,6 +24,18 @@ def measure_approximation2_algorithm(tsp_graphs, calls):
 
     print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
 
+def measure_closest_insertion(tsp_graphs, calls):
+    approximate_solutions, run_times, errors = measure_algorithm_performance(
+        closest_insertion, tsp_graphs, error_function, calls
+    )
+
+    print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
+
+def measure_random_insertion_algorithm(tsp_graphs, calls):
+    approximate_solutions, run_times, errors = measure_algorithm_performance(
+        random_insertion, tsp_graphs, error_function, calls
+    )
+    print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
 
 def print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors):
     padding = len(str(max(run_times))) + 5
@@ -52,8 +61,9 @@ def print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
 
 class TSPAlgorithms(Enum):
     all = "all"
-    random_insertion = "random_insertion"
     approximation2_metric_tsp = "approximation2_metric_tsp"
+    closest_insertion = "closest_insertion"
+    random_insertion = "random_insertion"
 
     def __str__(self):
         return self.value
@@ -86,7 +96,7 @@ def init_args():
     parser.add_argument(
         "--calls",
         type=check_positive,
-        help="How many times execute an algorithm",
+        help="How many times to run an algorithm",
         const=100,
         nargs="?",
     )
@@ -101,7 +111,8 @@ def main():
 
     algorithms = {
         TSPAlgorithms.approximation2_metric_tsp: measure_approximation2_algorithm,
-        TSPAlgorithms.random_insertion: measure_random_insertion_algorithm,
+        TSPAlgorithms.closest_insertion: measure_closest_insertion,
+        TSPAlgorithms.random_insertion: measure_random_insertion_algorithm
     }
 
     if args.alg == TSPAlgorithms.all:

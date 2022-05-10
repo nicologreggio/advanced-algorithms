@@ -3,7 +3,7 @@ from glob import glob
 from typing import NewType, Tuple
 import heapq as hq
 
-from tsp.tsp_file import TSPLabel
+from tsp.tsp_file import TSPFileFormat, TSPLabel
 from tsp.points import init_point
 
 
@@ -35,6 +35,7 @@ class Graph:
         return self.adj_list.get(v, None)
 
     def get_weight(self, s: Vertex, t: Vertex):
+        """returns the weight of the edge (s,t) """
         return self.adj_list[s][t]
 
     def get_n(self):
@@ -45,8 +46,8 @@ class Graph:
         """returns the number of edges"""
         return len(self.edges)
 
-    def get_information(self, label: TSPLabel):
-        return self.information.get(label.value, None)
+    def get_information(self, key):
+        return self.information.get(key, None)
 
     def add_edge(self, s: Vertex, t: Vertex, w):
         """adds an edge between the vertices s and t with weight w"""
@@ -77,7 +78,7 @@ def read_tsp_graph(f):
     s = next(f).strip()
     while s and s != TSPLabel.NODE_COORD_SECTION.value:
         information, value = list(map(lambda s: s.strip(), s.split(":")))
-        file_information[information] = value
+        file_information[TSPLabel[information]] = value
 
         s = next(f).strip()
 
@@ -87,7 +88,9 @@ def read_tsp_graph(f):
     while s and s != TSPLabel.EOF.value:
         line = s.split()
         v, x, y = int(line[0]), float(line[1]), float(line[2])
-        data[v] = init_point(x, y, file_information[TSPLabel.EDGE_WEIGHT_TYPE.value])
+        data[v] = init_point(
+            x, y, TSPFileFormat[file_information[TSPLabel.EDGE_WEIGHT_TYPE]]
+        )
         hq.heappush(vertices, v)
 
         s = next(f).strip()
@@ -100,7 +103,7 @@ def read_tsp_graph(f):
             g.add_edge(s, t, p_s.compute_distance(p_t))
 
     # TODO: write in the report that the parameter optimal solution has been added to the dataset files
-    return (g, int(file_information[TSPLabel.OPTIMAL_SOLUTION.value]))
+    return (g, int(file_information[TSPLabel.OPTIMAL_SOLUTION]))
 
 
 def open_tsp_graph(file_path):
