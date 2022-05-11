@@ -1,15 +1,16 @@
 import io
 import unittest
 from graph.graph import Graph, read_all
-from tsp.tsp_file import TSPLabel
+from tsp.tsp_file import TSPFileLabel
 from algorithms.constructive_heuristics import random_insertion
 
 class RandomInsertionTest(unittest.TestCase):
     def test_insertion(self):
-        path = "/Users/dilettarigo/Desktop/advanced-algorithms/assignment-2/tsp_dataset"
+        path = "tsp_dataset"
         A = read_all(path)
+        print(A)
         g = A[0][0]
-        n = int(g.get_information(TSPLabel.DIMENSION))
+        n = int(g.get_information(TSPFileLabel.DIMENSION))
         current = random_insertion(g)
         current.sort()
         expected = [1] + list(range(1, n+1))
