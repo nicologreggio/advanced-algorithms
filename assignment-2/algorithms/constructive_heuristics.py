@@ -1,4 +1,4 @@
-from graph.graph import Graph, Vertex, Edge
+from graph.graph import Graph, Vertex
 import random
 from typing import Tuple
 
@@ -8,9 +8,11 @@ def init_path(g: Graph, s: Vertex) -> "Tuple[list[int], set[int], int, int]":
     """Initialize circuit for constructive heuristics with node s"""
     d = g.get_adj_list_vertex(s)
     m = min(d, key=d.get)
-    G = set(g.get_vertices())
-    C = [s, m, s]
-    total_len, total_w = g.get_n(), 2 * g.get_weight(s, m)
+    G = set(g.get_vertices()) # set of vertices
+    C = [s, m, s] # build the single node path
+    
+    # the num. of vertices the circuit will need to have and the initial weight of the path
+    total_len, total_w = g.get_n(), 2 * g.get_weight(s, m) 
     return C, G, total_len, total_w
     
 
@@ -32,19 +34,20 @@ def get_dist(k: Vertex, C: list[int], g: Graph) -> "int":
 
 def closest_selection(C: list[int], G: set[int], g: Graph) -> "Vertex":
     """Select the node according to the closest insertion heuristic"""
-    candidates = G - set(C)
+    candidates = G - set(C) # vertices not in the circuit yet
     assert (
         len(candidates) > 0
     ), "{G}\{C} leads to empty set. No candidates available to choose next closest node!"
 
     min_distance = float("inf")
+    # for each k not in the circuit calculate its cirucit-vertex distance from C
     for k in candidates:
         new_dist = get_dist(k, C, g)
         if new_dist < min_distance:
             min_distance = new_dist
             r = k
 
-    return r
+    return r # this is the k not in C that minimizes ciruit-vertex distance
 
 
 

@@ -7,9 +7,6 @@ from algorithms.measure_algorithm_performance import measure_algorithm_performan
 
 from algorithms.approximation2_metric_tsp import approximation2_metric_tsp
 
-# TODO: remove following 2 import when sure everything is fine
-# from algorithms.closest_insertion import closest_insertion
-# from algorithms.random_insertion import random_insertion
 from algorithms.constructive_heuristics import closest_insertion, random_insertion
 
 
