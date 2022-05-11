@@ -5,28 +5,43 @@ from algorithms.constructive_heuristics import closest_insertion, closest_select
 
 
 class ClosestInsertionTest(unittest.TestCase):
-    def test_circuit_vertex_distance(self):
-        g = Graph(
+    def __init__(self, sth) -> None:
+        super().__init__(sth)
+        self.g=Graph(
             [
-                (1, 3, 281),
-                (1, 5, 291),
-                (5, 6, 35),
-                (6, 4, 70),
-                (3, 8, 308),
-                (8, 10, 180),
-                (10, 9, 83),
-                (3, 7, 611),
-                (7, 2, 45),
+                (1, 2, 8),
+                (1, 3, 6),
+                (1, 4, 7),
+                (1, 5, 2),
+                (2, 3, 9),
+                (2, 4, 15),
+                (2, 5, 4),
+                (3, 4, 12),
+                (3, 5, 5),
+                (4, 5, 3)
             ]
         )
 
-        C=[1,5,6,1]
+    def test_circuit_vertex_distance(self):
+        C=[2,4,5,2]
 
-        actual = get_dist(10, C, g)
-        expected = 3
+        actual = get_dist(1, C, self.g)
+        expected = 2
 
         self.assertEqual(expected, actual)
 
+    def test_closest_selection(self):
+        C=[1,5,1]
+        k=closest_selection(C, set(self.g.get_vertices()), self.g)
+
+        expected=4
+        self.assertEqual(expected, k)
+        
+    def test_closest_insertion(self):
+        expected=[1,4,5,2,3,1]
+        actual=closest_insertion(self.g)
+
+        self.assertEqual(expected, actual)
 
 if __name__ == "__main__":
     unittest.main()
