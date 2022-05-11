@@ -1,6 +1,24 @@
 # Advanced Algorithms
 Advanced Algorithms assignments ; Master's Degree in Computer Science @ UniPd
 
+## Table of contents
+- [Assignment 1](#assignment-1---minimum-spanning-tree)
+    - [Algorithms](#algorithms)
+    - [Dataset](#dataset)
+    - [Questions](#question-1)
+    - [What to deliver](#what-to-deliver)
+    - [Final remarks](#final-remarks)
+- [Assignment 2](#assignment-2---traveling-salesman-problem)
+    - [Algorithms](#algorithms-1)
+    - [Dataset](#dataset-1)
+    - [Questions](#question-1-1)
+    - [What to deliver](#what-to-deliver-1)
+    - [Final remarks](#final-remarks-1)
+### Useful links
+- [Board 1](https://github.com/nicologreggio/advanced-algorithms/projects/1)
+- [Board 2](https://github.com/nicologreggio/advanced-algorithms/projects/2)
+- [Milestones](https://github.com/nicologreggio/advanced-algorithms/milestones)
+
 ## Contributors
 - [Diletta Rigo](https://github.com/rigodiletta) 
 - [Filippo Fantinato](https://github.com/FilippoFantinato)
