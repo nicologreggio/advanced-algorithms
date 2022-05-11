@@ -1,5 +1,5 @@
 import math
-from tsp.tsp_file import TSPFileFormat
+from tsp.tsp_file import TSPEdgeWeightType
 
 
 class Coordinate:
@@ -46,13 +46,13 @@ class RadianPoint(Coordinate):
         return (self.latitude, self.longitude)
 
 
-filetype_to_point = {
-    TSPFileFormat.GEO: RadianPoint,
-    TSPFileFormat.EUC_2D: SimplePoint,
+edgeweighttype_to_point = {
+    TSPEdgeWeightType.GEO: RadianPoint,
+    TSPEdgeWeightType.EUC_2D: SimplePoint,
 }
 
 
-def init_point(x, y, format: TSPFileFormat) -> Coordinate:
-    Point = filetype_to_point[format]
+def init_point(x, y, type: TSPEdgeWeightType) -> Coordinate:
+    Point = edgeweighttype_to_point[type]
 
     return Point(x, y)

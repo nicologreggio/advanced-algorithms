@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class TSPLabel(Enum):
+class TSPFileLabel(Enum):
     NAME = "NAME"
     TYPE = "TYPE"
     COMMENT = "COMMENT"
@@ -17,7 +17,7 @@ class TSPLabel(Enum):
         return self.value
 
 
-class TSPFileFormat(Enum):
+class TSPEdgeWeightType(Enum):
     GEO = "GEO"
     EUC_2D = "EUC_2D"
 

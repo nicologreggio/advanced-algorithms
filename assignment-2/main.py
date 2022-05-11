@@ -1,7 +1,7 @@
 import argparse
 from enum import Enum
 from graph import graph
-from tsp.tsp_file import TSPLabel
+from tsp.tsp_file import TSPFileLabel
 
 from algorithms.measure_algorithm_performance import measure_algorithm_performance
 
@@ -14,7 +14,7 @@ from algorithms.constructive_heuristics import closest_insertion, random_inserti
 
 
 def error_function(approximate_solution, optimal_solution):
-    return (approximate_solution - optimal_solution) / optimal_solution
+    return round((approximate_solution - optimal_solution) / optimal_solution, 4)
 
 
 def measure_approximation2_algorithm(tsp_graphs, calls):
@@ -55,7 +55,7 @@ def print_measurement_data(tsp_graphs, approximate_solutions, run_times, errors)
     print(hr)
     for i in range(len(approximate_solutions)):
         g, _ = tsp_graphs[i]
-        name = g.get_information(TSPLabel.NAME)
+        name = g.get_information(TSPFileLabel.NAME)
         print(
             str(name).ljust(padding),
             str(approximate_solutions[i]).ljust(padding),
