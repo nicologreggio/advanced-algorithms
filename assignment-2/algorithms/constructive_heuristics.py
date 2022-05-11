@@ -30,10 +30,17 @@ def get_dist(k: Vertex, C: list[int], g: Graph) -> "int":
     """Return the circuit-vertex distance between k and C"""
     assert len(C) > 0, f"Cannot calculate distance between {k} and empty circuit!"
 
-    return min([g.get_weight(h, k) for h in C])
+    # since C is a list here, the start and end of the path will be used twice in the following calculation
+    # but the overhead of converting C to a Set here each time is not worth, 
+    # since neither computation nor result are affected
+    return min([g.get_weight(h, k) for h in C]) 
 
 def closest_selection(C: list[int], G: set[int], g: Graph) -> "Vertex":
-    """Select the node according to the closest insertion heuristic"""
+    """Select the node according to the closest insertion heuristic
+    :param list[int] C: circuit
+    :param set[int] G: set of nodes of the graph g
+    :param Graph g: the graph"""
+
     candidates = G - set(C) # vertices not in the circuit yet
     assert (
         len(candidates) > 0
