@@ -16,6 +16,7 @@ def preorder_visit_recursive(
 
 
 def preorder_visit(g: Graph, r: Vertex) -> "list[Vertex]":
+    """Preorder visit implemented exploiting the DFS algorithm"""
     if g.get_n() == 0:
         return []
 
@@ -24,10 +25,11 @@ def preorder_visit(g: Graph, r: Vertex) -> "list[Vertex]":
 
 
 def approximation2_metric_tsp(g: Graph, r: Vertex = 1) -> "list[Vertex]":
+    """Returns the Hamiltonian path built using the 2-approximation algorithm"""
     if g.get_n() == 0:
         return []
 
-    mst = Graph(prim_priority_queue(g))
+    mst = Graph(prim_priority_queue(g, r))
     H = preorder_visit(mst, r)
 
     return H + [r]
