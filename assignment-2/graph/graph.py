@@ -36,7 +36,7 @@ class Graph:
 
     def get_weight(self, s: Vertex, t: Vertex):
         """returns the weight of the edge (s,t), or None if such edge does not exist"""
-        return self.adj_list[s].get(t)
+        return self.adj_list[s].get(t, None)
 
     def get_n(self):
         """returns the number of nodes"""
@@ -47,6 +47,7 @@ class Graph:
         return len(self.edges)
 
     def get_information(self, key):
+        """returns the information associated to the given key"""
         return self.information.get(key, None)
 
     def add_edge(self, s: Vertex, t: Vertex, w):
@@ -57,6 +58,7 @@ class Graph:
         self.edges.add((s, t, w))
 
     def remove_edge(self, s: Vertex, t: Vertex):
+        """removes the edge from s to t and vice-versa"""
         w = self.adj_list[s][t]
 
         if t in self.adj_list[s]:
@@ -98,13 +100,12 @@ def read_tsp_graph(f) -> "Tuple[Graph, int]":
         s = next(f).strip()
 
     g = Graph([], file_information)
-    for i, s in enumerate(vertices):  # [(0, 32), (1, 54), (2, 55), (3, 56), (4, 57)]
-        for t in vertices[i + 1 :]:  # [54, 55, 56, 57]
+    for i, s in enumerate(vertices):
+        for t in vertices[i + 1 :]:
             p_s = data[s]
             p_t = data[t]
             g.add_edge(s, t, p_s.compute_distance(p_t))
 
-    # TODO: write in the report that the parameter optimal solution has been added to the dataset files
     return (g, int(file_information[TSPFileLabel.OPTIMAL_SOLUTION]))
 
 
