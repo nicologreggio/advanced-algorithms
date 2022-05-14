@@ -1,5 +1,5 @@
 # Advanced Algorithms
-Advanced Algorithms assignments ; Master's Degree in Computer Science @ UniPd
+[Advanced Algorithms assignments](https://github.com/nicologreggio/advanced-algorithms/) ; Master's Degree in Computer Science @ UniPd
 
 ## Table of contents
 - [Assignment 1](#assignment-1---minimum-spanning-tree)
@@ -23,6 +23,11 @@ Advanced Algorithms assignments ; Master's Degree in Computer Science @ UniPd
 - [Diletta Rigo](https://github.com/rigodiletta) 
 - [Filippo Fantinato](https://github.com/FilippoFantinato)
 - [Nicolò Greggio](https://github.com/nicologreggio/)
+
+<br>
+
+---
+<br>
 
 ## Assignment 1 - Minimum Spanning Tree
 ### Algorithms
@@ -70,7 +75,10 @@ The first assigment must be delivered by Monday 25 April, 11:55 pm. Late submiss
 You can implement the algorithms with any programming language you like. Basic data structures such as lists, queues, stacks, sets, dictionaries or maps, provided by the standard libraries of the language, can be used without restrictions. It is not allowed to use libraries that directly provide data structures and algorithms to represent and manipulate graphs, such as NetworkX, JGraphT or similar. 
 Comment the essential parts of the code so that the reader can grasp the ideas that led you to write the code in that way. Comments help to clarify whether a bug is a conceptual error or just a small mistake.
 
+<br>
+
 ---
+<br>
 
 ## Assignment 2 - Traveling Salesman Problem
 
@@ -124,10 +132,10 @@ The following table summarizes some statistics of the dataset:
 
 
 ### Input handling and distance computation
-- GEO format: the x coordinate is the latitude, the y coordinate is the longitude
+- **GEO format:** the x coordinate is the latitude, the y coordinate is the longitude
 convert x, y coordinates to radians using the code specified in the TSPLIB FAQ (Q: I get wrong distances for problems of type GEO.). The formula uses the integer part of x and y (DOES NOT ROUND TO THE NEAREST INTEGER).
 compute the geographic distance between points i and j using the FAQ code for "dij". The code uses the integer part of the distances (does not round).
-- File in EUC_2D format: No coordinate conversions are needed in this case. Calculate the Euclidean distance and round the value to the nearest integer.
+- **File in EUC_2D format:** No coordinate conversions are needed in this case. Calculate the Euclidean distance and round the value to the nearest integer.
 
 ### Question 1
 Run the three algorithms (the two constructive heuristics and 2-approximate) on the 13 graphs of the dataset. Show your results in a table like the one below. The rows in the table correspond to the problem instances. The columns show, for each algorithm, the weight of the approximate solution, the execution time and the relative error calculated as
@@ -151,3 +159,8 @@ The second assigment must be delivered by Monday 16 May, 11:55 pm. Late submissi
 ### Final remarks
 - You can implement the algorithms with any programming language you like. Basic data structures such as lists, queues, stacks, sets, dictionaries or maps, provided by the standard libraries of the language, can be used without restrictions. It is not allowed to use libraries that directly provide data structures and algorithms to represent and manipulate graphs, such as NetworkX, JGraphT or similar. 
 - Comment the essential parts of the code so that the reader can grasp the ideas that led you to write the code in that way. Comments help to clarify whether a bug is a conceptual error or just a small mistake. 
+
+<br>
+
+---
+<br>
