@@ -42,6 +42,10 @@ class Graph:
 
         self.edges.add((s, t, w))
 
+    def get_weight(self, s: Vertex, t: Vertex):
+        """returns the weight of the edge (s,t), or None if such edge does not exist"""
+        return self.adj_list[s].get(t, None)
+
     def remove_edge(self, s: Vertex, t: Vertex):
         if t in self.adj_list[s]:
             del self.adj_list[s][t]
