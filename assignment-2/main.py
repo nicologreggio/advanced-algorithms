@@ -101,7 +101,7 @@ def init_args():
         "--calls",
         type=check_positive,
         help="How many times to run an algorithm",
-        default=100
+        default=100,
     )
 
     return parser
@@ -111,8 +111,6 @@ def main():
     args = init_args().parse_args()
 
     tsp_graphs = graph.read_all(args.directory, args.size)
-
-    print(args.calls)
 
     algorithms = {
         TSPAlgorithms.approximation2_metric_tsp: measure_approximation2_algorithm,
