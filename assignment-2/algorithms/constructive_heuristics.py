@@ -19,14 +19,14 @@ def init_path(g: Graph, s: Vertex) -> "Tuple[list[int], set[int], int, int]":
 
 '''SELECTION: random vs. closest '''   
 
-def random_selection(C: list[int], G: set[int]) -> "Vertex":
+def random_selection(C: "list[int]", G: "set[int]") -> "Vertex":
     """Select the node according to the random insertion heuristic"""
     c = set(C)
     r = random.choice(list(G - c))
     return r    
 
 
-def get_dist(k: Vertex, C: list[int], g: Graph) -> "int":
+def get_dist(k: Vertex, C: "list[int]", g: Graph) -> "int":
     """Return the circuit-vertex distance between k and C"""
     assert len(C) > 0, f"Cannot calculate distance between {k} and empty circuit!"
 
@@ -35,7 +35,7 @@ def get_dist(k: Vertex, C: list[int], g: Graph) -> "int":
     # since neither computation nor result are affected
     return min([g.get_weight(h, k) for h in C]) 
 
-def closest_selection(C: list[int], G: set[int], g: Graph) -> "Vertex":
+def closest_selection(C: "list[int]", G: "set[int]", g: Graph) -> "Vertex":
     """Select the node according to the closest insertion heuristic
     :param list[int] C: circuit
     :param set[int] G: set of nodes of the graph g
@@ -60,7 +60,7 @@ def closest_selection(C: list[int], G: set[int], g: Graph) -> "Vertex":
 
 '''INSERTION: common subroutine'''
 
-def min_triangular(k: Vertex, C: list[int], g: Graph) -> "Tuple[int,int]":
+def min_triangular(k: Vertex, C: "list[int]", g: Graph) -> "Tuple[int,int]":
     """returns weight of the edge that minimizes "triangleTSP" and the position where the new one should be inserted"""
     min_weight = float("inf")
     for n in range(len(C) - 1):
