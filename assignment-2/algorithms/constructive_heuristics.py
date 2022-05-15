@@ -30,7 +30,7 @@ def get_dist(k: Vertex, C: "list[int]", g: Graph) -> "int":
     """Return the circuit-vertex distance between k and C"""
     assert len(C) > 0, f"Cannot calculate distance between {k} and empty circuit!"
 
-    # since C is a list here, the start and end of the path will be used twice in the following calculation
+    # since C is a list here and it represents the current path, the start and end of the path will be used twice in the following calculation
     # but the overhead of converting C to a Set here each time is not worth, 
     # since neither computation nor result are affected
     return min([g.get_weight(h, k) for h in C]) 
