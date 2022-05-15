@@ -12,8 +12,8 @@ def init_path(g: Graph, s: Vertex) -> "Tuple[list[int], set[int], int, int]":
     C = [s, m, s] # build the single node path
     
     # the num. of vertices the circuit will need to have and the initial weight of the path
-    total_len, total_w = g.get_n(), 2 * g.get_weight(s, m) 
-    return C, G, total_len, total_w
+    total_len = g.get_n()
+    return C, G, total_len
     
 
 
@@ -61,7 +61,7 @@ def closest_selection(C: "list[int]", G: "set[int]", g: Graph) -> "Vertex":
 '''INSERTION: common subroutine'''
 
 def min_triangular(k: Vertex, C: "list[int]", g: Graph) -> "Tuple[int,int]":
-    """returns weight of the edge that minimizes "triangleTSP" and the position where the new one should be inserted"""
+    """Returns the position where the new one should be inserted according to minimum "triangleTSP" """
     min_weight = float("inf")
     for n in range(len(C) - 1):
         i = C[n]
@@ -73,35 +73,31 @@ def min_triangular(k: Vertex, C: "list[int]", g: Graph) -> "Tuple[int,int]":
         if tmp < min_weight:
             min_weight = tmp
             pos = n + 1
-    return min_weight, pos
+    return pos
 
 
 
 '''ALGORITHMS'''
 
 def random_insertion(g: Graph, s: Vertex = 1) -> "list[Vertex]":
-    """Return the hamiltonian path built using the random insertion heuristic"""
-    C, G, total_len, total_w=init_path(g, s)
+    """Returns the hamiltonian path built using the random insertion heuristic"""
+    C, G, total_len=init_path(g, s)
 
     while len(C) <= total_len:
         k = random_selection(C, G)
-        w, pos = min_triangular(k, C, g)
+        pos = min_triangular(k, C, g)
         C.insert(pos, k)
-        total_w += w
     
-    # optionally, total_w (the weight of the circuit) may be returned as well
     return C
 
 
 def closest_insertion(g: Graph, s: Vertex = 1) -> "list[Vertex]":
-    """Return the hamiltonian path built using the closest insertion heuristic"""
-    C, G, total_len, total_w=init_path(g, s)
+    """Returns the hamiltonian path built using the closest insertion heuristic"""
+    C, G, total_len=init_path(g, s)
 
     while len(C) <= total_len:
         k = closest_selection(C, G, g)
-        w, pos = min_triangular(k, C, g)
+        pos = min_triangular(k, C, g)
         C.insert(pos, k)
-        total_w += w
 
-    # optionally, total_w (the weight of the circuit) may be returned as well
     return C
