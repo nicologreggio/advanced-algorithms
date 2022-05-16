@@ -20,19 +20,20 @@ two_app_error = [float(x) for x in two_app_error_str]
 
 x = [i for i in range(1,14)]
 
-'''
+
 # RUNTIMES
 plt.scatter(x, random_run_times, label="Random Insertion", marker=".")
 plt.scatter(x, closest_run_times, label="Closest Insertion", marker="|")
 plt.scatter(x, two_app_run_times, label="2-approximation", marker="_")
+plt.yscale("log")
 
 plt.title("Comparison between algorithms runtimes")
 plt.xlabel("Graph")
 plt.ylabel("Time")
 plt.legend()
 plt.show()
-'''
 
+'''
 # ERRORS
 plt.scatter(x, random_error, label="Random Insertion", marker="o")
 plt.scatter(x, closest_error, label="Closest Insertion", marker="v")
@@ -43,5 +44,5 @@ plt.xlabel("Graph")
 plt.ylabel("Relative Error")
 plt.legend()
 plt.show()
-
+'''
 
