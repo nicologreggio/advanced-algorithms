@@ -4,32 +4,42 @@ from enum import Enum
 from graph import graph
 from graph.graph import Graph
 
-from algorithms.measure_asymptotic_behaviour import compute_asymptotic_constant, plot_complexity
+from algorithms.measure_asymptotic_behaviour import (
+    compute_asymptotic_constant,
+    plot_complexity,
+)
 
 # Prim's algorithms
-from algorithms.prim_priority_queue import prim_priority_queue, prim_priority_queue_asymptotic_behaviour
+from algorithms.prim_priority_queue import (
+    prim_priority_queue,
+    prim_priority_queue_asymptotic_behaviour,
+)
 from algorithms.prim_smarter import prim_smarter, prim_smarter_asymptotic_behaviour
+from algorithms.prim_dense_graphs import (
+    prim_dense_graphs,
+    prim_dense_graphs_asymptotic_behaviour,
+)
 
 # Kruskal's algorithms
-from algorithms.kruskal_union_find import kruskal_union_find, kruskal_union_find_asymptotic_behaviour
+from algorithms.kruskal_union_find import (
+    kruskal_union_find,
+    kruskal_union_find_asymptotic_behaviour,
+)
 from algorithms.kruskal_naive import kruskal_naive, kruskal_naive_asymptotic_behaviour
 
 
-def prim_priority_queue_complexity(graphs: 'list[Graph]'):
-    run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
-        graphs,
-        prim_priority_queue,
-        prim_priority_queue_asymptotic_behaviour,
-        10
-    )
-
-    print_complexity_data(
+def prim_priority_queue_complexity(graphs: "list[Graph]"):
+    (
         run_times,
         graphs_dimensions,
         ratios,
         c_estimates,
-        weights
+        weights,
+    ) = compute_asymptotic_constant(
+        graphs, prim_priority_queue, prim_priority_queue_asymptotic_behaviour, 10
     )
+
+    print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights)
 
     C = sum(c_estimates) / len(c_estimates)
 
@@ -42,21 +52,44 @@ def prim_priority_queue_complexity(graphs: 'list[Graph]'):
         "Expected complexity: O(m*log(n))",
     )
 
-def prim_smarter_complexity(graphs: 'list[Graph]'):
-    run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
-        graphs,
-        prim_smarter,
-        prim_smarter_asymptotic_behaviour,
-        10
-    )
 
-    print_complexity_data(
+def prim_dense_graphs_complexity(graphs: "list[Graph]"):
+    (
         run_times,
         graphs_dimensions,
         ratios,
         c_estimates,
-        weights
+        weights,
+    ) = compute_asymptotic_constant(
+        graphs, prim_dense_graphs, prim_dense_graphs_asymptotic_behaviour, 1
     )
+
+    print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights)
+
+    C = sum(c_estimates) / len(c_estimates)
+
+    plot_complexity(
+        C,
+        run_times,
+        graphs_dimensions,
+        prim_dense_graphs_asymptotic_behaviour,
+        "Prim's algorithm smarter version",
+        "Expected complexity: O(m*log(n))",
+    )
+
+
+def prim_smarter_complexity(graphs: "list[Graph]"):
+    (
+        run_times,
+        graphs_dimensions,
+        ratios,
+        c_estimates,
+        weights,
+    ) = compute_asymptotic_constant(
+        graphs, prim_smarter, prim_smarter_asymptotic_behaviour, 10
+    )
+
+    print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights)
 
     C = sum(c_estimates) / len(c_estimates)
 
@@ -69,21 +102,19 @@ def prim_smarter_complexity(graphs: 'list[Graph]'):
         "Expected complexity: O(m*log(n))",
     )
 
-def kruskal_naive_complexity(graphs: 'list[Graph]'):
-    run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
-        graphs,
-        kruskal_naive,
-        kruskal_naive_asymptotic_behaviour,
-        10
-    )
 
-    print_complexity_data(
+def kruskal_naive_complexity(graphs: "list[Graph]"):
+    (
         run_times,
         graphs_dimensions,
         ratios,
         c_estimates,
-        weights
+        weights,
+    ) = compute_asymptotic_constant(
+        graphs, kruskal_naive, kruskal_naive_asymptotic_behaviour, 10
     )
+
+    print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights)
 
     C = sum(c_estimates) / len(c_estimates)
 
@@ -97,21 +128,18 @@ def kruskal_naive_complexity(graphs: 'list[Graph]'):
     )
 
 
-def kruskal_union_find_complexity(graphs: 'list[Graph]'):
-    run_times, graphs_dimensions, ratios, c_estimates, weights = compute_asymptotic_constant(
-        graphs,
-        kruskal_union_find,
-        kruskal_union_find_asymptotic_behaviour,
-        100
-    )
-
-    print_complexity_data(
+def kruskal_union_find_complexity(graphs: "list[Graph]"):
+    (
         run_times,
         graphs_dimensions,
         ratios,
         c_estimates,
-        weights
+        weights,
+    ) = compute_asymptotic_constant(
+        graphs, kruskal_union_find, kruskal_union_find_asymptotic_behaviour, 100
     )
+
+    print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights)
 
     C = sum(c_estimates) / len(c_estimates)
 
@@ -126,28 +154,34 @@ def kruskal_union_find_complexity(graphs: 'list[Graph]'):
 
 
 def print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights):
-    padding=len(str(max(run_times)))+5
-    headers=[str(h).ljust(padding) for h in['Size','Time(ns)','Constant','Ratio', 'MST Weight']]
-    hr=padding*(len(headers)+2) * "-"
-    print('\n\n\n')
-    print(*headers, sep='\t')
+    padding = len(str(max(run_times))) + 5
+    headers = [
+        str(h).ljust(padding)
+        for h in ["Size", "Time(ns)", "Constant", "Ratio", "MST Weight"]
+    ]
+    hr = padding * (len(headers) + 2) * "-"
+    print("\n\n\n")
+    print(*headers, sep="\t")
     print(hr)
     for i in range(len(c_estimates)):
-        print(str(graphs_dimensions[i]).ljust(padding), 
-                str(run_times[i]).ljust(padding), 
-                str(c_estimates[i]).ljust(padding), 
-                str(ratios[i]).ljust(padding), 
-                str(weights[i]).ljust(padding),
-                sep="\t")
+        print(
+            str(graphs_dimensions[i]).ljust(padding),
+            str(run_times[i]).ljust(padding),
+            str(c_estimates[i]).ljust(padding),
+            str(ratios[i]).ljust(padding),
+            str(weights[i]).ljust(padding),
+            sep="\t",
+        )
     print(hr)
 
 
 class MSTAlgorithms(Enum):
-    all = 'all'
-    prim_priority_queue = 'prim_priority_queue'
-    prim_smarter = 'prim_smarter'
-    kruskal_naive = 'kruskal_naive'
-    kruskal_union_find = 'kruskal_union_find'
+    all = "all"
+    prim_priority_queue = "prim_priority_queue"
+    prim_smarter = "prim_smarter"
+    prim_dense_graphs = "prim_dense_graphs"
+    kruskal_naive = "kruskal_naive"
+    kruskal_union_find = "kruskal_union_find"
 
     def __str__(self):
         return self.value
@@ -155,13 +189,16 @@ class MSTAlgorithms(Enum):
 
 def init_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", type=str, required=True, help='Path to the dataset to use')
+    parser.add_argument(
+        "-d", type=str, required=True, help="Path to the dataset to use"
+    )
     parser.add_argument(
         "--alg",
         type=MSTAlgorithms,
         choices=list(MSTAlgorithms),
         required=True,
-        help='Algorithm to execute on the chosen dataset among those available')
+        help="Algorithm to execute on the chosen dataset among those available",
+    )
 
     return parser
 
@@ -174,6 +211,7 @@ def main():
     algorithms = {
         MSTAlgorithms.prim_priority_queue: prim_priority_queue_complexity,
         MSTAlgorithms.prim_smarter: prim_smarter_complexity,
+        MSTAlgorithms.prim_dense_graphs: prim_dense_graphs_complexity,
         MSTAlgorithms.kruskal_naive: kruskal_naive_complexity,
         MSTAlgorithms.kruskal_union_find: kruskal_union_find_complexity,
     }
