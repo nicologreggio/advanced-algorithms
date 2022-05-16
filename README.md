@@ -1,19 +1,33 @@
 # Advanced Algorithms
 [Advanced Algorithms assignments](https://github.com/nicologreggio/advanced-algorithms/) ; Master's Degree in Computer Science @ UniPd
 
-## Table of contents
-- [Assignment 1](#assignment-1---minimum-spanning-tree)
-    - [Algorithms](#algorithms)
-    - [Dataset](#dataset)
-    - [Questions](#question-1)
-    - [What to deliver](#what-to-deliver)
-    - [Final remarks](#final-remarks)
-- [Assignment 2](#assignment-2---traveling-salesman-problem)
-    - [Algorithms](#algorithms-1)
-    - [Dataset](#dataset-1)
-    - [Questions](#question-1-1)
-    - [What to deliver](#what-to-deliver-1)
-    - [Final remarks](#final-remarks-1)
+- [Assignment 1 - Minimum Spanning Tree](#assignment-1---minimum-spanning-tree)
+  * [Algorithms](#algorithms)
+  * [Dataset](#dataset)
+  * [Question 1](#question-1)
+  * [Question 2](#question-2)
+  * [What to deliver](#what-to-deliver)
+  * [Final remarks](#final-remarks)
+- [Assignment 2 - Traveling Salesman Problem](#assignment-2---traveling-salesman-problem)
+  * [General Description](#general-description)
+  * [Algorithms](#algorithms-1)
+  * [Dataset](#dataset-1)
+  * [Input handling and distance computation](#input-handling-and-distance-computation)
+  * [Question 1](#question-1-1)
+  * [Question 2](#question-2-1)
+  * [What to deliver](#what-to-deliver-1)
+  * [How to submit the assigment](#how-to-submit-the-assigment)
+  * [Final remarks](#final-remarks-1)
+- [Assignment 3 - Minimum Cut](#assignment-3---minimum-cut)
+  * [General Description](#general-description-1)
+  * [Dataset](#dataset-2)
+  * [Question 1](#question-1-2)
+  * [Question 2](#question-2-2)
+  * [Question 3](#question-3)
+  * [What to deliver](#what-to-deliver-2)
+  * [How to submit the assigment](#how-to-submit-the-assigment-1)
+  * [Final remarks](#final-remarks-2)
+
 ### Useful links
 - [Board 1](https://github.com/nicologreggio/advanced-algorithms/projects/1)
 - [Board 2](https://github.com/nicologreggio/advanced-algorithms/projects/2)
@@ -164,3 +178,52 @@ The second assigment must be delivered by Monday 16 May, 11:55 pm. Late submissi
 
 ---
 <br>
+
+## Assignment 3 - Minimum Cut
+### General Description
+In this assigment your are asked to compare the performance of two algorithms for the min-cut problem for weighted graphs:
+
+1. Stoer and Wagner's deterministic algorithm 
+2. Karger and Stein's randomized algorithm
+
+### Dataset
+The dataset contains 56 graphs, ranging in size from 10 to 500 vertices, generated randomly with stanford-algs' TestCaseGenerator. Each file describes an undirected graph with positive integer weights using the following format:
+
+[number_of_nodes] [number_of_edges] 
+[one_node_edge_1] [other_node_edge_1] [weight_edge_1] 
+[one_node_edge_2] [other_node_edge_2] [weight_edge_2] 
+[one_node_edge_3] [other_node_edge_3] [weight_edge_3] 
+...
+
+For example, a row "2 3 8874" indicates that there is an edge connecting vertex 2 to vertex 3 with weight 8874. Weights are positive but not necessarily distinct.
+
+### Question 1
+Run the two algorithms you have implemented on the graphs of the dataset. For the Karger e Stein algorithm, use a number of repetitions that guarantees a probability to obtain a global min-cut fo at least 1−1/n.
+
+Measure the execution times of the algorithms and create a graph showing the increase of execution times as the number of vertices in the graph increases. Compare the measured times with the asymptotic complexity of the algorithms. For each problem instance, report the weight of the minimum cut obtained by your code.
+
+You can use a timeout to limit the execution time of large instances if it became too large.
+
+
+### Question 2
+Measure the discovery time of the Karger and Stein algorithm. The discovery time is the instant (in seconds) when the algorithm finds the minimum cost cut. Compare the discovery time with the overall execution time for each of the graphs in the dataset.
+
+### Question 3
+Comment on the results you have obtained: how do the algorithms behave with respect to the various instances? There is an algorithm that is always better than the other? Which algorithm is more efficient? 
+
+### What to deliver
+A brief report on your project. The report must contain: 
+an introductory section with a description of the algorithms and implementation choices you have made;
+explanatory graphs of the results with the answers to the questions; 
+any originality you introduced in the implementation; 
+a concluding section with your comments and your conclusions on results. 
+The source code of the implementation in a single archive file (.zip, .tar.gz, etc.).
+
+### How to submit the assigment
+You can do the assigment either on your own or in a group of up to three people. 
+You have to create a group even if you do the assigment on your own.
+The third assigment must be delivered by Friday June 17, 11:55 pm. Late submissions get a penalty.
+
+### Final remarks
+You can implement the algorithms with any programming language you like. Basic data structures such as lists, queues, stacks, sets, dictionaries or maps, provided by the standard libraries of the language, can be used without restrictions. It is not allowed to use libraries that directly provide data structures and algorithms to represent and manipulate graphs, such as NetworkX, JGraphT or similar. 
+Comment the essential parts of the code so that the reader can grasp the ideas that led you to write the code in that way. Comments help to clarify whether a bug is a conceptual error or just a small mistake. 
