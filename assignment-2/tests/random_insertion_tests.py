@@ -1,4 +1,3 @@
-import io
 import unittest
 from graph.graph import Graph, read_all
 from tsp.tsp_file import TSPFileLabel
