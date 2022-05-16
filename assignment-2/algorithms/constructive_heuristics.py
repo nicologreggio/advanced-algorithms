@@ -4,7 +4,7 @@ from typing import Tuple
 
 '''INITIALIZATION: common subroutine'''
 
-def init_path(g: Graph, s: Vertex) -> "Tuple[list[int], set[int], int, int]":
+def init_path(g: Graph, s: Vertex) -> "Tuple[list[int], set[int], int]":
     """Initialize circuit for constructive heuristics with node s"""
     d = g.get_adj_list_vertex(s)
     m = min(d, key=d.get)
@@ -26,7 +26,7 @@ def random_selection(C: "list[int]", G: "set[int]") -> "Vertex":
     return r    
 
 
-def get_dist(k: Vertex, C: "list[int]", g: Graph) -> "int":
+def get_dist(k: Vertex, C: "list[int]", g: Graph) -> int:
     """Return the circuit-vertex distance between k and C"""
     assert len(C) > 0, f"Cannot calculate distance between {k} and empty circuit!"
 
@@ -60,8 +60,8 @@ def closest_selection(C: "list[int]", G: "set[int]", g: Graph) -> "Vertex":
 
 '''INSERTION: common subroutine'''
 
-def min_triangular(k: Vertex, C: "list[int]", g: Graph) -> "Tuple[int,int]":
-    """Returns the position where the new one should be inserted according to minimum "triangleTSP" """
+def min_triangular(k: Vertex, C: "list[int]", g: Graph) -> int:
+    """Returns the position where the new node k should be inserted in the circuit according to minimum "triangleTSP" """
     min_weight = float("inf")
     for n in range(len(C) - 1):
         i = C[n]
