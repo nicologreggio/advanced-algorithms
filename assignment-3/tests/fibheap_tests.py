@@ -16,7 +16,15 @@ class FibHeapTest(unittest.TestCase):
 
         self.assertEqual(expected_size, current_size)
 
-    def test_maximum(self):
+    def test_maximmum_from_empty(self):
+        pq = FibHeap()
+
+        current = pq.maximum()
+        expected = None
+
+        self.assertEqual(expected, current)
+
+    def test_existing_maximum(self):
         pq = FibHeap()
         elements = [2, 7, 5, 8, 1, 6, 9, -2, 4]
 
@@ -27,6 +35,40 @@ class FibHeapTest(unittest.TestCase):
         expected = FibHeapItem(9, 9)
 
         self.assertEqual(expected, current)
+
+    def test_extract_maximum_from_empty(self):
+        pq = FibHeap()
+
+        current = pq.extract_maximum()
+        expected = None
+        current_size = len(pq)
+        expected_size = 0
+
+        self.assertEqual(expected, current)
+        self.assertEqual(expected_size, current_size)
+
+    def test_extract_maximum_all_elements_plus_one_more(self):
+        pq = FibHeap()
+        elements = [2, 7, 5, 8, 1, 6, 9, -2, 4]
+
+        for el in elements:
+            pq.insert(FibHeapItem(el, el))
+
+        current = []
+        while len(pq):
+            current.append(pq.extract_maximum())
+
+        current.append(pq.extract_maximum())
+
+        expected = [FibHeapItem(el, el) for el in sorted(elements, reverse=True)] + [
+            None
+        ]
+
+        current_size = len(pq)
+        expected_size = 0
+
+        self.assertEqual(expected, current)
+        self.assertEqual(expected_size, current_size)
 
     def test_extract_maximum_one_element(self):
         pq = FibHeap()
