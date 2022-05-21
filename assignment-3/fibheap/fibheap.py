@@ -105,8 +105,8 @@ class FibHeap:
         y.mark = False
 
     def _compute_max_degree(self):
-        FI = 1.61803
-        return math.floor(math.log(self.size, FI))
+        PHI = 1.61803
+        return math.floor(math.log(self.size, PHI))
 
     def __len__(self):
         return self.size
