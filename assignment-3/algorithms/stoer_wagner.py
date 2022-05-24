@@ -1,10 +1,12 @@
 import math
+from typing import Set, Tuple, List
+
 from fibheap.fibheap import FibHeap
 from fibheap.fibheap_item import FibHeapItem
 
 
-def stoer_wagner(g):
-    PQ = FibHeap.make_fibheap()
+def st_min_cut(g: Graph) -> Tuple[Tuple[Set[Vertex], Set[Vertex]], Vertex, Vertex]:
+    PQ = FibHeap()
     keys = {}
     vertices = {}
     in_pq = {}
@@ -31,8 +33,37 @@ def stoer_wagner(g):
                 PQ.increase_key(vertices[v], keys[v])
 
     V = set(g.get_vertices())
-    return ((V - set([t]), t), s, t)
+    return ((V - set([t]), set([t])), s, t)
 
 
-def stoer_wagner_asymptotic_behaviour(n, m):
+def compute_cut_weight(g: Graph, V1: Set[Vertex], t: Set[Vertex]) -> int:
+    w = 0
+
+    (t,) = t
+    for v in V1:
+        w += g.get_weight(v, t)
+
+    return w
+
+
+def stoer_wagner(g: Graph) -> Tuple[Set[Vertex], Set[Vertex]]:
+    assert (g.get_n() < 2, "The graph needs to have at least 2 vertices")
+
+    if g.get_n() == 2:
+        s, t = g.get_vertices()
+        return (set([s]), set([t]))
+    else:
+        C1, s, t = st_min_cut(g)
+        # PROBLEM HERE
+        g.remove_vertex(s)
+        g.remove_vertex(t)
+        C2 = stoer_wagner(g)
+
+        if compute_cut_weight(g, C1) < compute_cut_weight(g, C2):
+            return C1
+        else:
+            return C2
+
+
+def stoer_wagner_asymptotic_behaviour(n: int, m: int) -> int:
     return m * n + n ** 2 * math.log(n)

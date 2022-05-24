@@ -62,7 +62,7 @@ class FibHeap:
     def _cascading_cut(self, x: FibHeapItem):
         z = x.p
         if not z:
-            if x.mark == False:
+            if not x.mark:
                 x.mark = True
             else:
                 self._cut(x, z)
