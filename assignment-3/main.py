@@ -35,7 +35,8 @@ def stoer_wagner_complexity(graphs: "list[Graph]"):
         graphs_dimensions,
         stoer_wagner_asymptotic_behaviour,
         "Stoer-Wagner deterministic algorithm"
-        "Expected complexity: O(???)",
+        "Expected complexity: O(n^2*log(n)) ", 
+        #TODO would be O(mn + n^2*log(n)) but analysis on m/n relation: m = O(n) and then...
     )
 
 def karger_stein_complexity(graphs: "list[Graph]"):
@@ -67,7 +68,7 @@ def karger_stein_complexity(graphs: "list[Graph]"):
     "Runtimes vs. Discovery Times for Karger-Stein algorithm",
     )
 
-# TODO: add something to compute error 
+# TODO: add something to compare the two algorithms, maybe reading from file results, and compute error 
 
 def d_print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights):
     padding = len(str(max(run_times))) + 5

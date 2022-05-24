@@ -45,18 +45,20 @@ def d_compute_asymptotic_constant(
 
 def r_measure_run_time(alg, graph, num_calls):
     gc.disable()
+    discovery_times = []
     start_time = perf_counter_ns()
 
     # return mincut and discovery time 
     for _ in range(num_calls):
         min_cut_weight, discovery_time = alg(graph)
+        discovery_times.append(discovery_time)
 
     end_time = perf_counter_ns()
     gc.enable()
     avg_time = (end_time - start_time) / num_calls
+    avg_disc_time = sum(discovery_times) / num_calls
 
-    return min_cut_weight, avg_time, discovery_time
-
+    return min_cut_weight, avg_time, avg_disc_time
 
 def r_compute_asymptotic_constant(
     graphs, alg, asymptotic_behaviour, num_calls=1000
