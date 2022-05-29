@@ -27,27 +27,19 @@ class FibHeap:
         z = self.max
 
         if z:
-            print("Max: ", z)
-            print("Before adding children: ", self.roots)
             for child in z.children:
-                print(child)
+                z.children.remove(child)
                 self.roots.append(child)
                 child.parent = None
 
-            print("after added children: ", self.roots)
-
             self.roots.remove(z)
             z.children.clean()
-
-            print("After removed children: ", self.roots)
 
             if id(z.right) == id(z):
                 self.max = None
             else:
                 self.max = z.right
                 self._consolidate()
-
-            print("After consolidate: ", self.roots)
 
             self.size -= 1
 
@@ -65,8 +57,6 @@ class FibHeap:
         if x > self.max:
             self.max = x
 
-        print(self.roots)
-
     def _cut(self, x: FibHeapItem, y: FibHeapItem):
         y.children.remove(x)
         self.roots.append(x)
@@ -74,8 +64,8 @@ class FibHeap:
         x.mark = False
 
     def _cascading_cut(self, x: FibHeapItem):
-        z = x.p
-        if not z:
+        z = x.parent
+        if z:
             if not x.mark:
                 x.mark = True
             else:
@@ -86,11 +76,10 @@ class FibHeap:
         max_degree = self._compute_max_degree()
         A = [None] * max_degree
 
-        i = 0
         w = self.roots.nil.right
-        while i <= len(self.roots):
-            print(w, self.roots.nil)
+        while id(w) != id(self.roots.nil):
             x = w
+            next_node = w.right
             d = x.get_degree()
             while A[d]:
                 y = A[d]
@@ -100,8 +89,7 @@ class FibHeap:
                 A[d] = None
                 d += 1
             A[d] = x
-            i += 1
-            w = w.right
+            w = next_node
 
         self.max = None
 

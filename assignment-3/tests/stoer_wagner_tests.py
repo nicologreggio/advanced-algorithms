@@ -1,6 +1,6 @@
 import unittest
 from graph.graph import Graph
-from algorithms.stoer_wagner import st_min_cut
+from algorithms.stoer_wagner import st_min_cut, stoer_wagner
 
 
 class StoerWagnerTest(unittest.TestCase):
@@ -19,7 +19,26 @@ class StoerWagnerTest(unittest.TestCase):
         )
 
         current = st_min_cut(g)
-        expected = ((set([1, 3, 5, 6, 4, 8, 10, 7]), set([2])), 2, 7)
+        expected = ((set([1, 3, 5, 6, 4, 8, 10, 7]), set([2])), 7, 2)
+
+        self.assertEqual(expected, current)
+
+    def test_stoer_wagner(self):
+        g = Graph(
+            [
+                (1, 3, 281),
+                (1, 5, 291),
+                (6, 4, 70),
+                (3, 8, 308),
+                (6, 8, 20),
+                (8, 10, 180),
+                (3, 7, 20),
+                (7, 2, 45),
+            ]
+        )
+
+        current = stoer_wagner(g)
+        expected = ((set([1, 3, 5, 6, 4, 8, 10, 7]), set([2])), 7, 2)
 
         self.assertEqual(expected, current)
 

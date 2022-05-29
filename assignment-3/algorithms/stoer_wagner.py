@@ -1,8 +1,10 @@
 import math
-from typing import Set, Tuple, List
+from typing import Set, Tuple
 
 from fibheap.fibheap import FibHeap
 from fibheap.fibheap_item import FibHeapItem
+
+from graph.graph import Graph, Vertex
 
 
 def st_min_cut(g: Graph) -> Tuple[Tuple[Set[Vertex], Set[Vertex]], Vertex, Vertex]:
@@ -25,7 +27,7 @@ def st_min_cut(g: Graph) -> Tuple[Tuple[Set[Vertex], Set[Vertex]], Vertex, Verte
         u = PQ.extract_maximum()
         in_pq[u.name] = False
         s = t
-        t = u
+        t = u.name
 
         for u, v, w in E:
             if in_pq[v]:
@@ -47,19 +49,20 @@ def compute_cut_weight(g: Graph, V1: Set[Vertex], t: Set[Vertex]) -> int:
 
 
 def stoer_wagner(g: Graph) -> Tuple[Set[Vertex], Set[Vertex]]:
-    assert (g.get_n() < 2, "The graph needs to have at least 2 vertices")
+    # assert g.get_n() < 2, "The graph needs to have at least 2 vertices"
 
     if g.get_n() == 2:
         s, t = g.get_vertices()
         return (set([s]), set([t]))
     else:
         C1, s, t = st_min_cut(g)
-        # PROBLEM HERE
-        g.remove_vertex(s)
-        g.remove_vertex(t)
+        g = copy.deepcopy g.merge_vertices(s, t)
         C2 = stoer_wagner(g)
 
-        if compute_cut_weight(g, C1) < compute_cut_weight(g, C2):
+        print(C1)
+        print(C2)
+
+        if compute_cut_weight(g, *C1) < compute_cut_weight(g, *C2):
             return C1
         else:
             return C2

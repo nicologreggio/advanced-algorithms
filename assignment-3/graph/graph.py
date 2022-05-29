@@ -52,18 +52,47 @@ class Graph:
         self.edges.add((s, t, w))
         self.edges.add((t, s, w))
 
+    def merge_vertices(self, s: Vertex, t: Vertex):
+        s_adj_list = self.adj_list.pop(s)
+        t_adj_list = self.adj_list.pop(t)
+
+        for v, w in s_adj_list.items():
+            if v != t:
+                del self.adj_list[v][s]
+            self.edges.remove((v, s, w))
+            self.edges.remove((s, v, w))
+
+        for v, w in t_adj_list.items():
+            if v != s:
+                del self.adj_list[v][t]
+                self.edges.remove((v, t, w))
+                self.edges.remove((t, v, w))
+
+        new_vertex = s
+
+        for v, w in s_adj_list.items():
+            if t != v:
+                self.add_edge(v, new_vertex, w)
+
+        for v, w in t_adj_list.items():
+            if s != v:
+                self.add_edge(v, new_vertex, w)
+
+        print(self.get_vertices(), s, t)
+
     def remove_edge(self, s: Vertex, t: Vertex):
         """removes the edge from s to t and vice-versa"""
-        w = self.adj_list[s][t]
+        w = self.adj_list[s].get(t, None)
 
-        if t in self.adj_list[s]:
-            del self.adj_list[s][t]
+        if w != None:
+            if t in self.adj_list[s]:
+                del self.adj_list[s][t]
 
-        if s in self.adj_list[t]:
-            del self.adj_list[t][s]
+            if s in self.adj_list[t]:
+                del self.adj_list[t][s]
 
-        self.edges.discard((s, t, w))
-        self.edges.discard((t, s, w))
+            self.edges.discard((s, t, w))
+            self.edges.discard((t, s, w))
 
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())

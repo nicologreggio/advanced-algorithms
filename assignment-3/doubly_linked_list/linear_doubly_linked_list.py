@@ -30,8 +30,8 @@ class LinearDoublyLinkedList(DoublyLinkedList):
         if right:
             right.left = left
 
-        # x.right = None
-        # x.left = None
+        x.right = None
+        x.left = None
 
         self.size -= 1
 

@@ -27,8 +27,8 @@ class CircularDoublyLinkedList(DoublyLinkedList):
         x.left.right = x.right
         x.right.left = x.left
 
-        # x.left = None
-        # x.right = None
+        x.left = None
+        x.right = None
 
         self.size -= 1
 
