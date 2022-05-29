@@ -16,7 +16,7 @@ class FibHeapTest(unittest.TestCase):
 
         self.assertEqual(expected_size, current_size)
 
-    def test_maximmum_from_empty(self):
+    def test_maximum_from_empty(self):
         pq = FibHeap()
 
         current = pq.maximum()
@@ -56,7 +56,8 @@ class FibHeapTest(unittest.TestCase):
 
         current = []
         while len(pq):
-            current.append(pq.extract_maximum())
+            m = pq.extract_maximum()
+            current.append(m)
 
         current.append(pq.extract_maximum())
 
@@ -138,9 +139,12 @@ class FibHeapTest(unittest.TestCase):
             if key != elements[name]:
                 pq.increase_key(items[name], key)
 
+        print("Incremented")
+
         current = []
         while len(pq):
-            current.append(pq.extract_maximum())
+            m = pq.extract_maximum()
+            current.append(m)
 
         expected = [
             FibHeapItem(name, key)
