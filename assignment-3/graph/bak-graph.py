@@ -9,11 +9,13 @@ GRAPH_FILE_EXTENSION = "txt"
 Edge = NewType("Edge", Tuple[int, int, int])
 Vertex = NewType("Vertex", int)
 
-# TODO: review all operations @nicolo
+
 class Graph:
-    def __init__(self, edges: "list[Edge]" = []):
-        self.adj_list = defaultdict(lambda: defaultdict(list))
+    def __init__(self, edges: "list[Edge]" = [], information={}):
+        
+        self.adj_list = defaultdict(dict)
         self.edges = set()
+        self.information = information
 
         for s, t, w in edges:
             self.add_edge(s, t, w)
@@ -32,8 +34,7 @@ class Graph:
 
     def get_weight(self, s: Vertex, t: Vertex):
         """returns the weight of the edge (s,t), or None if such edge does not exist"""
-        print(f"Weight from {s} to {t}: {self.adj_list[s][t]}")
-        return sum(self.adj_list[s][t])
+        return self.adj_list[s].get(t, None)
 
     def get_n(self):
         """returns the number of nodes"""
@@ -49,27 +50,10 @@ class Graph:
 
     def add_edge(self, s: Vertex, t: Vertex, w):
         """adds an edge between the vertices s and t with weight w"""
-
-        self.adj_list[s][t].append(w)
-        self.adj_list[t][s].append(w)
+        self.adj_list[s][t] = w
+        self.adj_list[t][s] = w
 
         self.edges.add((s, t, w))
-        self.edges.add((t, s, w))
-
-    def remove_edge(self, s: Vertex, t: Vertex):
-        """removes the edge from s to t and vice-versa"""
-        ws = self.adj_list[s].get(t, None)
-
-        if ws != None:
-            self.adj_list[s].pop(t, None)
-            self.adj_list[t].pop(s, None)
-
-            for w in ws:
-                self.edges.discard((s, t, w))
-                self.edges.discard((t, s, w))
-
-    def __repr__(self):
-        return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
 
     def remove_edge(self, s: Vertex, t: Vertex):
         """removes the edge from s to t and vice-versa"""
@@ -87,10 +71,12 @@ class Graph:
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
 
-# TODO: review from now on @diletta
+
 def read_graph(f):
     lines = f.readlines()
+    n, m = list(map(int, lines[0].split()))
 
+    # g = Graph(n, m)
     g=Graph()
 
     for l in lines[1:]:
