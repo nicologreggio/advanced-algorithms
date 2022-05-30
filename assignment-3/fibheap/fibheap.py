@@ -1,5 +1,4 @@
 import math
-from turtle import right
 from fibheap.fibheap_item import FibHeapItem
 from doubly_linked_list.circular_doubly_linked_list import CircularDoublyLinkedList
 
@@ -8,7 +7,6 @@ class FibHeap:
     def __init__(self):
         self.roots = CircularDoublyLinkedList()
         self.max = None
-
         self.size = 0
 
     def insert(self, x: FibHeapItem):
