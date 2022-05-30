@@ -31,6 +31,7 @@
 ### Useful links
 - [Board 1](https://github.com/nicologreggio/advanced-algorithms/projects/1)
 - [Board 2](https://github.com/nicologreggio/advanced-algorithms/projects/2)
+- [Board 3](https://github.com/nicologreggio/advanced-algorithms/projects/3)
 - [Milestones](https://github.com/nicologreggio/advanced-algorithms/milestones)
 
 ## Contributors

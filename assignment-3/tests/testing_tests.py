@@ -18,7 +18,7 @@ class TestingTest(unittest.TestCase):
     #         ]
     #     )
 
-    def test_circuit_vertex_distance(self):
+    def tester_test(self):
         self.assertTrue(True)
 
 if __name__ == "__main__":
