@@ -17,6 +17,12 @@ class DoublyLinkedList:
     def clean(self):
         pass
 
+    def to_list(self):
+        l = []
+        for item in self:
+            l.append(item)
+        return l
+
     def __iter__(self):
         pass
 
@@ -32,5 +38,5 @@ class DoublyLinkedList:
     def __len__(self):
         return self.size
 
-    # def __str__(self):
-    #     return f"{self.to_list()}"
+    def __str__(self):
+        return f"{self.to_list()}"

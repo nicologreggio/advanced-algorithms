@@ -139,8 +139,6 @@ class FibHeapTest(unittest.TestCase):
             if key != elements[name]:
                 pq.increase_key(items[name], key)
 
-        print("Incremented")
-
         current = []
         while len(pq):
             m = pq.extract_maximum()
@@ -151,6 +149,81 @@ class FibHeapTest(unittest.TestCase):
             for name, key in sorted(
                 new_elements.items(), key=lambda el: el[1], reverse=True
             )
+        ]
+
+        self.assertEqual(expected, current)
+
+    def test_all_operations_many_times(self):
+        pq = FibHeap()
+        elements = {2: 2, 7: 7, 5: 5, 8: 8, 1: 1, 6: 6, 9: 9, 3: 3, 4: 4}
+        increased_elements = {2: 10, 1: 20, 6: 9, 9: 11, 4: 12, 7: 9}
+        new_elements = {11: 1, 12: 50, 15: 7}
+        increased_new_elements = {11: 80, 15: 51, 3: 81}
+        items = {}
+
+        def add(key, value):
+            item = FibHeapItem(key, value)
+            items[key] = item
+            pq.insert(item)
+
+        def increase(key, value):
+            item = items[key]
+            if value != None:
+                pq.increase_key(item, value)
+
+        current = []
+        for _ in range(2):
+            for key, value in elements.items():
+                add(key, elements[key])
+
+            while len(pq) == len(elements) // 2:
+                current.append(pq.extract_maximum())
+
+            for key, value in increased_elements.items():
+                increase(key, value)
+
+            current.append(pq.extract_maximum())
+
+            for key, value in new_elements.items():
+                add(key, value)
+
+            current.append(pq.extract_maximum())
+
+            for key, value in increased_new_elements.items():
+                increase(key, value)
+
+            while len(pq):
+                current.append(pq.extract_maximum())
+
+            current.append(pq.extract_maximum())
+
+        expected = [
+            FibHeapItem(1, 20),
+            FibHeapItem(12, 50),
+            FibHeapItem(3, 81),
+            FibHeapItem(11, 80),
+            FibHeapItem(15, 51),
+            FibHeapItem(4, 12),
+            FibHeapItem(9, 11),
+            FibHeapItem(2, 10),
+            FibHeapItem(7, 9),
+            FibHeapItem(6, 9),
+            FibHeapItem(8, 8),
+            FibHeapItem(5, 5),
+            None,
+            FibHeapItem(1, 20),
+            FibHeapItem(12, 50),
+            FibHeapItem(3, 81),
+            FibHeapItem(11, 80),
+            FibHeapItem(15, 51),
+            FibHeapItem(4, 12),
+            FibHeapItem(9, 11),
+            FibHeapItem(2, 10),
+            FibHeapItem(7, 9),
+            FibHeapItem(6, 9),
+            FibHeapItem(8, 8),
+            FibHeapItem(5, 5),
+            None,
         ]
 
         self.assertEqual(expected, current)

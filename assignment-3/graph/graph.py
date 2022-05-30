@@ -9,7 +9,7 @@ Vertex = NewType("Vertex", int)
 
 class Graph:
     def __init__(self, edges: "list[Edge]" = [], information={}):
-        self.adj_list = defaultdict(dict)
+        self.adj_list = defaultdict(lambda: defaultdict(list))
         self.edges = set()
         self.information = information
 
@@ -30,7 +30,8 @@ class Graph:
 
     def get_weight(self, s: Vertex, t: Vertex):
         """returns the weight of the edge (s,t), or None if such edge does not exist"""
-        return self.adj_list[s].get(t, None)
+        print(f"Weight from {s} to {t}: {self.adj_list[s][t]}")
+        return sum(self.adj_list[s][t])
 
     def get_n(self):
         """returns the number of nodes"""
@@ -46,53 +47,65 @@ class Graph:
 
     def add_edge(self, s: Vertex, t: Vertex, w):
         """adds an edge between the vertices s and t with weight w"""
-        self.adj_list[s][t] = w
-        self.adj_list[t][s] = w
+        self.adj_list[s][t].append(w)
+        self.adj_list[t][s].append(w)
 
         self.edges.add((s, t, w))
         self.edges.add((t, s, w))
 
     def merge_vertices(self, s: Vertex, t: Vertex):
+        print("Merging: ", s, t)
+
         s_adj_list = self.adj_list.pop(s)
         t_adj_list = self.adj_list.pop(t)
 
-        for v, w in s_adj_list.items():
+        for v, ws in s_adj_list.items():
             if v != t:
                 del self.adj_list[v][s]
-            self.edges.remove((v, s, w))
-            self.edges.remove((s, v, w))
+            for w in ws:
+                self.edges.remove((v, s, w))
+                self.edges.remove((s, v, w))
 
-        for v, w in t_adj_list.items():
+        for v, ws in t_adj_list.items():
             if v != s:
                 del self.adj_list[v][t]
-                self.edges.remove((v, t, w))
-                self.edges.remove((t, v, w))
+                for w in ws:
+                    self.edges.remove((v, t, w))
+                    self.edges.remove((t, v, w))
+
+        s_adj_list.pop(t)
+        t_adj_list.pop(s)
 
         new_vertex = s
 
-        for v, w in s_adj_list.items():
-            if t != v:
+        print(f"Adj list {s}: ", s_adj_list)
+        print(f"Adj list {t}: ", t_adj_list)
+
+        for v, ws in s_adj_list.items():
+            for w in ws:
+                print("Adding: ", (v, new_vertex, w))
                 self.add_edge(v, new_vertex, w)
 
-        for v, w in t_adj_list.items():
-            if s != v:
+        for v, ws in t_adj_list.items():
+            for w in ws:
+                w_from_s = sum(s_adj_list.get(v, []))
+                print("Adding: ", (v, new_vertex, w + w_from_s))
                 self.add_edge(v, new_vertex, w)
 
-        print(self.get_vertices(), s, t)
+        print("Vertices: ", self.get_vertices())
+        print("Edges: ", self.get_edges())
 
     def remove_edge(self, s: Vertex, t: Vertex):
         """removes the edge from s to t and vice-versa"""
-        w = self.adj_list[s].get(t, None)
+        ws = self.adj_list[s].get(t, None)
 
-        if w != None:
-            if t in self.adj_list[s]:
-                del self.adj_list[s][t]
+        if ws != None:
+            self.adj_list[s].pop(t, None)
+            self.adj_list[t].pop(s, None)
 
-            if s in self.adj_list[t]:
-                del self.adj_list[t][s]
-
-            self.edges.discard((s, t, w))
-            self.edges.discard((t, s, w))
+            for w in ws:
+                self.edges.discard((s, t, w))
+                self.edges.discard((t, s, w))
 
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())

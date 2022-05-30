@@ -27,8 +27,8 @@ class CircularDoublyLinkedList(DoublyLinkedList):
         x.left.right = x.right
         x.right.left = x.left
 
-        x.left = None
-        x.right = None
+        # x.left = None
+        # x.right = None
 
         self.size -= 1
 
@@ -37,14 +37,6 @@ class CircularDoublyLinkedList(DoublyLinkedList):
         self.nil.right = self.nil
         self.size = 0
 
-    def to_list(self):
-        l = []
-        for item in self:
-            l.append(item)
-        return l
-
     def __iter__(self):
         return CircularDoublyLinkedListIterator(self)
 
-    def __str__(self):
-        return self.to_list().__str__()

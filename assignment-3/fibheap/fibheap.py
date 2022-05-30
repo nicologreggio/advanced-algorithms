@@ -35,7 +35,8 @@ class FibHeap:
             self.roots.remove(z)
             z.children.clean()
 
-            if id(z.right) == id(z):
+            id_nil = id(self.roots.nil)
+            if id(z.left) == id_nil and id(z.right) == id_nil:
                 self.max = None
             else:
                 self.max = z.right
@@ -76,10 +77,7 @@ class FibHeap:
         max_degree = self._compute_max_degree()
         A = [None] * max_degree
 
-        w = self.roots.nil.right
-        while id(w) != id(self.roots.nil):
-            x = w
-            next_node = w.right
+        for x in self.roots:
             d = x.get_degree()
             while A[d]:
                 y = A[d]
@@ -89,7 +87,21 @@ class FibHeap:
                 A[d] = None
                 d += 1
             A[d] = x
-            w = next_node
+
+        # w = self.roots.nil.right
+        # while id(w) != id(self.roots.nil):
+        #     x = w
+        #     next_node = w.right
+        #     d = x.get_degree()
+        #     while A[d]:
+        #         y = A[d]
+        #         if x < y:
+        #             x, y = y, x
+        #         self._fib_heap_link(y, x)
+        #         A[d] = None
+        #         d += 1
+        #     A[d] = x
+        #     w = next_node
 
         self.max = None
 

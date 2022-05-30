@@ -3,6 +3,7 @@ from typing import Set, Tuple
 
 from fibheap.fibheap import FibHeap
 from fibheap.fibheap_item import FibHeapItem
+import copy
 
 from graph.graph import Graph, Vertex
 
@@ -56,13 +57,14 @@ def stoer_wagner(g: Graph) -> Tuple[Set[Vertex], Set[Vertex]]:
         return (set([s]), set([t]))
     else:
         C1, s, t = st_min_cut(g)
-        g = copy.deepcopy g.merge_vertices(s, t)
+        g.merge_vertices(s, t)
+        g = copy.deepcopy(g)
         C2 = stoer_wagner(g)
 
-        print(C1)
-        print(C2)
+        print("Cut 1: ", C1, compute_cut_weight(g, *C1))
+        print("Cut 2: ", C2, compute_cut_weight(g, *C2))
 
-        if compute_cut_weight(g, *C1) < compute_cut_weight(g, *C2):
+        if compute_cut_weight(g, *C1) <= compute_cut_weight(g, *C2):
             return C1
         else:
             return C2
