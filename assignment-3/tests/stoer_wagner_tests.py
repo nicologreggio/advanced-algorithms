@@ -95,14 +95,7 @@ class StoerWagnerTest(unittest.TestCase):
         self.assertEqual(expected, current)
 
     def test_st_mincut_graph_with_same_weight(self):
-        g = Graph(
-            [
-                (1, 2, 1),
-                (2, 3, 1),
-                (3, 4, 1),
-                (2, 4, 1),
-            ]
-        )
+        g = Graph([(1, 2, 1), (2, 3, 1), (3, 4, 1), (2, 4, 1)])
 
         current = st_min_cut(g)
         expected = ((set([1, 2, 3]), set([4])), 3, 4)
@@ -120,7 +113,7 @@ class StoerWagnerTest(unittest.TestCase):
         )
 
         current = stoer_wagner(g)
-        expected = (set([1, 2, 4]), set([3]))
+        expected = (set([2, 3, 4]), set([1]))
 
         self.assertEqual(expected, current)
 

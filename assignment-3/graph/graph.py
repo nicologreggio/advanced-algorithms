@@ -12,7 +12,9 @@ Vertex = NewType("Vertex", int)
 class Graph:
     def __init__(self, edges: "list[Edge]" = []):
         self.adj_list = defaultdict(lambda: defaultdict(list))
-        self.edges = [] # TODO: eventually adopt multiset (https://pypi.org/project/multiset/)
+        self.edges = (
+            []
+        )  # TODO: eventually adopt multiset (https://pypi.org/project/multiset/)
 
         for s, t, w in edges:
             self.add_edge(s, t, w)
@@ -51,8 +53,7 @@ class Graph:
         self.adj_list[s][t].append(w)
         self.adj_list[t][s].append(w)
 
-        self.edges.add((s, t, w))
-        self.edges.add((t, s, w))
+        self.edges.append((s, t, w))
 
     def remove_edge(self, s: Vertex, t: Vertex):
         """removes the edge from s to t and vice-versa"""
@@ -69,11 +70,12 @@ class Graph:
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
 
+
 # TODO: review from now on @diletta
 def read_graph(f):
     lines = f.readlines()
 
-    g=Graph()
+    g = Graph()
 
     for l in lines[1:]:
         l = list(map(int, l.split()))
@@ -95,4 +97,3 @@ def read_all(directory_path, size=None):
 def read_sort_files(directory_path, size=None):
     files = sorted(glob(f"{directory_path}/*.{GRAPH_FILE_EXTENSION}"))
     return files if not size else files[:size]
-
