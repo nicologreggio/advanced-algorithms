@@ -1,8 +1,9 @@
 from time import perf_counter_ns
 import matplotlib.pyplot as plt
 import gc
+import copy
 
-# from algorithms... import compute_cut_weight 
+from algorithms.stoer_wagner import compute_cut_weight 
 
 # ANALYSIS FOR DETERMINISTIC ALGORITHM 
 
@@ -11,7 +12,8 @@ def d_measure_run_time(alg, graph, num_calls):
     start_time = perf_counter_ns()
 
     for _ in range(num_calls):
-        min_cut = alg(graph)
+        g = copy.deepcopy(graph)
+        min_cut = alg(g)
     end_time = perf_counter_ns()
     gc.enable()
     avg_time = (end_time - start_time) / num_calls
@@ -53,8 +55,8 @@ def r_measure_run_time(alg, graph, num_calls):
 
     # return mincut and discovery time 
     for _ in range(num_calls):
-        min_cut, discovery_time = alg(graph)
-        # TODO: keep the maximum cut to ensure bound on error?
+        g = copy.deepcopy(graph)
+        min_cut, discovery_time = alg(g)
         discovery_times.append(discovery_time)
 
     end_time = perf_counter_ns()

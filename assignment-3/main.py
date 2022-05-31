@@ -2,7 +2,7 @@ import argparse
 from enum import Enum
 
 #from graph import graph
-#from graph.graph import Graph
+from graph.graph import Graph, read_all
 
 from algorithms.analysis import (
     r_compute_asymptotic_constant,
@@ -11,18 +11,16 @@ from algorithms.analysis import (
     plot_run_vs_discovery,
 )
 
-# from algorithms. +++ import +++
+from algorithms.stoer_wagner import stoer_wagner, stoer_wagner_asymptotic_behaviour
+from algorithms.karger_stein import karger_stein, karger_stein_asymptotic_behaviour
 
-def error_function(approximate_solution, optimal_solution):
-    return round((approximate_solution - optimal_solution) / optimal_solution, 4)
-
-def stoer_wagner_complexity(graphs: "list[Graph]"):
+def stoer_wagner_complexity(graphs: "list[Graph]", num_calls):
     (run_times, 
     graphs_dimensions, 
     ratios, 
     c_estimates, 
     weights
-    ) = d_compute_asymptotic_constant(graphs, stoer_wagner_algorithm, stoer_wagner_asymptotic_behaviour, 10)
+    ) = d_compute_asymptotic_constant(graphs, stoer_wagner, stoer_wagner_asymptotic_behaviour, num_calls)
 
     print("Stoer-Wagner algorithm")
     d_print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights)
@@ -39,14 +37,14 @@ def stoer_wagner_complexity(graphs: "list[Graph]"):
         #TODO would be O(mn + n^2*log(n)) but analysis on m/n relation: m = O(n) and then...
     )
 
-def karger_stein_complexity(graphs: "list[Graph]"):
+def karger_stein_complexity(graphs: "list[Graph]", num_calls):
     (run_times, 
     discovery_times, 
     graphs_dimensions, 
     ratios, 
     c_estimates, 
     weights
-    ) = r_compute_asymptotic_constant(graphs, karger_stein_algorithm, karger_stein_asymptotic_behaviour, 10)
+    ) = r_compute_asymptotic_constant(graphs, karger_stein, karger_stein_asymptotic_behaviour, num_calls)
 
     print("Karger-Stein algorithm")
     r_print_complexity_data(run_times, discovery_times, graphs_dimensions, ratios, c_estimates, weights)
@@ -160,7 +158,7 @@ def init_args():
 def main():
     args = init_args().parse_args()
 
-    mincut_graphs = graph.read_all(args.directory, args.size)
+    mincut_graphs = read_all(args.directory, args.size)
 
     algorithms = {
         MCAlgorithms.stoer_wagner: stoer_wagner_complexity,

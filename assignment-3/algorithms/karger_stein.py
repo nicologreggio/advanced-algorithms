@@ -2,6 +2,8 @@ import math
 from time import perf_counter_ns
 from typing import Set, Tuple
 
+from graph.graph import Graph, Vertex
+from algorithms.stoer_wagner import compute_cut_weight
 
 def karger_stein(g: Graph) -> Tuple[Tuple[Set[Vertex], Set[Vertex]], int]:
     k = math.log(g.get_n(), 2) ** 2
