@@ -54,6 +54,7 @@ class Graph:
         self.adj_list[t][s].append(w)
 
         self.edges.append((s, t, w))
+        self.edges.append((t, s, w))
 
     def remove_edge(self, s: Vertex, t: Vertex):
         """removes the edge from s to t and vice-versa"""
