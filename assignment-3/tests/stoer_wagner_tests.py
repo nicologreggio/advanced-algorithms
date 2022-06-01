@@ -98,7 +98,7 @@ class StoerWagnerTest(unittest.TestCase):
         g = Graph([(1, 2, 1), (2, 3, 1), (3, 4, 1), (2, 4, 1)])
 
         current = st_min_cut(g)
-        expected = ((set([1, 2, 3]), set([4])), 3, 4)
+        expected = ((set([1, 2, 4]), set([3])), 4, 3)
 
         self.assertEqual(expected, current)
 
@@ -130,7 +130,7 @@ class StoerWagnerTest(unittest.TestCase):
         )
 
         current = st_min_cut(g)
-        expected = (({1, 3, 4}, {2}), 3, 2)
+        expected = (({1, 2, 4}, {3}), 4, 3)
 
         self.assertEqual(expected, current)
 
