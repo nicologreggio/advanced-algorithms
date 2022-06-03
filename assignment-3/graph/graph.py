@@ -1,6 +1,9 @@
 from collections import defaultdict
+from functools import reduce
 from glob import glob
-from typing import NewType, Tuple
+from random import random
+from typing import NewType, Tuple, final
+from math import ceil, sqrt
 import heapq as hq
 
 GRAPH_FILE_EXTENSION = "txt"
@@ -16,8 +19,20 @@ class Graph:
             []
         )  # TODO: eventually adopt multiset (https://pypi.org/project/multiset/)
 
+        self.weighted_degree = {}
+
         for s, t, w in edges:
             self.add_edge(s, t, w)
+
+        # self.weighted_degree = {
+        #     i: self.__calculate_weighted_degree(i) for i in self.get_vertices()
+        # }
+
+    def __calculate_weighted_degree(self, v: Vertex):
+        """return the weighted degree of the vertex v"""
+        return reduce(
+            lambda a, b: a + sum(b), [x for x in self.adj_list[v].values()], 0
+        )
 
     def get_vertices(self):
         """returns the list of vertices"""
@@ -31,10 +46,16 @@ class Graph:
         """returns the adjaceny list of v"""
         return self.adj_list.get(v, None)
 
+    def get_weighted_degree_list(self):
+        """return the weighted degree list"""
+        return self.weighted_degree
+
     def get_weight(self, s: Vertex, t: Vertex):
         """returns the weight of the edge (s,t), or None if such edge does not exist"""
         print(f"Weight from {s} to {t}: {self.adj_list[s][t]}")
-        return sum(self.adj_list[s][t])
+        return sum(
+            self.adj_list[s][t]
+        )  # TODO: is it correct? I guess so, but we cannot discriminate edges when getting weights or looking up for them right? we just know they're there
 
     def get_n(self):
         """returns the number of nodes"""
@@ -44,10 +65,6 @@ class Graph:
         """returns the number of edges"""
         return len(self.edges)
 
-    def get_information(self, key):
-        """returns the information associated to the given key"""
-        return self.information.get(key, None)
-
     def add_edge(self, s: Vertex, t: Vertex, w):
         """adds an edge between the vertices s and t with weight w"""
         self.adj_list[s][t].append(w)
@@ -55,6 +72,8 @@ class Graph:
 
         self.edges.append((s, t, w))
         self.edges.append((t, s, w))
+        self.weighted_degree[s] = self.__calculate_weighted_degree(s)
+        self.weighted_degree[t] = self.__calculate_weighted_degree(t)
 
     def remove_edge(self, s: Vertex, t: Vertex):
         """removes the edge from s to t and vice-versa"""
@@ -68,9 +87,79 @@ class Graph:
                 self.edges.discard((s, t, w))
                 self.edges.discard((t, s, w))
 
+        self.weighted_degree[s] = self.__calculate_weighted_degree(s)
+        self.weighted_degree[t] = self.__calculate_weighted_degree(t)
+
+    def contract_edge(self, u: Vertex, v: Vertex):
+        """Contracts the (u,v) edge"""
+        self.remove_edge(u,v)
+        for i in self.get_vertices():
+            if i!=u and i!=v:
+                self.weighted_degree[i]=self.__calculate_weighted_degree(i)
+
+    def contract(self, k: int):
+        """Contraction algorithms, unlike theory does not return anything because it side effects on instance graph"""
+        for i in range(1, self.get_n()-k):
+            u,v=edge_select(self)
+            self.contract_edge(u,v)
+
+    def recursive_contract(self):
+        n=self.get_n()
+        if n<=6:
+            self.contract(2)
+            return self.edges[0][2] #they say "return weight of the only edge"...
+        t=ceil(n/sqrt(2)+1)
+
+        w=[]
+        for i in range(1,2):
+            self.contract(t)
+            w.append(self.recursive_contract)
+        
+        return min(w) #boh
+
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
 
+
+# =====================================================================================
+
+# FIND A PLACE FOR THIS STUF
+def binary_search(g: Graph, C: list[int], r: int):
+    start, next, end = 0, None, len(C) - 1
+    found = False
+    while start <= end and not found:
+        next = (start + end) // 2
+        if C[next - 1] <= r and r < C[next]:
+            found = True
+        elif C[next - 1] <= r:
+            start = next + 1
+        else:
+            end = next
+
+    return next if found else None
+
+
+def random_select(g: Graph, C: list[int]) -> Edge:
+    r = random.choice(0, C[-1])
+    e = binary_search(g, C, r)
+    return e
+
+
+def edge_select(g: Graph):
+    D = g.get_weighted_degree_list()
+    C = [sum(D[:i]) for i in range(1, len(D) + 1)]
+    u = random_select(g, C)
+
+    C2=[0 for _ in len(g.get_adj_list_vertex(u))]
+    for i in range(1, len(C2)-1):
+        C2[i]=C2[i-1]+g.get_weight(u, i)
+
+    v=random_select(g, C2)
+
+    return (u,v)
+
+
+# =========================================================
 
 # TODO: review from now on @diletta
 def read_graph(f):
