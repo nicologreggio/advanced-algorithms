@@ -1,7 +1,8 @@
 from collections import defaultdict
 from functools import reduce
 from glob import glob
-from random import random
+#from random import random
+from random import randint
 from typing import NewType, Tuple, final, Set
 from math import ceil, sqrt
 import heapq as hq
@@ -112,11 +113,13 @@ class Graph:
     def recursive_contract(self) -> Tuple[Cut, int]:
         n = self.get_n()
         if n <= 6:
-            self.contract(2)
+            #self.contract(2)
+            self.contract(1)
             # return self.edges[0]#[2]  # they say "return weight of the only edge"...
             s,t,_=self.edges[0]
             w=self.get_weight(s,t)
-            return ((set([s]), set([t])), w)
+            #return ((set([s]), set([t])), w)
+            return w
         t = ceil(n / sqrt(2) + 1)
 
         ws = []
@@ -124,8 +127,8 @@ class Graph:
             self.contract(t)
             ws.append(self.recursive_contract())
 
-        return ws[0] if ws[0][2] <= ws[1][2] else ws[1]
-        # return min(ws)  # boh
+        #return ws[0] if ws[0][2] <= ws[1][2] else ws[1]
+        return min(ws)  # boh
 
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
@@ -150,17 +153,23 @@ def binary_search(g: Graph, C: list[int], r: int):
 
 
 def random_select(g: Graph, C: list[int]) -> Edge:
-    r = random.randint(0, C[-1])
+    #r = random.randint(0, C[-1])
+    r = randint(0, C[-1])
     e = binary_search(g, C, r)
     return e
 
 
 def edge_select(g: Graph):
     D = g.get_weighted_degree_list()
-    C = [sum(D[:i]) for i in range(1, len(D) + 1)]
-    u = random_select(g, C)
+    #C1 = [sum(D[:i]) for i in range(1, len(D) + 1)]
+    C1 = [0 for _ in range(len(D))]
+    C1[1] = D[1]
+    for i in range(2, len(D)):
+        C1[i] = C1[i - 1] + D[i]
 
-    C2 = [0 for _ in len(g.get_adj_list_vertex(u))]
+    u = random_select(g, C1)
+
+    C2 = [0 for _ in range(len(g.get_adj_list_vertex(u)))]
     for i in range(1, len(C2) - 1):
         C2[i] = C2[i - 1] + g.get_weight(u, i)
 
