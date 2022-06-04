@@ -1,6 +1,7 @@
+import copy
 import unittest
 from graph.graph import Graph
-from algorithms.stoer_wagner import st_min_cut, stoer_wagner
+from algorithms.stoer_wagner import st_min_cut, stoer_wagner, compute_cut_weight
 
 
 class StoerWagnerTest(unittest.TestCase):
@@ -64,7 +65,7 @@ class StoerWagnerTest(unittest.TestCase):
         )
 
         current = stoer_wagner(g)
-        expected = (set([1, 8, 3, 5, 6, 4, 10, 7]), set([2]))
+        expected = 20
 
         self.assertEqual(expected, current)
 
@@ -90,7 +91,7 @@ class StoerWagnerTest(unittest.TestCase):
         )
 
         current = stoer_wagner(g)
-        expected = (set([1, 2, 3, 5, 6, 7, 8, 9, 10]), set([4]))
+        expected = 20
 
         self.assertEqual(expected, current)
 

@@ -10,7 +10,7 @@ GRAPH_FILE_EXTENSION = "txt"
 
 Edge = NewType("Edge", Tuple[int, int, int])
 Vertex = NewType("Vertex", int)
-Cut=NewType("Cut", Tuple[Set[Vertex], Set[Vertex]])
+Cut = NewType("Cut", Tuple[Set[Vertex], Set[Vertex]])
 
 # TODO: review all operations @nicolo
 class Graph:
@@ -53,10 +53,8 @@ class Graph:
 
     def get_weight(self, s: Vertex, t: Vertex):
         """returns the weight of the edge (s,t), or None if such edge does not exist"""
-        print(f"Weight from {s} to {t}: {self.adj_list[s][t]}")
-        return sum(
-            self.adj_list[s][t]
-        )  # TODO: is it correct? I guess so, but we cannot discriminate edges when getting weights or looking up for them right? we just know they're there
+        # TODO: is it correct? I guess so, but we cannot discriminate edges when getting weights or looking up for them right? we just know they're there
+        return sum(self.adj_list[s][t])
 
     def get_n(self):
         """returns the number of nodes"""
@@ -93,15 +91,20 @@ class Graph:
 
     def contract_edge(self, u: Vertex, v: Vertex):
         """Contracts the (u,v) edge"""
-        self.remove_edge(u, v)
+        g = Graph(self.edges)
+        g.remove_edge(u, v)
 
-        for w in self.get_vertices():
+        for w in g.get_vertices():
             if w != u and w != v:
-                self.add_edge(u, w, self.get_weight(w, v))
-                self.remove_edge(w, v)
+                weight = g.get_weight(w, v)
+                if weight != 0:
+                    g.add_edge(u, w, weight)
+                    g.remove_edge(w, v)
 
-        del self.weighted_degree[v]
-        del self.adj_list[v]
+        del g.weighted_degree[v]
+        del g.adj_list[v]
+
+        return g
 
     def contract(self, k: int):
         """Contraction algorithms, unlike theory does not return anything because it side effects on instance graph"""
@@ -114,8 +117,8 @@ class Graph:
         if n <= 6:
             self.contract(2)
             # return self.edges[0]#[2]  # they say "return weight of the only edge"...
-            s,t,_=self.edges[0]
-            w=self.get_weight(s,t)
+            s, t, _ = self.edges[0]
+            w = self.get_weight(s, t)
             return ((set([s]), set([t])), w)
         t = ceil(n / sqrt(2) + 1)
 

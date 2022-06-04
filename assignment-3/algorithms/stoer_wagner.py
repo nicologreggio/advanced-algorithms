@@ -5,10 +5,10 @@ from fibheap.fibheap import FibHeap
 from fibheap.fibheap_item import FibHeapItem
 import copy
 
-from graph.graph import Graph, Vertex
+from graph.graph import Graph, Vertex, Cut
 
 
-def st_min_cut(g: Graph) -> Tuple[Tuple[Set[Vertex], Set[Vertex]], Vertex, Vertex]:
+def st_min_cut(g: Graph) -> Tuple[Cut, Vertex, Vertex]:
     PQ = FibHeap()
     keys = {}
     vertices = {}
@@ -39,35 +39,39 @@ def st_min_cut(g: Graph) -> Tuple[Tuple[Set[Vertex], Set[Vertex]], Vertex, Verte
     return ((V - set([t]), set([t])), s, t)
 
 
-def compute_cut_weight(g: Graph, V1: Set[Vertex], t: Set[Vertex]) -> int:
+def compute_cut_weight(g: Graph, C: Cut) -> int:
     w = 0
+    V, (t,) = C
 
-    (t,) = t
-    for v in V1:
+    for v in V:
         w += g.get_weight(v, t)
 
     return w
 
 
-def stoer_wagner(g: Graph) -> Tuple[Set[Vertex], Set[Vertex]]:
-    # assert g.get_n() < 2, "The graph needs to have at least 2 vertices"
-
+def stoer_wagner(g: Graph) -> int:
     if g.get_n() == 2:
         s, t = g.get_vertices()
-        return (set([s]), set([t]))
+        C = (set([s]), set([t]))
+        print("Final Cut: ", C, compute_cut_weight(g, C))
+        return compute_cut_weight(g, C)
     else:
         C1, s, t = st_min_cut(g)
-        g.contract_edge(s, t)
-        g = copy.deepcopy(g)
-        C2 = stoer_wagner(g)
+        C1_w = compute_cut_weight(g, C1)
 
-        print("Cut 1: ", C1, compute_cut_weight(g, *C1))
-        print("Cut 2: ", C2, compute_cut_weight(g, *C2))
+        g1 = g.contract_edge(s, t)
 
-        if compute_cut_weight(g, *C1) <= compute_cut_weight(g, *C2):
-            return C1
+        C2_w = stoer_wagner(g1)
+        # C2_w = compute_cut_weight(g1, C2)
+
+        print("s, t", (s, t))
+        print("Cut 1: ", C1, C1_w)
+        print("Cut 2: ", C2_w)
+
+        if C1_w <= C2_w:
+            return C1_w
         else:
-            return C2
+            return C2_w
 
 
 def stoer_wagner_asymptotic_behaviour(n: int, m: int) -> int:
