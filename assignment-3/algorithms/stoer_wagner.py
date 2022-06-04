@@ -66,3 +66,4 @@ def stoer_wagner(g: Graph) -> int:
 
 def stoer_wagner_asymptotic_behaviour(n: int, m: int) -> int:
     return m * n + n ** 2 * math.log(n)
+    # return m * n * math.log(n)
