@@ -57,7 +57,7 @@ def stoer_wagner(g: Graph) -> Tuple[Set[Vertex], Set[Vertex]]:
         return (set([s]), set([t]))
     else:
         C1, s, t = st_min_cut(g)
-        g.merge_vertices(s, t)
+        g.contract_edge(s, t)
         g = copy.deepcopy(g)
         C2 = stoer_wagner(g)
 

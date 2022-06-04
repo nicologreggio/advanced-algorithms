@@ -8,11 +8,11 @@ from algorithms.stoer_wagner import compute_cut_weight
 # ANALYSIS FOR DETERMINISTIC ALGORITHM 
 
 def d_measure_run_time(alg, graph, num_calls):
+    g = copy.deepcopy(graph)
     gc.disable()
     start_time = perf_counter_ns()
 
     for _ in range(num_calls):
-        g = copy.deepcopy(graph)
         min_cut = alg(g)
     end_time = perf_counter_ns()
     gc.enable()
@@ -49,13 +49,13 @@ def d_compute_asymptotic_constant(
 # ANALYSIS FOR RANDOMIZED ALGORITHM 
 
 def r_measure_run_time(alg, graph, num_calls):
-    gc.disable()
+    g = copy.deepcopy(graph)
     discovery_times = []
+    gc.disable()
     start_time = perf_counter_ns()
 
     # return mincut and discovery time 
     for _ in range(num_calls):
-        g = copy.deepcopy(graph)
         min_cut, discovery_time = alg(g)
         discovery_times.append(discovery_time)
 

@@ -161,7 +161,6 @@ def edge_select(g: Graph):
 
 # =========================================================
 
-# TODO: review from now on @diletta
 def read_graph(f):
     lines = f.readlines()
 
