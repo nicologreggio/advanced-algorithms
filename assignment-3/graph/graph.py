@@ -2,7 +2,7 @@ from collections import defaultdict
 from functools import reduce
 from glob import glob
 from random import random
-from typing import NewType, Tuple, final
+from typing import NewType, Tuple, final, Set
 from math import ceil, sqrt
 import heapq as hq
 
@@ -10,14 +10,15 @@ GRAPH_FILE_EXTENSION = "txt"
 
 Edge = NewType("Edge", Tuple[int, int, int])
 Vertex = NewType("Vertex", int)
+Cut=NewType("Cut", Tuple[Set[Vertex], Set[Vertex]])
 
 # TODO: review all operations @nicolo
 class Graph:
     def __init__(self, edges: "list[Edge]" = []):
         self.adj_list = defaultdict(lambda: defaultdict(list))
-        self.edges = (
-            []
-        )  # TODO: eventually adopt multiset (https://pypi.org/project/multiset/)
+
+        # TODO: eventually adopt multiset (https://pypi.org/project/multiset/)
+        self.edges = []
 
         self.weighted_degree = {}
 
@@ -84,38 +85,47 @@ class Graph:
             self.adj_list[t].pop(s, None)
 
             for w in ws:
-                self.edges.discard((s, t, w))
-                self.edges.discard((t, s, w))
+                self.edges.remove((s, t, w))
+                self.edges.remove((t, s, w))
 
         self.weighted_degree[s] = self.__calculate_weighted_degree(s)
         self.weighted_degree[t] = self.__calculate_weighted_degree(t)
 
     def contract_edge(self, u: Vertex, v: Vertex):
         """Contracts the (u,v) edge"""
-        self.remove_edge(u,v)
-        for i in self.get_vertices():
-            if i!=u and i!=v:
-                self.weighted_degree[i]=self.__calculate_weighted_degree(i)
+        self.remove_edge(u, v)
+
+        for w in self.get_vertices():
+            if w != u and w != v:
+                self.add_edge(u, w, self.get_weight(w, v))
+                self.remove_edge(w, v)
+
+        del self.weighted_degree[v]
+        del self.adj_list[v]
 
     def contract(self, k: int):
         """Contraction algorithms, unlike theory does not return anything because it side effects on instance graph"""
-        for i in range(1, self.get_n()-k):
-            u,v=edge_select(self)
-            self.contract_edge(u,v)
+        for i in range(1, self.get_n() - k):
+            u, v = edge_select(self)
+            self.contract_edge(u, v)
 
-    def recursive_contract(self):
-        n=self.get_n()
-        if n<=6:
+    def recursive_contract(self) -> Tuple[Cut, int]:
+        n = self.get_n()
+        if n <= 6:
             self.contract(2)
-            return self.edges[0][2] #they say "return weight of the only edge"...
-        t=ceil(n/sqrt(2)+1)
+            # return self.edges[0]#[2]  # they say "return weight of the only edge"...
+            s,t,_=self.edges[0]
+            w=self.get_weight(s,t)
+            return ((set([s]), set([t])), w)
+        t = ceil(n / sqrt(2) + 1)
 
-        w=[]
-        for i in range(1,2):
+        ws = []
+        for _ in range(1, 2):
             self.contract(t)
-            w.append(self.recursive_contract)
-        
-        return min(w) #boh
+            ws.append(self.recursive_contract())
+
+        return ws[0] if ws[0][2] <= ws[1][2] else ws[1]
+        # return min(ws)  # boh
 
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
@@ -140,7 +150,7 @@ def binary_search(g: Graph, C: list[int], r: int):
 
 
 def random_select(g: Graph, C: list[int]) -> Edge:
-    r = random.choice(0, C[-1])
+    r = random.randint(0, C[-1])
     e = binary_search(g, C, r)
     return e
 
@@ -150,16 +160,17 @@ def edge_select(g: Graph):
     C = [sum(D[:i]) for i in range(1, len(D) + 1)]
     u = random_select(g, C)
 
-    C2=[0 for _ in len(g.get_adj_list_vertex(u))]
-    for i in range(1, len(C2)-1):
-        C2[i]=C2[i-1]+g.get_weight(u, i)
+    C2 = [0 for _ in len(g.get_adj_list_vertex(u))]
+    for i in range(1, len(C2) - 1):
+        C2[i] = C2[i - 1] + g.get_weight(u, i)
 
-    v=random_select(g, C2)
+    v = random_select(g, C2)
 
-    return (u,v)
+    return (u, v)
 
 
 # =========================================================
+
 
 def read_graph(f):
     lines = f.readlines()

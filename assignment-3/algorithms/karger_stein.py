@@ -13,8 +13,9 @@ def karger_stein(g: Graph) -> Tuple[Tuple[Set[Vertex], Set[Vertex]], int]:
     start_time = perf_counter_ns()
     found_time = start_time
     for _ in range(k):
-        C = g.recursive_contract() # wrong return type?
+        C, w = g.recursive_contract() # wrong return type?
         current_value = compute_cut_weight(g, *C) 
+        #TODO  w == current_value ???
 
         if current_value < minimum:
             minimum = current_value
