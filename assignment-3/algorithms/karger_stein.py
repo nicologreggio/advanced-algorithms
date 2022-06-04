@@ -14,13 +14,17 @@ def karger_stein(g: Graph) -> Tuple[Tuple[Set[Vertex], Set[Vertex]], int]:
     found_time = start_time
     for _ in range(k):
         C, w = g.recursive_contract() # wrong return type?
-        current_value = compute_cut_weight(g, *C) 
+        #current_value = compute_cut_weight(g, *C) 
         #TODO  w == current_value ???
-
-        if current_value < minimum:
-            minimum = current_value
+        if w < minimum:
+            minimum = w
             minimum_cut = C
             found_time = perf_counter_ns()
+
+        """if current_value < minimum:
+            minimum = current_value
+            minimum_cut = C
+            found_time = perf_counter_ns()"""
 
     discovery_time = found_time - start_time
     return minimum_cut, discovery_time
