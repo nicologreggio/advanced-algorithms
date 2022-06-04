@@ -3,10 +3,12 @@ from typing import Set, Tuple
 
 from fibheap.fibheap import FibHeap
 from fibheap.fibheap_item import FibHeapItem
+from priority_queue.priority_queue import PriorityQueue
+from priority_queue.vertex_helper import VertexHelper
 
 from graph.graph import Graph, Vertex, Cut
 
-
+# Fibonacci
 def st_min_cut(g: Graph) -> Tuple[Cut, Vertex, Vertex]:
     PQ = FibHeap()
     keys = {}
@@ -35,6 +37,38 @@ def st_min_cut(g: Graph) -> Tuple[Cut, Vertex, Vertex]:
 
     V = set(g.get_vertices())
     return ((V - set([t]), set([t])), s, t)
+
+
+# Binary Heap
+"""def st_min_cut(g: Graph) -> Tuple[Cut, Vertex, Vertex]:
+    PQ = PriorityQueue()
+    keys = {}
+    vertices = {}
+    in_pq = {}
+
+    for v in g.get_vertices():
+        keys[v] = 0
+        vertices[v] = VertexHelper(v, keys[v])
+        in_pq[v] = True
+        PQ.insert(vertices[v])
+
+    s = None
+    t = None
+
+    while len(PQ):
+        u = PQ.extract_maximum()
+        in_pq[u.name] = False
+        s = t
+        t = u.name
+
+        for v in g.get_adj_list_vertex(u.name):
+            if in_pq[v]:
+                keys[v] = keys[v] + g.get_weight(u.name, v)
+                index = PQ.get_index(v)
+                PQ.increase_key(index, keys[v])
+
+    V = set(g.get_vertices())
+    return ((V - set([t]), set([t])), s, t)"""
 
 
 def compute_cut_weight(g: Graph, C: Cut) -> int:
@@ -66,4 +100,3 @@ def stoer_wagner(g: Graph) -> int:
 
 def stoer_wagner_asymptotic_behaviour(n: int, m: int) -> int:
     return m * n + n ** 2 * math.log(n)
-    # return m * n * math.log(n)
