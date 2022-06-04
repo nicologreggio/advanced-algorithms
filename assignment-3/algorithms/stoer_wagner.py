@@ -23,16 +23,16 @@ def st_min_cut(g: Graph) -> Tuple[Cut, Vertex, Vertex]:
     s = None
     t = None
 
-    E = g.get_edges()
     while len(PQ):
         u = PQ.extract_maximum()
         in_pq[u.name] = False
+        print("Extracting: ", u)
         s = t
         t = u.name
 
-        for u, v, w in E:
+        for v in g.get_adj_list_vertex(u.name):
             if in_pq[v]:
-                keys[v] = keys[v] + w
+                keys[v] = keys[v] + g.get_weight(u.name, v)
                 PQ.increase_key(vertices[v], keys[v])
 
     V = set(g.get_vertices())
@@ -56,16 +56,22 @@ def stoer_wagner(g: Graph) -> int:
         print("Final Cut: ", C, compute_cut_weight(g, C))
         return compute_cut_weight(g, C)
     else:
+        print("Calling st_min_cut on: ", g.get_vertices())
+        for v in g.get_vertices():
+            for u in g.get_adj_list_vertex(v):
+                print(v, u, end="; ")
+
         C1, s, t = st_min_cut(g)
         C1_w = compute_cut_weight(g, C1)
+        # print("-------------s, t", (s, t))
+        # print("Cut 1: ", C1, C1_w)
 
+        print("Contracting")
         g1 = g.contract_edge(s, t)
 
         C2_w = stoer_wagner(g1)
         # C2_w = compute_cut_weight(g1, C2)
 
-        print("s, t", (s, t))
-        print("Cut 1: ", C1, C1_w)
         print("Cut 2: ", C2_w)
 
         if C1_w <= C2_w:

@@ -19,7 +19,7 @@ class Graph:
         self.adj_list = defaultdict(lambda: defaultdict(list))
 
         # TODO: eventually adopt multiset (https://pypi.org/project/multiset/)
-        self.edges = []
+        self.edges = set()
 
         self.weighted_degree = {}
 
@@ -55,7 +55,7 @@ class Graph:
     def get_weight(self, s: Vertex, t: Vertex):
         """returns the weight of the edge (s,t), or None if such edge does not exist"""
         # TODO: is it correct? I guess so, but we cannot discriminate edges when getting weights or looking up for them right? we just know they're there
-        return sum(self.adj_list[s][t])
+        return sum(self.adj_list[s].get(t, []))
 
     def get_n(self):
         """returns the number of nodes"""
@@ -70,8 +70,8 @@ class Graph:
         self.adj_list[s][t].append(w)
         self.adj_list[t][s].append(w)
 
-        self.edges.append((s, t, w))
-        self.edges.append((t, s, w))
+        self.edges.add((s, t, w))
+        # self.edges.append((t, s, w))
         self.weighted_degree[s] = self.__calculate_weighted_degree(s)
         self.weighted_degree[t] = self.__calculate_weighted_degree(t)
 
@@ -80,12 +80,12 @@ class Graph:
         ws = self.adj_list[s].get(t, None)
 
         if ws != None:
-            self.adj_list[s].pop(t, None)
-            self.adj_list[t].pop(s, None)
+            del self.adj_list[s][t]
+            del self.adj_list[t][s]
 
             for w in ws:
-                self.edges.remove((s, t, w))
-                self.edges.remove((t, s, w))
+                self.edges.discard((s, t, w))
+                self.edges.discard((t, s, w))
 
         self.weighted_degree[s] = self.__calculate_weighted_degree(s)
         self.weighted_degree[t] = self.__calculate_weighted_degree(t)

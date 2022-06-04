@@ -114,7 +114,7 @@ class StoerWagnerTest(unittest.TestCase):
         )
 
         current = stoer_wagner(g)
-        expected = (set([2, 3, 4]), set([1]))
+        expected = 1
 
         self.assertEqual(expected, current)
 
@@ -131,7 +131,7 @@ class StoerWagnerTest(unittest.TestCase):
         )
 
         current = st_min_cut(g)
-        expected = (({1, 2, 4}, {3}), 4, 3)
+        expected = (({1, 3, 4}, {2}), 4, 2)
 
         self.assertEqual(expected, current)
 
