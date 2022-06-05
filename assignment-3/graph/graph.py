@@ -1,9 +1,10 @@
 from collections import defaultdict
 from functools import reduce
 from glob import glob
-#from random import random
+
+# from random import random
 from random import randint
-from typing import NewType, Tuple, final, Set
+from typing import List, NewType, Tuple, final, Set
 from math import ceil, sqrt
 import heapq as hq
 
@@ -15,7 +16,7 @@ Cut = NewType("Cut", Tuple[Set[Vertex], Set[Vertex]])
 
 # TODO: review all operations @nicolo
 class Graph:
-    def __init__(self, edges: "list[Edge]" = []):
+    def __init__(self, edges: List[Edge] = []):
         self.adj_list = defaultdict(lambda: defaultdict(list))
 
         # TODO: eventually adopt multiset (https://pypi.org/project/multiset/)
@@ -32,9 +33,17 @@ class Graph:
 
     def __calculate_weighted_degree(self, v: Vertex):
         """return the weighted degree of the vertex v"""
+
+        """ def my_sum(a,b):
+            return a + sum(b)
         return reduce(
-            lambda a, b: a + sum(b), [x for x in self.adj_list[v].values()], 0
-        )
+            lambda a, b: my_sum(a,b), [x for x in self.adj_list[v].values()], 0
+        ) """
+
+        acc = 0
+        for x in self.adj_list[v].values():
+            acc += sum(x)
+        return acc
 
     def get_vertices(self):
         """returns the list of vertices"""
@@ -43,6 +52,16 @@ class Graph:
     def get_edges(self):
         """returns the list of edges"""
         return self.edges
+
+    def get_nth_vertex(self, nth: int):
+        """returns the nth vertex, starting from 0"""
+        assert (
+            nth < self.get_n()
+        ), f"graph has {self.get_n()} vertices, so {nth} is out of bounds"
+        it = iter(self.get_vertices())
+        for _ in range(0, nth):
+            next(it)
+        return next(it)
 
     def get_adj_list_vertex(self, v: Vertex):
         """returns the adjaceny list of v"""
@@ -90,8 +109,8 @@ class Graph:
         self.weighted_degree[s] = self.__calculate_weighted_degree(s)
         self.weighted_degree[t] = self.__calculate_weighted_degree(t)
 
-    def contract_edge(self, u: Vertex, v: Vertex):
-        """Contracts the (u,v) edge"""
+    def contract_edge(self, u: Vertex, v: Vertex) -> "Graph":
+        """Returns a new graph with the (u,v) edge contracted"""
         g = Graph(self.edges)
         g.remove_edge(u, v)
 
@@ -107,30 +126,33 @@ class Graph:
 
         return g
 
-    def contract(self, k: int):
-        """Contraction algorithms, unlike theory does not return anything because it side effects on instance graph"""
-        for i in range(1, self.get_n()+1 - k):
+    def contract(self, k: int) -> "Graph":
+        """Returns a new graph contracted to k vertices"""
+        g = self
+        for i in range(1, self.get_n() + 1 - k):
             u, v = edge_select(self)
-            self.contract_edge(u, v)
+            g = g.contract_edge(u, v)
+        return g
 
     def recursive_contract(self) -> Tuple[Cut, int]:
+        g = self
         n = self.get_n()
         if n <= 6:
-            self.contract(2)
+            g = self.contract(2)
             # self.contract(1) #shouldn't go like this, with the change in the cintract (n+1-k) should be fine now
             # return self.edges[0]#[2]  # they say "return weight of the only edge"...
-            s,t,_=self.edges[0]
-            w=self.get_weight(s,t)
-            #return ((set([s]), set([t])), w)
+            s, t, _ = g.edges[0]
+            w = g.get_weight(s, t)
+            # return ((set([s]), set([t])), w)
             return w
         t = ceil(n / sqrt(2) + 1)
 
         ws = []
         for _ in range(1, 2):
-            self.contract(t)
-            ws.append(self.recursive_contract())
+            g = self.contract(t)
+            ws.append(g.recursive_contract())
 
-        #return ws[0] if ws[0][2] <= ws[1][2] else ws[1]
+        # return ws[0] if ws[0][2] <= ws[1][2] else ws[1]
         return min(ws)  # boh
 
     def __repr__(self):
@@ -140,9 +162,10 @@ class Graph:
 # =====================================================================================
 
 # FIND A PLACE FOR THIS STUF
-def binary_search(g: Graph, C: list[int], r: int):
+def binary_search(C: List[int], r: int):
     start, next, end = 0, None, len(C) - 1
     found = False
+    print(f"list is {C} random val is {r}")
     while start <= end and not found:
         next = (start + end) // 2
         if C[next - 1] <= r and r < C[next]:
@@ -152,29 +175,41 @@ def binary_search(g: Graph, C: list[int], r: int):
         else:
             end = next
 
+    print(f"found this {next}")
     return next if found else None
 
 
-def random_select(g: Graph, C: list[int]) -> Edge:
-    #r = random.randint(0, C[-1])
-    r = randint(0, C[-1]) #randint(a,b) gives n . a<=n<=b
-    e = binary_search(g, C, r)
-    return e
+def random_select(g: Graph, C: List[int]) -> Edge:
+    # r = random.randint(0, C[-1])
+    r = randint(0, C[-1])  # randint(a,b) gives n . a<=n<=b
+    e = binary_search(C, r)
+    # return e
+    return g.get_nth_vertex(e)
 
 
 def edge_select(g: Graph):
     D = g.get_weighted_degree_list()
-    #C1 = [sum(D[:i]) for i in range(1, len(D) + 1)]
-    C1 = [0 for _ in range(len(D))]
-    C1[1] = D[1]
-    for i in range(2, len(D)):
-        C1[i] = C1[i - 1] + D[i]
+
+    # C1 = [0 for _ in range(len(D))]
+    # C1[1] = next(iter(D.values()))
+    # for i in range(2, len(D)):
+    #     C1[i] = C1[i - 1] + D[i]
+
+    D_val = list(D.values())
+    C1 = [sum(D_val[:i]) for i in range(1, len(D_val) + 1)]
 
     u = random_select(g, C1)
+    print(f"nodes are: {g.get_vertices()}, bin search selected: {u}")
 
-    C2 = [0 for _ in range(len(g.get_adj_list_vertex(u)))]
-    for i in range(1, len(C2) - 1):
-        C2[i] = C2[i - 1] + g.get_weight(u, i)
+    # C2 = [0 for _ in range(len(g.get_adj_list_vertex(u)))]
+    # for i in range(1, len(C2) - 1):
+    #     C2[i] = C2[i - 1] + g.get_weight(u, i)
+
+    W_val = list(g.get_adj_list_vertex(u).values())
+
+    C2=[None] * len(W_val)
+    C2[0]=sum(W_val[0])
+    for i in range(1, len(W_val)): C2[i]=C2[i-1]+sum(W_val[i])
 
     v = random_select(g, C2)
 
