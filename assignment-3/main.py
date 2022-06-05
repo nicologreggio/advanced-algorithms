@@ -1,5 +1,7 @@
 import argparse
 from enum import Enum
+import sys
+from typing import List
 
 # from graph import graph
 from graph.graph import Graph, read_all
@@ -15,7 +17,7 @@ from algorithms.stoer_wagner import stoer_wagner, stoer_wagner_asymptotic_behavi
 from algorithms.karger_stein import karger_stein, karger_stein_asymptotic_behaviour
 
 
-def stoer_wagner_complexity(graphs: "list[Graph]", num_calls):
+def stoer_wagner_complexity(graphs: List[Graph], num_calls):
     (
         run_times,
         graphs_dimensions,
@@ -42,7 +44,7 @@ def stoer_wagner_complexity(graphs: "list[Graph]", num_calls):
     )
 
 
-def karger_stein_complexity(graphs: "list[Graph]", num_calls):
+def karger_stein_complexity(graphs: List[Graph], num_calls):
     (
         run_times,
         discovery_times,
@@ -178,6 +180,7 @@ def init_args():
 
 
 def main():
+    # sys.setrecursionlimit(8000)
     args = init_args().parse_args()
 
     mincut_graphs = read_all(args.directory, args.size)
