@@ -109,15 +109,15 @@ class Graph:
 
     def contract(self, k: int):
         """Contraction algorithms, unlike theory does not return anything because it side effects on instance graph"""
-        for i in range(1, self.get_n() - k):
+        for i in range(1, self.get_n()+1 - k):
             u, v = edge_select(self)
             self.contract_edge(u, v)
 
     def recursive_contract(self) -> Tuple[Cut, int]:
         n = self.get_n()
         if n <= 6:
-            #self.contract(2)
-            self.contract(1)
+            self.contract(2)
+            # self.contract(1) #shouldn't go like this, with the change in the cintract (n+1-k) should be fine now
             # return self.edges[0]#[2]  # they say "return weight of the only edge"...
             s,t,_=self.edges[0]
             w=self.get_weight(s,t)
@@ -157,7 +157,7 @@ def binary_search(g: Graph, C: list[int], r: int):
 
 def random_select(g: Graph, C: list[int]) -> Edge:
     #r = random.randint(0, C[-1])
-    r = randint(0, C[-1])
+    r = randint(0, C[-1]) #randint(a,b) gives n . a<=n<=b
     e = binary_search(g, C, r)
     return e
 
