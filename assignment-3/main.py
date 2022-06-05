@@ -1,7 +1,7 @@
 import argparse
 from enum import Enum
 
-#from graph import graph
+# from graph import graph
 from graph.graph import Graph, read_all
 
 from algorithms.analysis import (
@@ -14,13 +14,17 @@ from algorithms.analysis import (
 from algorithms.stoer_wagner import stoer_wagner, stoer_wagner_asymptotic_behaviour
 from algorithms.karger_stein import karger_stein, karger_stein_asymptotic_behaviour
 
+
 def stoer_wagner_complexity(graphs: "list[Graph]", num_calls):
-    (run_times, 
-    graphs_dimensions, 
-    ratios, 
-    c_estimates, 
-    weights
-    ) = d_compute_asymptotic_constant(graphs, stoer_wagner, stoer_wagner_asymptotic_behaviour, num_calls)
+    (
+        run_times,
+        graphs_dimensions,
+        ratios,
+        c_estimates,
+        weights,
+    ) = d_compute_asymptotic_constant(
+        graphs, stoer_wagner, stoer_wagner_asymptotic_behaviour, num_calls
+    )
 
     print("Stoer-Wagner algorithm")
     d_print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights)
@@ -32,22 +36,28 @@ def stoer_wagner_complexity(graphs: "list[Graph]", num_calls):
         run_times,
         graphs_dimensions,
         stoer_wagner_asymptotic_behaviour,
-        "Stoer-Wagner deterministic algorithm"
-        "Expected complexity: O(n^2*log(n)) ", 
-        #TODO would be O(mn + n^2*log(n)) but analysis on m/n relation: m = O(n) and then...
+        "Stoer-Wagner deterministic algorithm",
+        "Expected complexity: O(m*n + n^2*log(n)) ",
+        # TODO would be O(mn + n^2*log(n)) but analysis on m/n relation: m = O(n) and then...
     )
 
+
 def karger_stein_complexity(graphs: "list[Graph]", num_calls):
-    (run_times, 
-    discovery_times, 
-    graphs_dimensions, 
-    ratios, 
-    c_estimates, 
-    weights
-    ) = r_compute_asymptotic_constant(graphs, karger_stein, karger_stein_asymptotic_behaviour, num_calls)
+    (
+        run_times,
+        discovery_times,
+        graphs_dimensions,
+        ratios,
+        c_estimates,
+        weights,
+    ) = r_compute_asymptotic_constant(
+        graphs, karger_stein, karger_stein_asymptotic_behaviour, num_calls
+    )
 
     print("Karger-Stein algorithm")
-    r_print_complexity_data(run_times, discovery_times, graphs_dimensions, ratios, c_estimates, weights)
+    r_print_complexity_data(
+        run_times, discovery_times, graphs_dimensions, ratios, c_estimates, weights
+    )
 
     C = sum(c_estimates) / len(c_estimates)
 
@@ -56,17 +66,19 @@ def karger_stein_complexity(graphs: "list[Graph]", num_calls):
         run_times,
         graphs_dimensions,
         karger_stein_asymptotic_behaviour,
-        "Karger-Stein randomized algorithm"
-        "Expected complexity: O(n^2*log^3(n))",
+        "Karger-Stein randomized algorithm" "Expected complexity: O(n^2*log^3(n))",
     )
 
-    plot_run_vs_discovery(run_times,
-    discovery_times,
-    graphs_dimensions,
-    "Runtimes vs. Discovery Times for Karger-Stein algorithm",
+    plot_run_vs_discovery(
+        run_times,
+        discovery_times,
+        graphs_dimensions,
+        "Runtimes vs. Discovery Times for Karger-Stein algorithm",
     )
 
-# TODO: add something to compare the two algorithms, maybe reading from file results, and compute error 
+
+# TODO: add something to compare the two algorithms, maybe reading from file results, and compute error
+
 
 def d_print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights):
     padding = len(str(max(run_times))) + 5
@@ -89,11 +101,21 @@ def d_print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, w
         )
     print(hr)
 
-def r_print_complexity_data(run_times, discovery_times, graphs_dimensions, ratios, c_estimates, weights):
+
+def r_print_complexity_data(
+    run_times, discovery_times, graphs_dimensions, ratios, c_estimates, weights
+):
     padding = len(str(max(run_times))) + 5
     headers = [
         str(h).ljust(padding)
-        for h in ["Size", "Time(ns)", "Discovery Time(ns)","Constant", "Ratio", "MinCut Weight"]
+        for h in [
+            "Size",
+            "Time(ns)",
+            "Discovery Time(ns)",
+            "Constant",
+            "Ratio",
+            "MinCut Weight",
+        ]
     ]
     hr = padding * (len(headers) + 2) * "-"
     print("\n\n\n")

@@ -123,7 +123,7 @@ class FibHeap:
 
     def _compute_max_degree(self):
         PHI = 1.61803
-        return math.floor(math.log(self.size, PHI))
+        return math.ceil(math.log(self.size, PHI))
 
     def __len__(self):
         return self.size

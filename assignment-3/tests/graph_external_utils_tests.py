@@ -41,13 +41,16 @@ class GraphExternalUtilsTests(unittest.TestCase):
         self.assertEqual(24, D[1])
         self.assertEqual(25, D[3])
 
-        g.contract_edge(1,2)
+        g2 = g.contract_edge(1,2)
+        print(g2.get_edges())
 
-        self.assertEqual(25, D[1])
-        self.assertEqual(25, D[3])
+        Q=g2.get_weighted_degree_list()
 
-        self.assertEqual(4, g.get_m())
-        print(g.get_edges())
+        self.assertEqual(25, Q[1])
+        self.assertEqual(25, Q[3])
+
+        self.assertEqual(4, g2.get_m())
+        print(g2.get_edges())
 
 
 if __name__ == "__main__":
