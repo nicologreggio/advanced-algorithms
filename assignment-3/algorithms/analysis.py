@@ -9,12 +9,12 @@ from algorithms.stoer_wagner import compute_cut_weight
 
 
 def d_measure_run_time(alg, graph, num_calls):
-    g = copy.deepcopy(graph)
     gc.disable()
     start_time = perf_counter_ns()
 
     for _ in range(num_calls):
-        w = alg(g)
+        w = alg(graph)
+
     end_time = perf_counter_ns()
     gc.enable()
     avg_time = (end_time - start_time) / num_calls
@@ -49,14 +49,13 @@ def d_compute_asymptotic_constant(graphs, alg, asymptotic_behaviour, num_calls=1
 
 
 def r_measure_run_time(alg, graph, num_calls):
-    g = copy.deepcopy(graph)
     discovery_times = []
     gc.disable()
     start_time = perf_counter_ns()
 
     # return mincut and discovery time
     for _ in range(num_calls):
-        min_cut_weight, discovery_time = alg(g)
+        min_cut_weight, discovery_time = alg(graph)
         discovery_times.append(discovery_time)
 
     end_time = perf_counter_ns()
