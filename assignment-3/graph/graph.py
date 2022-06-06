@@ -3,7 +3,7 @@ from functools import reduce
 from glob import glob
 
 # from random import random
-from random import randint
+from random import randint, randrange
 from typing import List, NewType, Tuple, final, Set
 from math import ceil, sqrt
 import heapq as hq
@@ -54,6 +54,7 @@ class Graph:
         return self.edges
 
     def get_nth_vertex(self, nth: int):
+        # TODO: update this function since the index selection has changed
         """returns the nth vertex, starting from 0"""
         assert (
             nth < self.get_n()
@@ -129,9 +130,14 @@ class Graph:
     def contract(self, k: int) -> "Graph":
         """Returns a new graph contracted to k vertices"""
         g = self
-        for i in range(1, self.get_n() + 1 - k):
-            u, v = edge_select(self)
+        n = self.get_n()
+        print("number of vertices:", n)
+        #for _ in range(1, self.get_n() + 1 - k): this keeps on updating self.get_n()! 
+        for _ in range(1, n + 1 - k): 
+            #u, v = edge_select(self)
+            u, v = edge_select(g)
             g = g.contract_edge(u, v)
+            print("vertices after contraction:", g.get_n())
         return g
 
     def recursive_contract(self) -> Tuple[Cut, int]:
@@ -162,11 +168,14 @@ class Graph:
 # =====================================================================================
 
 # FIND A PLACE FOR THIS STUF
-def binary_search(C: List[int], r: int):
-    start, next, end = 0, None, len(C) - 1
+
+def binary_search(C: List[int], r: int): # returns an int if found, None if not found. 
+    # NB: in our case should never return None, because we're choosing r exactly in the correct range. 
+    #start, next, end = 0, None, len(C) - 1
+    start, next, end = 0, None, len(C) 
     found = False
     print(f"list is {C} random val is {r}")
-    while start <= end and not found:
+    while start < end and not found:
         next = (start + end) // 2
         if C[next - 1] <= r and r < C[next]:
             found = True
@@ -174,14 +183,17 @@ def binary_search(C: List[int], r: int):
             start = next + 1
         else:
             end = next
-
-    print(f"found this {next}")
+    if found: 
+        print(f"found this {next}")
+    else: 
+        print("not found")
     return next if found else None
 
 
-def random_select(g: Graph, C: List[int]) -> Edge:
+def random_select(g: Graph, C: List[int]) -> Vertex: #(g: Graph, C: List[int]) -> Edge:
     # r = random.randint(0, C[-1])
-    r = randint(0, C[-1])  # randint(a,b) gives n . a<=n<=b
+    #r = randint(0, C[-1])  # randint(a,b) gives n . a<=n<=b
+    r = randrange(0, C[-1]) # I don't want to have the last one included
     e = binary_search(C, r)
     # return e
     return g.get_nth_vertex(e)
@@ -196,7 +208,10 @@ def edge_select(g: Graph):
     #     C1[i] = C1[i - 1] + D[i]
 
     D_val = list(D.values())
-    C1 = [sum(D_val[:i]) for i in range(1, len(D_val) + 1)]
+    #C1 = [sum(D_val[:i]) for i in range(1, len(D_val) + 1)]
+    C1 = [0] + [sum(D_val[:i]) for i in range(1, len(D_val) + 1)] 
+    # should start from 0, in order to be able to select also the first vertex. 
+    print(C1)
 
     u = random_select(g, C1)
     print(f"nodes are: {g.get_vertices()}, bin search selected: {u}")
@@ -207,11 +222,15 @@ def edge_select(g: Graph):
 
     W_val = list(g.get_adj_list_vertex(u).values())
 
-    C2=[None] * len(W_val)
-    C2[0]=sum(W_val[0])
-    for i in range(1, len(W_val)): C2[i]=C2[i-1]+sum(W_val[i])
+    C2=[None] * (len(W_val) + 1)
+    #C2[0]=sum(W_val[0])
+    C2[0] = 0
+     # also this should start from 0, in order to be able to select also the first vertex. 
+    for i in range(1, len(W_val)+1): C2[i]=C2[i-1]+sum(W_val[i-1])
+    print(C2)
 
     v = random_select(g, C2)
+    print(f"nodes are: {g.get_vertices()}, bin search selected: {v}")
 
     return (u, v)
 

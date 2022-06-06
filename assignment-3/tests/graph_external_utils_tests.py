@@ -52,15 +52,20 @@ class GraphExternalUtilsTests(unittest.TestCase):
     def test_binary_search(self):
         # random.seed(42)
         # print([random.choice(range(1,100)) for _ in range(1,10)])
-        C = [12, 31, 4, 95, 36, 32, 29, 18, 95]
-        r1, r2, r3 = 70, 30, 100
-        exp1, exp2, exp3 = 3, 1, None
+        C = [4, 12, 18, 29, 31, 32, 36, 95]
+        r1, r2, r3, r4 = 70, 30, 100, 2
+        exp1, exp2, exp3, exp4 = 7, 4, None, None
+       
         act1 = binary_search(C, r1)
         act2 = binary_search(C, r2)
         act3 = binary_search(C, r3)
+        act4 = binary_search(C, r4)
+    
         self.assertEqual(exp1, act1)
         self.assertEqual(exp2, act2)
         self.assertEqual(exp3, act3)
+        self.assertEqual(exp4, act4)
+        
 
     def test_contract_edge(self):
         g = Graph([(1, 2, 4), (1, 3, 20), (2, 3, 3), (2, 3, 2)])
