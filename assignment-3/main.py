@@ -68,7 +68,8 @@ def karger_stein_complexity(graphs: List[Graph], num_calls):
         run_times,
         graphs_dimensions,
         karger_stein_asymptotic_behaviour,
-        "Karger-Stein randomized algorithm" "Expected complexity: O(n^2*log^3(n))",
+        "Karger-Stein randomized algorithm", 
+        "Expected complexity: O(n^2*log^3(n))",
     )
 
     plot_run_vs_discovery(

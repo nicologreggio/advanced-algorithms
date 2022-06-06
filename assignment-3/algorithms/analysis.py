@@ -97,7 +97,7 @@ def plot_run_vs_discovery(
     graphs_dimensions,
     title,
 ):
-    x = graphs_dimensions
+    x = [n for n, _ in graphs_dimensions]
 
     plt.plot(x, run_times, label="Runtimes")
     plt.plot(x, discovery_times, label="Discovery times")

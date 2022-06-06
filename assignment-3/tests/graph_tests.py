@@ -23,8 +23,10 @@ class GraphTests(unittest.TestCase):
 
     def test_get_nth_vertex(self):
         g=self.g
-        self.assertEqual(3, g.get_nth_vertex(2))
-        self.assertRaises(AssertionError, g.get_nth_vertex, 5)
+        print(g.get_vertices())
+        self.assertEqual(1, g.get_nth_vertex(0))
+        self.assertEqual(5, g.get_nth_vertex(4))
+        #self.assertRaises(AssertionError, g.get_nth_vertex())
 
     def test_weighted_degree_calculation(s):
         D = s.g.get_weighted_degree_list()

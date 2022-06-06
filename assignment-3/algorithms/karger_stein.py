@@ -5,6 +5,7 @@ from graph.graph import Graph
 
 
 def karger_stein(g: Graph) -> Tuple[int, int]:
+    print("Running on ", g)
     k = math.ceil(math.log(g.get_n(), 2) ** 2)
     minimum = float("+inf")
 
