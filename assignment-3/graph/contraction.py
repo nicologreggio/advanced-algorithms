@@ -7,17 +7,14 @@ from math import ceil, sqrt
 def get_nth_vertex(d, nth: int):  # d is a list of keys (list[Vertex]?)
     # now should work with e-1
     """returns the nth vertex, starting from 0"""
-    assert (
-        nth
-        < len(d)
-    ), f"dictionary has {len(d)} vertices, so {nth} is out of bounds"
+    assert nth < len(d), f"dictionary has {len(d)} vertices, so {nth} is out of bounds"
     it = iter(d)
     for _ in range(0, nth):
         next(it)
     return next(it)
 
 
-def binary_search(C: List[int], r: int): 
+def binary_search(C: List[int], r: int):
     """returns an int if found, None if not found."""
     # NB: in our case should never return None, because we're choosing r exactly in the correct range.
     # start, next, end = 0, None, len(C) - 1
