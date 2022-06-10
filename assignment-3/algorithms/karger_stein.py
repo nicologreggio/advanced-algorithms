@@ -6,7 +6,7 @@ from graph.contraction import recursive_contract
 
 
 def karger_stein(g: Graph) -> Tuple[int, int]:
-    k = math.ceil(math.log(g.get_n(), 2) ** 2)
+    k = math.ceil(math.log(g.get_n()) ** 2)
     minimum = float("+inf")
 
     start_time = perf_counter_ns()
