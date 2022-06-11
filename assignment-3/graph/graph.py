@@ -1,12 +1,7 @@
 from collections import defaultdict
-from functools import reduce
 from glob import glob
 
-# from random import random
-from random import randint, randrange
-from typing import List, NewType, Tuple, final, Set
-from math import ceil, sqrt
-import heapq as hq
+from typing import List, NewType, Tuple, Set
 
 GRAPH_FILE_EXTENSION = "txt"
 
@@ -19,18 +14,19 @@ class Graph:
     def __init__(self, edges: List[Edge] = []):
         self.adj_list = defaultdict(lambda: defaultdict(list))
         self.edges = set()
-        self.weighted_degree = {}
+        self.weighted_degree = defaultdict(int)
 
         for s, t, w in edges:
             self.add_edge(s, t, w)
 
-    def __calculate_weighted_degree(self, v: Vertex):
-        """return the weighted degree of the vertex v"""
+    # deprecated :( -> to rm once verified results are all correct
+    # def __calculate_weighted_degree(self, v: Vertex):
+    #     """return the weighted degree of the vertex v"""
 
-        acc = 0
-        for x in self.adj_list[v].values():
-            acc += sum(x)
-        return acc
+    #     acc = 0
+    #     for x in self.adj_list[v].values():
+    #         acc += sum(x)
+    #     return acc
 
     def get_vertices(self):
         """returns the list of vertices"""
@@ -71,8 +67,10 @@ class Graph:
 
         self.edges.add((s, t, w))
 
-        self.weighted_degree[s] = self.__calculate_weighted_degree(s)
-        self.weighted_degree[t] = self.__calculate_weighted_degree(t)
+        # self.__calculate_weighted_degree(s) #should be safe to rm, do it once verified correctness
+        self.weighted_degree[s] += w  
+        # self.__calculate_weighted_degree(t) #should be safe to rm, do it once verified correctness
+        self.weighted_degree[t] += w  
 
     def remove_edge(self, s: Vertex, t: Vertex):
         """removes the edge from s to t and vice-versa"""
@@ -82,12 +80,14 @@ class Graph:
             del self.adj_list[s][t]
             del self.adj_list[t][s]
 
+            edges_weight = 0
             for w in ws:
+                edges_weight += w
                 self.edges.discard((s, t, w))
                 self.edges.discard((t, s, w))
 
-            self.weighted_degree[s] = self.__calculate_weighted_degree(s)
-            self.weighted_degree[t] = self.__calculate_weighted_degree(t)
+            self.weighted_degree[s] -= edges_weight
+            self.weighted_degree[t] -= edges_weight
 
     def __repr__(self):
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
