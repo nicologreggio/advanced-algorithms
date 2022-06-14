@@ -39,6 +39,16 @@
 - [Filippo Fantinato](https://github.com/FilippoFantinato)
 - [Nicolò Greggio](https://github.com/nicologreggio/)
 
+## General instructions
+- [ ] TODO: add info on how to run assignents (see reports) 
+### Generate code coverage reports
+- you can generate code coverage reports with python coverage:
+    - first, install coverage: `pip install coverage`
+    - cd into an assignment folder
+    - run tests through the coverage tool: `coverage run -m unittest tests/*.py`
+    - report:
+        - view in cli: `coverage report -m`
+        - generate html: `coverage html`
 <br>
 
 ---
