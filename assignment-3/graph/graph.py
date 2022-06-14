@@ -81,7 +81,7 @@ class Graph:
         return "(V: {0}, E: {1})".format(self.get_n(), self.get_m())
 
 
-def read_graph(f):
+def read_graph(f): # pragma: no cover
     lines = f.readlines()
 
     g = Graph()
@@ -93,16 +93,16 @@ def read_graph(f):
     return g
 
 
-def open_graph(file_path):
+def open_graph(file_path): # pragma: no cover
     with open(file_path, "r") as f:
         return read_graph(f)
 
 
-def read_all(directory_path, size=None):
+def read_all(directory_path, size=None): # pragma: no cover
     files = read_sort_files(directory_path, size)
     return list(map(open_graph, files))
 
 
-def read_sort_files(directory_path, size=None):
+def read_sort_files(directory_path, size=None): # pragma: no cover
     files = sorted(glob(f"{directory_path}/*.{GRAPH_FILE_EXTENSION}"))
     return files if not size else files[:size]

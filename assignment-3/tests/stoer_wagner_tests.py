@@ -1,7 +1,7 @@
 import copy
 import unittest
 from graph.graph import Graph
-from algorithms.stoer_wagner import st_min_cut, stoer_wagner, compute_cut_weight
+from algorithms.stoer_wagner import st_min_cut, stoer_wagner, compute_cut_weight, stoer_wagner_asymptotic_behaviour
 
 
 class StoerWagnerTest(unittest.TestCase):
@@ -158,6 +158,10 @@ class StoerWagnerTest(unittest.TestCase):
 
         self.assertEqual(expected, current)
 
+    def test_stoer_wagner_asymptotic_behaviour(self):
+        b=stoer_wagner_asymptotic_behaviour(5, 3)
+        self.assertEqual(b, 55.23594781085251)
+
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()  # pragma: no cover

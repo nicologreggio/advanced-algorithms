@@ -23,7 +23,7 @@ class GraphTests(unittest.TestCase):
         )
 
     def test_get_nth_vertex(self):
-        vertices=self.g.get_vertices()
+        vertices = self.g.get_vertices()
         print(vertices)
         self.assertEqual(1, get_nth_vertex(vertices, 0))
         self.assertEqual(5, get_nth_vertex(vertices, 4))
@@ -47,10 +47,12 @@ class GraphTests(unittest.TestCase):
         s.assertEqual(11, D[5])
 
     def test_contract(self):
-        g=contract(self.g, 2)
+        g = contract(self.g, 2)
         self.assertEqual(2, g.get_n())
 
+    def test_repr(self):
+        self.assertEqual("(V: 5, E: 10)", repr(self.g))
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()  # pragma: no cover

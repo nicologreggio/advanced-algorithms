@@ -7,4 +7,4 @@ class TestingTest(unittest.TestCase):
         self.assertFalse(False)
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main() # pragma: no cover
