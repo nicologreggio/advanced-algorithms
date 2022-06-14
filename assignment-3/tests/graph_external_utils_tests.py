@@ -1,6 +1,7 @@
 import unittest
 import random
 from graph.graph import *
+from graph.contraction import edge_select, contract_edge, binary_search
 
 
 class GraphExternalUtilsTests(unittest.TestCase):
@@ -50,8 +51,6 @@ class GraphExternalUtilsTests(unittest.TestCase):
 
     
     def test_binary_search(self):
-        # random.seed(42)
-        # print([random.choice(range(1,100)) for _ in range(1,10)])
         C = [4, 12, 18, 29, 31, 32, 36, 95]
         r1, r2, r3, r4 = 70, 30, 100, 2
         exp1, exp2, exp3, exp4 = 7, 4, None, None
@@ -75,7 +74,7 @@ class GraphExternalUtilsTests(unittest.TestCase):
         self.assertEqual(25, D[3])
 
         print(g.get_edges())
-        g2 = g.contract_edge(1,2)
+        g2 = contract_edge(g, 1, 2)
 
         Q=g2.get_weighted_degree_list()
 
@@ -95,7 +94,7 @@ class GraphExternalUtilsTests(unittest.TestCase):
         edges=set(map(lambda a: (a[0], a[1]), g.get_edges()))
         print(edges)
         
-        # self.assertTrue((u,v) in edges) # not a proper way to check
+        self.assertTrue((u,v) in edges or (v,u) in edges)
 
 
 if __name__ == "__main__":

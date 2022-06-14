@@ -177,7 +177,7 @@ stoer_runtime = [
 import matplotlib.pyplot as plt
 from graph.graph import read_all
 
-mincut_graphs = read_all("/Users/dilettarigo/Desktop/advanced-algorithms/assignment-3/mincut_dataset", 56)
+mincut_graphs = read_all("mincut_dataset", 56)
 
 x = [g.get_n() for g in mincut_graphs]
 

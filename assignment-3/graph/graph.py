@@ -9,7 +9,6 @@ Edge = NewType("Edge", Tuple[int, int, int])
 Vertex = NewType("Vertex", int)
 Cut = NewType("Cut", Tuple[Set[Vertex], Set[Vertex]])
 
-# TODO: review all operations @nicolo
 class Graph:
     def __init__(self, edges: List[Edge] = []):
         self.adj_list = defaultdict(lambda: defaultdict(list))
@@ -18,15 +17,6 @@ class Graph:
 
         for s, t, w in edges:
             self.add_edge(s, t, w)
-
-    # deprecated :( -> to rm once verified results are all correct
-    # def __calculate_weighted_degree(self, v: Vertex):
-    #     """return the weighted degree of the vertex v"""
-
-    #     acc = 0
-    #     for x in self.adj_list[v].values():
-    #         acc += sum(x)
-    #     return acc
 
     def get_vertices(self):
         """returns the list of vertices"""
@@ -67,9 +57,7 @@ class Graph:
 
         self.edges.add((s, t, w))
 
-        # self.__calculate_weighted_degree(s) #should be safe to rm, do it once verified correctness
         self.weighted_degree[s] += w  
-        # self.__calculate_weighted_degree(t) #should be safe to rm, do it once verified correctness
         self.weighted_degree[t] += w  
 
     def remove_edge(self, s: Vertex, t: Vertex):

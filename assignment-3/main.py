@@ -3,7 +3,6 @@ from enum import Enum
 import sys
 from typing import List
 
-# from graph import graph
 from graph.graph import Graph, read_all
 
 from algorithms.analysis import (
@@ -40,7 +39,6 @@ def stoer_wagner_complexity(graphs: List[Graph], num_calls):
         stoer_wagner_asymptotic_behaviour,
         "Stoer-Wagner deterministic algorithm",
         "Expected complexity: O(m*n + n^2*log(n)) ",
-        # TODO would be O(mn + n^2*log(n)) but analysis on m/n relation: m = O(n) and then...
     )
 
 
@@ -68,7 +66,7 @@ def karger_stein_complexity(graphs: List[Graph], num_calls):
         run_times,
         graphs_dimensions,
         karger_stein_asymptotic_behaviour,
-        "Karger-Stein randomized algorithm", 
+        "Karger-Stein randomized algorithm",
         "Expected complexity: O(n^2*log^3(n))",
     )
 
@@ -78,9 +76,6 @@ def karger_stein_complexity(graphs: List[Graph], num_calls):
         graphs_dimensions,
         "Runtimes vs. Discovery Times for Karger-Stein algorithm",
     )
-
-
-# TODO: add something to compare the two algorithms, maybe reading from file results, and compute error
 
 
 def d_print_complexity_data(run_times, graphs_dimensions, ratios, c_estimates, weights):
@@ -181,7 +176,6 @@ def init_args():
 
 
 def main():
-    # sys.setrecursionlimit(8000)
     args = init_args().parse_args()
 
     mincut_graphs = read_all(args.directory, args.size)

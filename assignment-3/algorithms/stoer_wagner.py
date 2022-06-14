@@ -7,7 +7,6 @@ from fibheap.fibheap_item import FibHeapItem
 from graph.graph import Graph, Vertex, Cut
 from graph.contraction import contract_edge
 
-# Fibonacci
 def st_min_cut(g: Graph) -> Tuple[Cut, Vertex, Vertex]:
     PQ = FibHeap()
     keys = {}

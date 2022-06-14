@@ -86,21 +86,6 @@ class FibHeap:
                 d += 1
             A[d] = x
 
-        # w = self.roots.nil.right
-        # while id(w) != id(self.roots.nil):
-        #     x = w
-        #     next_node = w.right
-        #     d = x.get_degree()
-        #     while A[d]:
-        #         y = A[d]
-        #         if x < y:
-        #             x, y = y, x
-        #         self._fib_heap_link(y, x)
-        #         A[d] = None
-        #         d += 1
-        #     A[d] = x
-        #     w = next_node
-
         self.max = None
 
         for el in A:

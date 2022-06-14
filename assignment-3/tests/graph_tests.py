@@ -1,6 +1,7 @@
 import unittest
 import random
 from graph.graph import *
+from graph.contraction import get_nth_vertex, contract
 
 
 class GraphTests(unittest.TestCase):
@@ -22,11 +23,11 @@ class GraphTests(unittest.TestCase):
         )
 
     def test_get_nth_vertex(self):
-        g=self.g
-        print(g.get_vertices())
-        self.assertEqual(1, g.get_nth_vertex(0))
-        self.assertEqual(5, g.get_nth_vertex(4))
-        #self.assertRaises(AssertionError, g.get_nth_vertex())
+        vertices=self.g.get_vertices()
+        print(vertices)
+        self.assertEqual(1, get_nth_vertex(vertices, 0))
+        self.assertEqual(5, get_nth_vertex(vertices, 4))
+        self.assertRaises(AssertionError, get_nth_vertex, vertices, 7)
 
     def test_weighted_degree_calculation(s):
         D = s.g.get_weighted_degree_list()
@@ -46,7 +47,7 @@ class GraphTests(unittest.TestCase):
         s.assertEqual(11, D[5])
 
     def test_contract(self):
-        g=self.g.contract(2)
+        g=contract(self.g, 2)
         self.assertEqual(2, g.get_n())
 
 
