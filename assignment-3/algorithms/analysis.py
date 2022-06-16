@@ -102,7 +102,10 @@ def plot_run_vs_discovery(
     plt.plot(x, run_times, label="Runtimes")
     plt.plot(x, discovery_times, label="Discovery times")
 
-    plt.title(title)
+    if len(title) > 52:
+        plt.title(title, y=1.03)
+    else:
+        plt.title(title)
     plt.xlabel("n")
     plt.ylabel("Time")
     plt.legend()
