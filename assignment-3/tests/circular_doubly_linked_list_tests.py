@@ -33,6 +33,12 @@ class CircularDoublyLinkedListTest(unittest.TestCase):
         el2 = Item(6)
         l.append(el1)
         l.append(el2)
+        self.assertEqual('5', str(el1))
+        self.assertEqual('5', repr(el1))
+        tt=next(iter(iter(l)))
+        self.assertEqual('5', str(tt))
+        self.assertEqual('6', repr(l[1]))
+        self.assertRaises(IndexError, l.__getitem__, 3)
 
         current = l.to_list()
         expected = [el1, el2]
