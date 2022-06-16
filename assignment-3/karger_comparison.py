@@ -376,12 +376,12 @@ reference_old = [old_C * karger_stein_asymptotic_behaviour(n, m) for (n, m) in g
 reference_new = [new_C * karger_stein_asymptotic_behaviour(n, m) for (n, m) in graphs_dimensions]
 
 #plt.plot(x, reference_old, label="Expected old complexity")
-plt.plot(x, old_runtime, label="Actual old complexity")
-plt.plot(x, old_discovery, label="Old discovery time")
+plt.plot(x, old_runtime, label="Wrong complexity")
+#plt.plot(x, old_discovery, label="Wrong discovery time")
 
 #plt.plot(x, reference_new, label="Expected new complexity")
-plt.plot(x, new_runtime, label="Actual new complexity")
-plt.plot(x, new_discovery, label="New discovery time")
+plt.plot(x, new_runtime, label="Correct complexity")
+plt.plot(x, new_discovery, label="Correct discovery time")
 
 plt.title("Plotting two Karger's version")
 plt.xlabel("n")
