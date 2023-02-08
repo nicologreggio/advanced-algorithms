@@ -35,7 +35,7 @@
 - [Milestones](https://github.com/nicologreggio/advanced-algorithms/milestones)
 
 ## Contributors
-- [Diletta Rigo](https://github.com/rigodiletta) 
+- [Diletta Rigo](https://github.com/dilettarigo) 
 - [Filippo Fantinato](https://github.com/FilippoFantinato)
 - [Nicolò Greggio](https://github.com/nicologreggio/)
 
